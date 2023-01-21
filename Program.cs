@@ -13,12 +13,13 @@ foreach (var orderNode in orderNodes)
     items.AddRange(ParseOrderItems(orderNode));
 }
 
+items = items.OrderBy(x => x.ProductName).ToList();
+
 using var outStream = File.OpenWrite("result.txt");
 using var textWriter = new StreamWriter(outStream);
 
 foreach (var item in items)
 {
-    throw new NotImplementedException("Why record doesnt write ToString()? ");
     textWriter.WriteLine(item);
 }
 
@@ -41,8 +42,8 @@ static List<OrderItem> ParseOrderItems(HtmlElementNode orderNode)
 
         var orderItem = new OrderItem()
         {
-            Name = children.Find(".main-name").First().Text,
-            Description = children.Find(".main-text > p").First().Text,
+            CategoryName = children.Find(".main-name").First().Text,
+            ProductName = children.Find(".main-text > p").First().Text,
             Quantity = decimal.Parse(children.Find(".item-count").First().Text),
             QuantityType = "?",
             UnitPrice = decimal.Parse(prices[0]),
@@ -82,12 +83,12 @@ static decimal ParseSum(HtmlElementNode node)
 
 internal record struct OrderItem
 {
-    internal string Name; // .main-name
-    internal string Description; // .main-text > p.text()
-    internal decimal Quantity; // .item-count
-    internal string QuantityType; // Pieces, kg.
-    internal decimal UnitPrice; // .main-price > .price-num.text()
-    internal decimal TotalPrice; // .main-summa > .price-num.text()
-    internal DateOnly OrderDate;
-    internal decimal OrderSum;
+    public string CategoryName; // .main-name
+    public string ProductName; // .main-text > p.text()
+    public decimal Quantity; // .item-count
+    public string QuantityType; // Pieces, kg.
+    public decimal UnitPrice; // .main-price > .price-num.text()
+    public decimal TotalPrice; // .main-summa > .price-num.text()
+    public DateOnly OrderDate;
+    public decimal OrderSum;
 }

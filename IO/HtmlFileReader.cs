@@ -23,7 +23,14 @@ internal class HtmlFileReader
         
         foreach (var orderNode in orderNodes)
         {
-            var orderItems = OrderItemDataNodeParser.ParseOrderItems(orderNode);
+            var date = OrderDataNodeParser.ParseDate(orderNode);
+            var sum = OrderDataNodeParser.ParseSum(orderNode);
+
+            var orderItems = orderNode.Children
+                .Find(".history-order-good")
+                .Select(node => OrderEntryNodeWrapper.ParseOrderItem(node, date, sum))
+                .ToList();
+
             items.AddRange(orderItems);
         }
 

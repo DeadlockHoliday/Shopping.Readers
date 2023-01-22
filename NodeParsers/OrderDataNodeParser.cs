@@ -4,7 +4,8 @@ internal static class OrderDataNodeParser
 {
     internal static DateOnly? ParseDate(HtmlElementNode node)
     {
-        var entry = GetOrderDataEntry(node, 1);
+        var dateElementHtmlIndex = 1;
+        var entry = GetOrderDataEntry(node, dateElementHtmlIndex);
         if (string.IsNullOrWhiteSpace(entry))
         {
             return null;
@@ -15,7 +16,8 @@ internal static class OrderDataNodeParser
 
     internal static decimal ParseSum(HtmlElementNode node)
     {
-        var entry = GetOrderDataEntry(node, 2);
+        var sumElementHtmlIndex = 2;
+        var entry = GetOrderDataEntry(node, sumElementHtmlIndex);
         if (decimal.TryParse(entry, out var result))
         {
             return result;

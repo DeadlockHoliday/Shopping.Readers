@@ -1,40 +1,37 @@
 ﻿using SoftCircuits.HtmlMonkey;
 
-internal class OrderItemDataNodeParser
+internal static class OrderItemDataNodeParser
 {
-    public static List<OrderItem> ParseOrderItems(HtmlElementNode orderNode)
+    public static OrderItem ParseOrderItem(HtmlElementNode node, DateOnly? date, decimal sum)
     {
-        var result = new List<OrderItem>();
-        var date = OrderDataNodeParser.ParseDate(orderNode);
-        var sum = OrderDataNodeParser.ParseSum(orderNode);
-
-        var itemNodes = orderNode.Children.Find(".history-order-good");
-        foreach (var node in itemNodes)
-        {
-            var children = node.Children
+        var children = node.Children
                 .Where(x => !string.IsNullOrWhiteSpace(x.Text))
                 .ToArray();
 
-            var prices = children.Find(".price-num")
+        return new()
+        {
+            CategoryName = GetText(children, ".main-name"),
+            ProductName = GetText(children, ".main-text > p"),
+            Quantity = GetDecimal(children, ".item-count"),
+            QuantityType = "?",
+            UnitPrice = GetPrices(children)[0],
+            TotalPrice = GetPrices(children)[1],
+            OrderDate = date ?? DateOnly.MinValue,
+            OrderSum = sum
+        };
+    }
+
+    private static decimal GetDecimal(HtmlNode[] children, string selector)
+        => decimal.Parse(GetText(children, selector));
+
+    private static string GetText(HtmlNode[] children, string selector)
+        => children.Find(selector).First().Text;
+
+    private static decimal[] GetPrices(HtmlNode[] children)
+        => children.Find(".price-num")
                 .Select(x => x.Text.Trim()
                     .Split(' ')
                     .First())
+                .Select(x => decimal.Parse(x))
                 .ToArray();
-
-            var orderItem = new OrderItem()
-            {
-                CategoryName = children.Find(".main-name").First().Text,
-                ProductName = children.Find(".main-text > p").First().Text,
-                Quantity = decimal.Parse(children.Find(".item-count").First().Text),
-                QuantityType = "?",
-                UnitPrice = decimal.Parse(prices[0]),
-                TotalPrice = decimal.Parse(prices[1]),
-                OrderDate = date ?? DateOnly.MinValue,
-                OrderSum = sum
-            };
-            result.Add(orderItem);
-        }
-
-        return result;
-    }
 }

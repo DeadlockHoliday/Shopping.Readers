@@ -29,7 +29,7 @@ internal class OrderItemDataNodeParser
                 QuantityType = "?",
                 UnitPrice = decimal.Parse(prices[0]),
                 TotalPrice = decimal.Parse(prices[1]),
-                OrderDate = date,
+                OrderDate = date ?? DateOnly.MinValue,
                 OrderSum = sum
             };
             result.Add(orderItem);

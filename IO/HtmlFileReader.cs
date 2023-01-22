@@ -28,7 +28,7 @@ internal class HtmlFileReader
 
             var orderItems = orderNode.Children
                 .Find(".history-order-good")
-                .Select(node => OrderEntryNodeWrapper.ParseOrderItem(node, date, sum))
+                .Select(node => OrderItemDataNodeParser.ParseOrderItem(node, date, sum))
                 .ToList();
 
             items.AddRange(orderItems);

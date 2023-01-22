@@ -1,9 +1,12 @@
-﻿var items = HtmlFileReader
-    .FromCurrentDir("samples/sample.html")
+﻿var input = "samples/sample.html";
+var output = "OrderReader.db";
+
+var items = HtmlFileReader
+    .FromCurrentDir(input)
     .ReadOrderItems()
-    .OrderBy(x => x.ProductName)
+    .Where(x => x.CategoryName != "Услуги")
+    .OrderBy(x => x.CategoryName)
+    .ThenBy(x => x.ProductName)
     .ToList();
 
-ResultWriter.WriteResult(items, "result.txt");
-
-Console.WriteLine("done");
+ResultWriter.WriteResult(items, output);

@@ -8,25 +8,24 @@ internal static class ResultWriter
         (
             serialize: obj =>
             {
-                var doc = new BsonDocument();
-                doc["Year"] = obj.Year;
-                doc["Month"] = obj.Month;
-                doc["Day"] = obj.Day;
-                return doc;
+                return new()
+                {
+                    ["Year"] = obj.Year,
+                    ["Month"] = obj.Month,
+                    ["Day"] = obj.Day
+                };
             },
             deserialize: doc =>
-            {
-                return new DateOnly(doc["Year"], doc["Month"], doc["Day"]);
-            }
+                new DateOnly(doc["Year"], doc["Month"], doc["Day"])
         );
 
-        using (var db = new LiteDatabase("OrderReader.db"))
+        using (var db = new LiteDatabase(writePath))
         {
             db.DropCollection("orderItems");
             db.Commit();
         }
 
-        using (var db = new LiteDatabase("OrderReader.db"))
+        using (var db = new LiteDatabase(writePath))
         {
             var collection = db.GetCollection<OrderItem>("orderItems");
             foreach (var item in items)
@@ -36,13 +35,13 @@ internal static class ResultWriter
             db.Commit();
         }
 
-        using (var db = new LiteDatabase("OrderReader.db"))
+        using (var db = new LiteDatabase(writePath))
         {
             var collection = db.GetCollection<OrderItem>("orderItems");
             var one = collection.FindOne(x => true);
         }
 
-        using (var db = new LiteDatabase("OrderReader.db"))
+        using (var db = new LiteDatabase(writePath))
         {
             var collection = db.GetCollection<OrderItem>("orderItems");
             collection.EnsureIndex(x => x.OrderDate);

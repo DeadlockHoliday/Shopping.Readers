@@ -11,7 +11,7 @@ internal static class OrderDataNodeParser
             return null;
         }
 
-        return DateOnly.ParseExact(entry, "dd-mm-yyyy");
+        return DateOnly.ParseExact(entry, "dd-MM-yyyy");
     }
 
     internal static decimal ParseSum(HtmlElementNode node)

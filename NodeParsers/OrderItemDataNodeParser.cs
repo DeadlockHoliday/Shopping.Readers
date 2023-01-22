@@ -12,8 +12,7 @@ internal static class OrderItemDataNodeParser
         {
             CategoryName = GetText(children, ".main-name"),
             ProductName = GetText(children, ".main-text > p"),
-            Quantity = GetDecimal(children, ".item-count"),
-            QuantityType = "?",
+            OrderQuantity = GetDecimal(children, ".item-count"),
             UnitPrice = GetPrices(children)[0],
             TotalPrice = GetPrices(children)[1],
             OrderDate = date ?? DateOnly.MinValue,

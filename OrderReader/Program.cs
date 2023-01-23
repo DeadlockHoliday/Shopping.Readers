@@ -1,4 +1,7 @@
-﻿var input = "samples/sample.html";
+﻿using System.Runtime.CompilerServices;
+[assembly: InternalsVisibleTo("OrderReaderTests")]
+
+var input = "samples/sample.html";
 var output = "OrderReader.db";
 
 var items = HtmlFileReader

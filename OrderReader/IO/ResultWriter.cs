@@ -8,7 +8,7 @@ internal static class ResultWriter
         (
             serialize: obj =>
             {
-                return new()
+                return new BsonDocument()
                 {
                     ["Year"] = obj.Year,
                     ["Month"] = obj.Month,

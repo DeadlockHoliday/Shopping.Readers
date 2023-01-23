@@ -46,7 +46,7 @@ internal static class ResultWriter
             var collection = db.GetCollection<OrderItem>("orderItems");
             collection.EnsureIndex(x => x.OrderDate);
             collection.EnsureIndex(x => x.CategoryName);
-            collection.EnsureIndex(x => x.ProductName);
+            collection.EnsureIndex(x => x.ProductFullName);
         }
     }
 }

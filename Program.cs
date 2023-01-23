@@ -6,7 +6,7 @@ var items = HtmlFileReader
     .ReadOrderItems()
     .Where(x => x.CategoryName != "Услуги")
     .OrderBy(x => x.CategoryName)
-    .ThenBy(x => x.ProductName)
+    .ThenBy(x => x.ProductFullName)
     .ToList();
 
 ResultWriter.WriteResult(items, output);

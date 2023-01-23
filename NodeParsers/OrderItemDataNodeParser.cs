@@ -11,7 +11,7 @@ internal static class OrderItemDataNodeParser
         return new()
         {
             CategoryName = GetText(children, ".main-name"),
-            ProductName = GetText(children, ".main-text > p"),
+            ProductFullName = GetText(children, ".main-text > p"),
             OrderQuantity = GetDecimal(children, ".item-count"),
             UnitPrice = GetPrices(children)[0],
             TotalPrice = GetPrices(children)[1],

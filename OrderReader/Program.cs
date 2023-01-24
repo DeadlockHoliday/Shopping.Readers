@@ -1,15 +1,16 @@
 ﻿using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("OrderReaderTests")]
 
-var input = "samples/sample.html";
-var output = "OrderReader.db";
+const string input = "samples/sample.html";
+const string output = "OrderReader.db";
 
-var items = HtmlFileReader
-    .FromCurrentDir(input)
-    .ReadOrderItems()
+var items = OrderDataNodeParser.ReadOrderItems(ToCurrentPath(input))
     .Where(x => x.CategoryName != "Услуги")
-    .OrderBy(x => x.CategoryName)
-    .ThenBy(x => x.ProductFullName)
     .ToList();
 
 ResultWriter.WriteResult(items, output);
+
+static string ToCurrentPath(string path)
+    => Path.Combine(
+                Directory.GetCurrentDirectory(),
+                path);

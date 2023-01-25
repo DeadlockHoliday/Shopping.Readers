@@ -6,7 +6,7 @@ public class OrderItemDataNodeParserTests
 {
     // TODO: Better naming
     [Test]
-    public void ParseDate_1()
+    public void ParseDate_ShouldReturn_CorrectResult()
     {
         var expectedItem = new
         {
@@ -14,11 +14,12 @@ public class OrderItemDataNodeParserTests
             ProductFullName = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
             TotalPrice = 49,
             UnitPrice = 49,
+            Url = "https://mt.delivery/single?id=206609"
         };
         
         var html = $$"""
         <div class="history-order-good">
-            <a href="https://mt.delivery/single?id=206609" class="main-link">
+            <a href="{{expectedItem.Url}}" class="main-link">
                 <div class="good-img">
                     <img alt="Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт" class="main_good-img" data-src="/img/img/items/small/206609.png" src="./История заказов МТ_files/206609.png" lazy="loaded" />
                 </div>
@@ -56,10 +57,13 @@ public class OrderItemDataNodeParserTests
 
         var item = OrderItemDataNodeParser.ParseOrderItems(html)
             .First();
-
-        Assert.That(item.CategoryName, Is.EqualTo(expectedItem.CategoryName));
-        Assert.That(item.ProductFullName, Is.EqualTo(expectedItem.ProductFullName));
-        Assert.That(item.UnitPrice, Is.EqualTo(expectedItem.UnitPrice));
-        Assert.That(item.TotalPrice, Is.EqualTo(expectedItem.TotalPrice));
+                
+        Assert.Multiple(() =>
+        {
+            Assert.That(item.CategoryName, Is.EqualTo(expectedItem.CategoryName));
+            Assert.That(item.ProductFullName, Is.EqualTo(expectedItem.ProductFullName));
+            Assert.That(item.UnitPrice, Is.EqualTo(expectedItem.UnitPrice));
+            Assert.That(item.TotalPrice, Is.EqualTo(expectedItem.TotalPrice));
+        });
     }
 }

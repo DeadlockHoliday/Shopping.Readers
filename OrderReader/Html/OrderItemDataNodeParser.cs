@@ -16,6 +16,7 @@ internal static class OrderItemDataNodeParser
                 {
                     CategoryName = children.GetText(".main-name").Trim(),
                     ProductFullName = children.GetText(".main-text > p").Trim(),
+                    Url = children.GetAttr(".main-link", "href"),
                     UnitPrice = prices[0],
                     TotalPrice = prices[1]
                 };
@@ -30,6 +31,9 @@ internal static class OrderItemDataNodeParser
         var parentNode = new HtmlElementNode("div", new HtmlAttributeCollection(), nodeCollection);
         return ParseOrderItems(parentNode);
     }
+
+    private static string GetAttr(this HtmlNode[] children, string selector, string name)
+        => children.Find(selector).First().Attributes[name].Value;
 
     private static string GetText(this HtmlNode[] children, string selector)
         => children.Find(selector).First().Text;

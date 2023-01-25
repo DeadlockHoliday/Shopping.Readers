@@ -14,13 +14,22 @@ internal static class OrderItemDataNodeParser
                 var prices = children.GetPrices();
                 return new OrderItem
                 {
-                    CategoryName = children.GetText(".main-name"),
-                    ProductFullName = children.GetText(".main-text > p"),
+                    CategoryName = children.GetText(".main-name").Trim(),
+                    ProductFullName = children.GetText(".main-text > p").Trim(),
                     UnitPrice = prices[0],
                     TotalPrice = prices[1]
                 };
             })
             .ToArray();
+
+    internal static OrderItem[] ParseOrderItems(string html)
+    {
+        // TODO: decide, is this method needs to be here just for tests?
+        // or such method should be in tests?
+        var nodeCollection = HtmlDocument.FromHtml(html).RootNodes;
+        var parentNode = new HtmlElementNode("div", new HtmlAttributeCollection(), nodeCollection);
+        return ParseOrderItems(parentNode);
+    }
 
     private static string GetText(this HtmlNode[] children, string selector)
         => children.Find(selector).First().Text;

@@ -1,19 +1,19 @@
 ﻿using SoftCircuits.HtmlMonkey;
 
-internal class OrderDataNodeParser
+internal class OrderParser
 {
-    internal static OrderItem[] ReadOrderItems(string filePath)
+    internal static Product[] ParseProducts(string filePath)
         => HtmlDocument.FromFile(filePath)
             .Find(".history-order")
-            .Select(ParseOrderItems)
+            .Select(ParseProducts)
             .SelectMany(x => x)
             .ToArray();
 
-    private static OrderItem[] ParseOrderItems(HtmlElementNode orderNode)
+    private static Product[] ParseProducts(HtmlElementNode orderNode)
     {
         var date = ParseDate(orderNode);
-        return OrderItemDataNodeParser.ParseOrderItems(orderNode)
-            // .Select(x => x with { OrderDate = date })
+        return ProductNodeParser.Parse(orderNode)
+            .Select(x => x with { OrderDate = date })
             .ToArray();
     }
 

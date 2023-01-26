@@ -4,7 +4,7 @@
 const string input = "samples/sample.html";
 const string output = "OrderReader.db";
 
-var items = OrderDataNodeParser.ReadOrderItems(ToCurrentPath(input))
+var items = OrderParser.ParseProducts(ToCurrentPath(input))
     .Where(x => x.CategoryName != "Услуги")
     .ToList();
 

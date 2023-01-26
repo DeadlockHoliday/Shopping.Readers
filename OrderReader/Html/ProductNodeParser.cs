@@ -1,8 +1,8 @@
 ﻿using SoftCircuits.HtmlMonkey;
 
-internal static class OrderItemDataNodeParser
+internal static class ProductNodeParser
 {
-    public static OrderItem[] ParseOrderItems(HtmlElementNode orderNode)
+    public static Product[] Parse(HtmlElementNode orderNode)
         => orderNode.Children
             .Find(".history-order-good")
             .Select(x =>
@@ -12,10 +12,10 @@ internal static class OrderItemDataNodeParser
                     .ToArray();
 
                 var prices = children.GetPrices();
-                return new OrderItem
+                return new Product
                 {
                     CategoryName = children.GetText(".main-name").Trim(),
-                    ProductFullName = children.GetText(".main-text > p").Trim(),
+                    FullName = children.GetText(".main-text > p").Trim(),
                     Url = children.GetAttr(".main-link", "href"),
                     UnitPrice = prices[0],
                     TotalPrice = prices[1]
@@ -23,13 +23,13 @@ internal static class OrderItemDataNodeParser
             })
             .ToArray();
 
-    internal static OrderItem[] ParseOrderItems(string html)
+    internal static Product[] Parse(string html)
     {
         // TODO: decide, is this method needs to be here just for tests?
         // or such method should be in tests?
         var nodeCollection = HtmlDocument.FromHtml(html).RootNodes;
         var parentNode = new HtmlElementNode("div", new HtmlAttributeCollection(), nodeCollection);
-        return ParseOrderItems(parentNode);
+        return Parse(parentNode);
     }
 
     private static string GetAttr(this HtmlNode[] children, string selector, string name)

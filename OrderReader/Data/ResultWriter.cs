@@ -2,7 +2,7 @@
 
 internal static class ResultWriter
 {
-    internal static void WriteResult(IEnumerable<OrderItem> items, string writePath)
+    internal static void WriteResult(IEnumerable<Product> items, string writePath)
     {
         BsonMapper.Global.RegisterType
         (
@@ -27,7 +27,7 @@ internal static class ResultWriter
 
         using (var db = new LiteDatabase(writePath))
         {
-            var collection = db.GetCollection<OrderItem>("orderItems");
+            var collection = db.GetCollection<Product>("orderItems");
             foreach (var item in items)
             {
                 collection.Insert(item);
@@ -37,16 +37,16 @@ internal static class ResultWriter
 
         using (var db = new LiteDatabase(writePath))
         {
-            var collection = db.GetCollection<OrderItem>("orderItems");
+            var collection = db.GetCollection<Product>("orderItems");
             var one = collection.FindOne(x => true);
         }
 
         using (var db = new LiteDatabase(writePath))
         {
-            var collection = db.GetCollection<OrderItem>("orderItems");
+            var collection = db.GetCollection<Product>("orderItems");
             collection.EnsureIndex(x => x.OrderDate);
             collection.EnsureIndex(x => x.CategoryName);
-            collection.EnsureIndex(x => x.ProductFullName);
+            collection.EnsureIndex(x => x.FullName);
         }
     }
 }

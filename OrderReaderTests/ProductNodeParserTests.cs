@@ -1,6 +1,6 @@
-﻿using SoftCircuits.HtmlMonkey;
+﻿using OrderReader.Html;
 
-public class OrderItemDataNodeParserTests
+public class ProductParserTests
 {
     [Test]
     public void ParseDate_ShouldReturn_CorrectResult()
@@ -14,8 +14,8 @@ public class OrderItemDataNodeParserTests
             Url = "https://mt.delivery/single?id=206609"
         };
 
-        var html = ProductRenderer.RenderProductHtml(expected);
-        var actual = ProductNodeParser.Parse(html)
+        var html = ProductRenderer.Render(expected);
+        var actual = ProductParser.Parse(html)
             .First();
                 
         Assert.Multiple(() =>
@@ -24,6 +24,7 @@ public class OrderItemDataNodeParserTests
             Assert.That(actual.FullName, Is.EqualTo(expected.ProductFullName));
             Assert.That(actual.UnitPrice, Is.EqualTo(expected.UnitPrice));
             Assert.That(actual.TotalPrice, Is.EqualTo(expected.TotalPrice));
+            Assert.That(actual.Url, Is.EqualTo(expected.Url));
         });
     }
 }

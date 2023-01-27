@@ -1,4 +1,5 @@
 ﻿using LiteDB;
+namespace OrderReader.Data;
 
 internal static class ResultWriter
 {

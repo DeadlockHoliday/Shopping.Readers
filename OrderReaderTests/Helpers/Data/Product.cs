@@ -5,4 +5,5 @@
     internal decimal TotalPrice;
     internal decimal UnitPrice;
     internal string Url;
+    internal DateOnly OrderDate;
 }

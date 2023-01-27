@@ -1,22 +1,20 @@
 ﻿using SoftCircuits.HtmlMonkey;
+using OrderReader.Data;
 
-internal static class ProductNodeParser
+namespace OrderReader.Html;
+internal static class ProductParser
 {
     public static Product[] Parse(HtmlElementNode orderNode)
         => orderNode.Children
             .Find(".history-order-good")
             .Select(x =>
             {
-                var children = x.Children
-                    .Where(x => !string.IsNullOrWhiteSpace(x.Text))
-                    .ToArray();
-
-                var prices = children.GetPrices();
+                var prices = x.Children.GetPrices();
                 return new Product
                 {
-                    CategoryName = children.GetText(".main-name").Trim(),
-                    FullName = children.GetText(".main-text > p").Trim(),
-                    Url = children.GetAttr(".main-link", "href"),
+                    CategoryName = x.Children.GetText(".main-name").Trim(),
+                    FullName = x.Children.GetText(".main-text > p").Trim(),
+                    Url = x.Children.GetAttr(".main-link", "href"),
                     UnitPrice = prices[0],
                     TotalPrice = prices[1]
                 };
@@ -25,20 +23,21 @@ internal static class ProductNodeParser
 
     internal static Product[] Parse(string html)
     {
-        // TODO: decide, is this method needs to be here just for tests?
-        // or such method should be in tests?
         var nodeCollection = HtmlDocument.FromHtml(html).RootNodes;
         var parentNode = new HtmlElementNode("div", new HtmlAttributeCollection(), nodeCollection);
         return Parse(parentNode);
     }
 
-    private static string GetAttr(this HtmlNode[] children, string selector, string name)
+    private static string GetAttr(
+        this IEnumerable<HtmlNode> children, 
+        string selector,
+        string name)
         => children.Find(selector).First().Attributes[name].Value;
 
-    private static string GetText(this HtmlNode[] children, string selector)
+    private static string GetText(this IEnumerable<HtmlNode> children, string selector)
         => children.Find(selector).First().Text;
 
-    private static decimal[] GetPrices(this HtmlNode[] children)
+    private static decimal[] GetPrices(this IEnumerable<HtmlNode> children)
         => children.Find(".price-num")
                 .Select(x => x.Text.Trim()
                     .Split(' ')

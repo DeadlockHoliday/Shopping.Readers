@@ -1,18 +1,23 @@
 ﻿using SoftCircuits.HtmlMonkey;
+using OrderReader.Data;
+
+namespace OrderReader.Html;
 
 internal class OrderParser
 {
-    internal static Product[] ParseProducts(string filePath)
-        => HtmlDocument.FromFile(filePath)
-            .Find(".history-order")
+    public static Product[] Parse(HtmlDocument doc)
+        => doc.Find(".history-order")
             .Select(ParseProducts)
             .SelectMany(x => x)
             .ToArray();
 
+    internal static Product[] Parse(string html)
+        => Parse(HtmlDocument.FromHtml(html));
+
     private static Product[] ParseProducts(HtmlElementNode orderNode)
     {
         var date = ParseDate(orderNode);
-        return ProductNodeParser.Parse(orderNode)
+        return ProductParser.Parse(orderNode)
             .Select(x => x with { OrderDate = date })
             .ToArray();
     }

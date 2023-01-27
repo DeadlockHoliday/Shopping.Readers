@@ -1,12 +1,12 @@
 ﻿
 internal class ProductRenderer
 {
-    public static string RenderProductHtml(Product product)
+    public static string Render(Product product)
     => $$"""
             <div class="history-order-good">
                 <a href="{{product.Url}}" class="main-link">
                     <div class="good-img">
-                        <img alt="Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт" class="main_good-img" data-src="/img/img/items/small/206609.png" src="./История заказов МТ_files/206609.png" lazy="loaded" />
+                        <img alt="Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт" class="main_good-img" />
                     </div>
                     <div class="main-desc">
                         <p class="main-name">{{product.CategoryName}}</p>

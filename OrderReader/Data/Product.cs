@@ -1,4 +1,6 @@
-﻿internal readonly record struct Product
+﻿namespace OrderReader.Data;
+
+internal readonly record struct Product
 {
     public string CategoryName { get; init; }
     public string FullName { get; init; }

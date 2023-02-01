@@ -17,9 +17,9 @@
                             <div>
                                 <div class="order-head hopened">
                                     <div class="order-data">
-                                        <div class="order-data_item id">100964</div>
+                                        <div class="order-data_item id">123456</div>
                                         <div class="order-data_item date">{{orderDateStr}} </div>
-                                        <div class="order-data_item sum">9261.00 ₽</div>
+                                        <div class="order-data_item sum">9999.00 ₽</div>
                                         <div class="order-data_item state">оформлен</div>
                                     </div>
                                 </div>

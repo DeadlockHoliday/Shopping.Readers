@@ -19,6 +19,7 @@ internal static class ProductParser
                     TotalPrice = prices[1]
                 };
             })
+            .DistinctBy(x => x.FullName)
             .ToArray();
 
     internal static Product[] Parse(string html)

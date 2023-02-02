@@ -1,4 +1,4 @@
-﻿namespace OrderReader.Data;
+﻿namespace Shopping.Readers.MT.Data;
 
 internal readonly record struct Product
 {

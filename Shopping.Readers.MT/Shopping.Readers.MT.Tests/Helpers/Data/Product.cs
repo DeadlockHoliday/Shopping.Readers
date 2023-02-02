@@ -1,4 +1,6 @@
-﻿internal record struct Product
+﻿namespace Shopping.Readers.MT.Tests.Helpers.Data;
+
+internal record struct Product
 {
     internal string CategoryName;
     internal string ProductFullName;

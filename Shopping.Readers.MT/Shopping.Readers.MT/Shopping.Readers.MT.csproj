@@ -8,20 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="sample\**" />
-    <EmbeddedResource Remove="sample\**" />
-    <None Remove="sample\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="LiteDB" Version="5.0.15" />
     <PackageReference Include="SoftCircuits.HtmlMonkey" Version="2.1.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="samples\sample.html">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

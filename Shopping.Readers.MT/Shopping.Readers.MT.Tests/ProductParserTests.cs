@@ -1,4 +1,4 @@
-﻿using OrderReader.Html;
+﻿namespace Shopping.Readers.MT.Tests;
 
 public class ProductParserTests
 {
@@ -17,7 +17,7 @@ public class ProductParserTests
         var html = ProductRenderer.Render(expected);
         var actual = ProductParser.Parse(html)
             .First();
-                
+
         Assert.Multiple(() =>
         {
             Assert.That(actual.CategoryName, Is.EqualTo(expected.CategoryName));

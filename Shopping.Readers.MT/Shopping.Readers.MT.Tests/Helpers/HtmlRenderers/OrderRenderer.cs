@@ -1,4 +1,6 @@
-﻿internal class OrderRenderer
+﻿using Shopping.Readers.MT.Tests.Helpers.Data;
+
+internal class OrderRenderer
 {
     public static string Render(DateOnly orderDate)
         => Render(orderDate, Array.Empty<Product>());

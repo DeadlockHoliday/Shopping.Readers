@@ -1,5 +1,6 @@
 ﻿using LiteDB;
-namespace OrderReader.Data;
+
+namespace Shopping.Readers.MT.Data;
 
 internal static class ResultWriter
 {

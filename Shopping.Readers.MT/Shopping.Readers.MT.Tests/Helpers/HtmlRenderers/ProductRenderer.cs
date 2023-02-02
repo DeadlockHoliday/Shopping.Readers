@@ -1,8 +1,9 @@
-﻿
+﻿namespace Shopping.Readers.MT.Tests.Helpers.HtmlRenderers;
+
 internal class ProductRenderer
 {
     public static string Render(Product product)
-    => $$"""
+        => $$"""
             <div class="history-order-good">
                 <a href="{{product.Url}}" class="main-link">
                     <div class="good-img">

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopping.Readers.MT", "Shopping.Readers.MT\Shopping.Readers.MT.csproj", "{8DBE2566-FB4E-4B79-B7BA-86AC9E7FDE11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopping.Readers.MT.Tests", "Shopping.Readers.MT.Tests\Shopping.Readers.MT.Tests.csproj", "{9CBD34D5-CB36-49CE-B76D-392555EEB06B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8DBE2566-FB4E-4B79-B7BA-86AC9E7FDE11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DBE2566-FB4E-4B79-B7BA-86AC9E7FDE11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DBE2566-FB4E-4B79-B7BA-86AC9E7FDE11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DBE2566-FB4E-4B79-B7BA-86AC9E7FDE11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CBD34D5-CB36-49CE-B76D-392555EEB06B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CBD34D5-CB36-49CE-B76D-392555EEB06B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CBD34D5-CB36-49CE-B76D-392555EEB06B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CBD34D5-CB36-49CE-B76D-392555EEB06B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

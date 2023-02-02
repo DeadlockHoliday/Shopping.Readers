@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OrderReader\OrderReader.csproj" />
+    <ProjectReference Include="..\Shopping.Readers.MT\Shopping.Readers.MT.csproj" />
   </ItemGroup>
 
 </Project>

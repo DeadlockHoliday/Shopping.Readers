@@ -1,7 +1,7 @@
 ﻿using SoftCircuits.HtmlMonkey;
-using OrderReader.Data;
+using Shopping.Readers.MT.Data;
 
-namespace OrderReader.Html;
+namespace Shopping.Readers.MT.Html;
 
 internal class OrderParser
 {

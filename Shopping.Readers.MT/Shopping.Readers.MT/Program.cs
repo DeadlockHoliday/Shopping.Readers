@@ -1,7 +1,7 @@
-﻿using OrderReader.Data;
-using OrderReader.Html;
+﻿using Shopping.Readers.MT.Data;
+using Shopping.Readers.MT.Html;
 using System.Runtime.CompilerServices;
-[assembly: InternalsVisibleTo("OrderReaderTests")]
+[assembly: InternalsVisibleTo("Shopping.Readers.MT.Tests")]
 
 const string input = "samples/sample.html";
 const string output = "OrderReader.db";

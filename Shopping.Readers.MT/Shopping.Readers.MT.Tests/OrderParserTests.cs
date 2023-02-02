@@ -1,18 +1,7 @@
-﻿using OrderReader.Html;
+﻿namespace Shopping.Readers.MT.Tests;
 
 public class OrderParserTests
 {
-    [Test]
-    public void Sometimes_Order_Could_Be_Empty_But_With_Sum()
-    {
-        throw new NotImplementedException("""
-            When i just go shopping outside. 
-            But still an order could have some info like... 
-                some products without sum but named ones.
-            Still looks like an idea for a separate project.
-    """);
-    }
-
     [Test]
     public void Parse_SameProduct_InDifferentOrders_ShouldReturn_SameProduct()
     {
@@ -58,6 +47,11 @@ public class OrderParserTests
     [Test]
     public void Parse_DuplicatedProduct_ShouldReturn_SingleResult()
     {
+        // TODO: reduce time from 100ms to 10ms.
+        // 1. Set time limit for test.
+        // 2. See bottleneck.
+        // 3. Fix it.
+
         var expected = new Product
         {
             CategoryName = "Пластиковая посуда",
@@ -100,7 +94,7 @@ public class OrderParserTests
         var html = OrderRenderer.Render(expected.OrderDate, expected);
         var actual = OrderParser.Parse(html)
             .First();
-                
+
         Assert.Multiple(() =>
         {
             Assert.That(actual.CategoryName, Is.EqualTo(expected.CategoryName));

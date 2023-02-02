@@ -1,7 +1,7 @@
 ﻿using SoftCircuits.HtmlMonkey;
-using OrderReader.Data;
+using Shopping.Readers.MT.Data;
 
-namespace OrderReader.Html;
+namespace Shopping.Readers.MT.Html;
 internal static class ProductParser
 {
     public static Product[] Parse(HtmlElementNode orderNode)
@@ -30,7 +30,7 @@ internal static class ProductParser
     }
 
     private static string GetAttr(
-        this IEnumerable<HtmlNode> children, 
+        this IEnumerable<HtmlNode> children,
         string selector,
         string name)
         => children.Find(selector).First().Attributes[name].Value;

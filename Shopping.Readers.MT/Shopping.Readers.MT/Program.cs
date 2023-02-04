@@ -3,9 +3,9 @@ using Shopping.Readers.MT.Html;
 using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("Shopping.Readers.MT.Tests")]
 
-var fileNowTimeStamp = DateTime.UtcNow.ToFileTimeUtc();
+var fileNowTimeStamp = DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss");
 var input = "https://raw.githubusercontent.com/DeadlockHoliday/Shopping.Samples/main/Shopping.Samples.Readers.Input/MT.html";
-var output = $"products.mt.{fileNowTimeStamp}.csv";
+var output = $"MT.{fileNowTimeStamp}.csv";
 
 var inputHtml = GetHtml(input);
 

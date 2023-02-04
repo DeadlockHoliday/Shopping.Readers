@@ -3,7 +3,7 @@ using Shopping.Readers.MT.Data;
 
 namespace Shopping.Readers.MT.Html;
 
-internal class OrderParser
+internal class OrderReader
 {
     public static Product[] Parse(HtmlDocument doc)
         => doc.Find(".history-order")
@@ -17,7 +17,7 @@ internal class OrderParser
     private static Product[] ParseProducts(HtmlElementNode orderNode)
     {
         var date = ParseDate(orderNode);
-        return ProductParser.Parse(orderNode)
+        return ProductReader.Read(orderNode)
             .Select(x => x with { OrderDate = date })
             .ToArray();
     }

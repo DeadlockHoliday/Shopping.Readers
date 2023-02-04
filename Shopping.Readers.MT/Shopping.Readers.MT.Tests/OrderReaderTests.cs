@@ -1,6 +1,6 @@
 ﻿namespace Shopping.Readers.MT.Tests;
 
-public class OrderParserTests
+public class OrderReaderTests
 {
     [Test]
     public void Parse_SameProduct_InDifferentOrders_ShouldReturn_SameProduct()
@@ -21,7 +21,7 @@ public class OrderParserTests
         var secondOrderHtml = OrderRenderer.Render(secondOrderDate, expected);
 
         var html = firstOrderHtml + secondOrderHtml;
-        var result = OrderParser.Parse(html);
+        var result = OrderReader.Parse(html);
 
         Assert.That(result, Has.Exactly(2).Items);
 
@@ -63,7 +63,7 @@ public class OrderParserTests
         };
 
         var html = OrderRenderer.Render(expected.OrderDate, new Product[] { expected, expected });
-        var result = OrderParser.Parse(html);
+        var result = OrderReader.Parse(html);
         var actual = result.FirstOrDefault();
 
         Assert.That(result, Has.Exactly(1).Items);
@@ -92,7 +92,7 @@ public class OrderParserTests
         };
 
         var html = OrderRenderer.Render(expected.OrderDate, expected);
-        var actual = OrderParser.Parse(html)
+        var actual = OrderReader.Parse(html)
             .First();
 
         Assert.Multiple(() =>

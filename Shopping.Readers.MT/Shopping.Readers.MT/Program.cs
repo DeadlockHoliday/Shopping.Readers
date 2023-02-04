@@ -9,7 +9,7 @@ var output = $"products.mt.{fileNowTimeStamp}.csv";
 
 var inputHtml = GetHtml(input);
 
-var items = OrderParser.Parse(inputHtml)
+var items = OrderReader.Parse(inputHtml)
     .Where(x => x.CategoryName != "Услуги")
     .ToList();
 

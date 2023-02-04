@@ -1,6 +1,6 @@
 ﻿namespace Shopping.Readers.MT.Tests;
 
-public class ProductParserTests
+public class ProductReaderTests
 {
     [Test]
     public void ParseDate_ShouldReturn_CorrectResult()
@@ -15,7 +15,7 @@ public class ProductParserTests
         };
 
         var html = ProductRenderer.Render(expected);
-        var actual = ProductParser.Parse(html)
+        var actual = ProductReader.Read(html)
             .First();
 
         Assert.Multiple(() =>

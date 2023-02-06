@@ -1,16 +1,13 @@
-﻿using Shopping.Readers.MT.Tests.Helpers.Data;
+﻿using Shopping.Readers.Common.Contracts;
 
 internal class OrderRenderer
 {
-    public static string Render(DateOnly orderDate)
-        => Render(orderDate, Array.Empty<Product>());
+    public static string Render(IOrder[] orders)
+        => String.Join('\n', orders.Select(Render));
 
-    public static string Render(DateOnly orderDate, Product product)
-        => Render(orderDate, new Product[] { product });
-
-    public static string Render(DateOnly orderDate, IEnumerable<Product> products)
+    public static string Render(IOrder order)
     {
-        var orderDateStr = orderDate.ToString("dd-MM-yyyy") + " 23:59";
+        var orderDateStr = order.Date.ToString("dd-MM-yyyy") + " 23:59";
         return $$"""
             <table>
                 <tr class="history-order">
@@ -19,7 +16,7 @@ internal class OrderRenderer
                             <div>
                                 <div class="order-head hopened">
                                     <div class="order-data">
-                                        <div class="order-data_item id">123456</div>
+                                        <div class="order-data_item id">{{order.Id}}</div>
                                         <div class="order-data_item date">{{orderDateStr}} </div>
                                         <div class="order-data_item sum">9999.00 ₽</div>
                                         <div class="order-data_item state">оформлен</div>
@@ -29,8 +26,8 @@ internal class OrderRenderer
                             <div class="dropdown opened">
                                 <div id="dropdownContent">
                                     <div class="order-item-container">
-                                        {{products
-                                            .Select(ProductRenderer.Render)
+                                        {{order.Positions
+                                            .Select(OrderPositionRenderer.Render)
                                             .Aggregate((x, y) => x + Environment.NewLine +  y)}}
                                     </div>
                                 </div>

@@ -1,51 +1,39 @@
-﻿namespace Shopping.Readers.MT.Tests;
+﻿using Shopping.Readers.Common.Contracts;
+using Shopping.Readers.MT.Data;
+using System.Collections.Immutable;
+using AssertBy = Shopping.Readers.MT.Tests.Helpers.AssertHelpers.AssertBy;
+
+namespace Shopping.Readers.MT.Tests;
 
 public class OrderReaderTests
 {
     [Test]
     public void Parse_SameProduct_InDifferentOrders_ShouldReturn_SameProduct()
     {
-        var expected = new Product
+        var expectedPosition = new OrderPosition
         {
             CategoryName = "Пластиковая посуда",
-            ProductFullName = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
-            TotalPrice = 49,
-            UnitPrice = 49,
-            Url = "https://mt.delivery/single?id=206609"
+            Info = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
+            Price = 49,
+            Url = "https://mt.delivery/single?id=206609",
+            Quantity = 1,
         };
 
-        var firstOrderDate = new DateOnly(2020, 10, 1);
-        var secondOrderDate = new DateOnly(2020, 10, 1);
+        // TODO: create a factory
+        var expectedOrders = new Order[]
+        {
+            new(){ Id = 1, Date = new DateOnly(2020, 10, 1), Positions = new OrderPosition[] { expectedPosition }.Cast<IOrderPosition>().ToImmutableList() },
+            new(){ Id = 2, Date = new DateOnly(2022, 10, 1), Positions = new OrderPosition[] { expectedPosition }.Cast<IOrderPosition>().ToImmutableList() },
+        }.Cast<IOrder>().ToArray();
 
-        var firstOrderHtml = OrderRenderer.Render(firstOrderDate, expected);
-        var secondOrderHtml = OrderRenderer.Render(secondOrderDate, expected);
-
-        var html = firstOrderHtml + secondOrderHtml;
+        var html = OrderRenderer.Render(expectedOrders);
         var result = OrderReader.Parse(html);
 
         Assert.That(result, Has.Exactly(2).Items);
 
         Assert.Multiple(() =>
         {
-            Assert.That(result[0].Date, Is.EqualTo(firstOrderDate));
-            Assert.That(result[1].Date, Is.EqualTo(secondOrderDate));
-        });
-
-        Assert.Multiple(() =>
-        {
-            foreach (var actualOrder in result)
-            {
-                Assert.Multiple(() =>
-                {
-                    foreach (var actualPosition in actualOrder.Positions)
-                    {
-                        Assert.That(actualPosition.CategoryName, Is.EqualTo(expected.CategoryName));
-                        Assert.That(actualPosition.Info, Is.EqualTo(expected.ProductFullName));
-                        Assert.That(actualPosition.Price, Is.EqualTo(expected.UnitPrice));
-                        Assert.That(actualPosition.Url, Is.EqualTo(expected.Url));
-                    }
-                });
-            }
+            AssertBy.Order.Equal(expectedOrders, result);
         });
     }
 
@@ -57,57 +45,53 @@ public class OrderReaderTests
         // 2. See bottleneck.
         // 3. Fix it.
 
-        var expected = new Product
+        var expectedPosition = new OrderPosition
         {
             CategoryName = "Пластиковая посуда",
-            ProductFullName = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
-            TotalPrice = 49,
-            UnitPrice = 49,
+            Info = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
+            Price = 49,
             Url = "https://mt.delivery/single?id=206609",
-            OrderDate = new DateOnly(2020, 10, 1)
+            Quantity = 1,
         };
 
-        var html = OrderRenderer.Render(expected.OrderDate, new Product[] { expected, expected });
-        var result = OrderReader.Parse(html);
-        var actual = result.FirstOrDefault();
+        // TODO: make a factory method/.
+        var expectedOrderPositions = new OrderPosition[] { expectedPosition, expectedPosition }.Cast<IOrderPosition>().ToImmutableList();
+        var expectedOrder = new Order { Id = 1, Date = new DateOnly(2020, 10, 1), Positions = expectedOrderPositions };
 
-        Assert.That(result, Has.Exactly(1).Items);
-        Assert.Multiple(() =>
-        {
-            Assert.That(actual.CategoryName, Is.EqualTo(expected.CategoryName));
-            Assert.That(actual.Info, Is.EqualTo(expected.ProductFullName));
-            Assert.That(actual.Price, Is.EqualTo(expected.UnitPrice));
-            Assert.That(actual.TotalPrice, Is.EqualTo(expected.TotalPrice));
-            Assert.That(actual.OrderDate, Is.EqualTo(expected.OrderDate));
-            Assert.That(actual.Url, Is.EqualTo(expected.Url));
-        });
+        var html = OrderRenderer.Render(expectedOrder);
+        var result = OrderReader.Parse(html);
+        var actualOrder = result.First();
+
+        Assert.That(actualOrder.Positions, Has.Exactly(1).Items);
     }
 
     [Test]
     public void Parse_SingleProduct_ShouldReturn_CorrectResult()
     {
-        var expected = new Product
+        var expectedPosition = new OrderPosition
         {
             CategoryName = "Пластиковая посуда",
-            ProductFullName = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
-            TotalPrice = 49,
-            UnitPrice = 49,
+            Info = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
+            Price = 49,
             Url = "https://mt.delivery/single?id=206609",
-            OrderDate = new DateOnly(2020, 10, 1)
+            Quantity = 1,
         };
 
-        var html = OrderRenderer.Render(expected.OrderDate, expected);
-        var actual = OrderReader.Parse(html)
+        var expectedOrderPositions = new OrderPosition[] { expectedPosition }.Cast<IOrderPosition>().ToImmutableList();
+        var expectedOrder = new Order { Id = 1, Date = new DateOnly(2020, 10, 1), Positions = expectedOrderPositions };
+
+        var html = OrderRenderer.Render(expectedOrder);
+        var actualOrder = OrderReader.Parse(html)
             .First();
 
         Assert.Multiple(() =>
         {
-            Assert.That(actual.CategoryName, Is.EqualTo(expected.CategoryName));
-            Assert.That(actual.Info, Is.EqualTo(expected.ProductFullName));
-            Assert.That(actual.Price, Is.EqualTo(expected.UnitPrice));
-            Assert.That(actual.TotalPrice, Is.EqualTo(expected.TotalPrice));
-            Assert.That(actual.OrderDate, Is.EqualTo(expected.OrderDate));
-            Assert.That(actual.Url, Is.EqualTo(expected.Url));
+            AssertBy.Order.Equal(expectedOrder, actualOrder);
+        });
+
+        Assert.Multiple(() =>
+        {
+            AssertBy.OrderPosition.Equal(expectedOrder.Positions, expectedOrderPositions);
         });
     }
 }

@@ -13,7 +13,9 @@ internal readonly struct OrderPosition : IOrderPosition
 
     public string CategoryName { get; init; }
 
-    public decimal Price { get; init; } // TODO: Encapsulate Price and CurrencyCode
+    public decimal Price { get; init; } // TODO: Encapsulate Price and CurrencyCode (and TotalPrice?)
+
+    public decimal TotalPrice { get; init; }
 
     public CurrencyCode CurrencyCode => CurrencyCode.RUB;
 }

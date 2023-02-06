@@ -1,40 +1,42 @@
-﻿namespace Shopping.Readers.MT.Tests.Helpers.HtmlRenderers;
+﻿using Shopping.Readers.Common.Contracts;
 
-internal class ProductRenderer
+namespace Shopping.Readers.MT.Tests.Helpers.HtmlRenderers;
+
+internal class OrderPositionRenderer
 {
-    public static string Render(Product product)
+    public static string Render(IOrderPosition orderPosition)
         => $$"""
             <div class="history-order-good">
-                <a href="{{product.Url}}" class="main-link">
+                <a href="{{orderPosition.Url}}" class="main-link">
                     <div class="good-img">
-                        <img alt="Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт" class="main_good-img" />
+                        <img class="main_good-img" />
                     </div>
                     <div class="main-desc">
-                        <p class="main-name">{{product.CategoryName}}</p>
+                        <p class="main-name">{{orderPosition.CategoryName}}</p>
                         <!---->
                         <div class="main-text">
                             <p>
-                                {{product.ProductFullName}}
+                                {{orderPosition.Info}}
                             </p>
                         </div>
                     </div>
                 </a>
                 <div class="main-quantity">
                     <span class="item-count_label">Количество</span>
-                    <span class="item-count">1</span>
+                    <span class="item-count">{{orderPosition.Quantity}}</span>
                 </div>
                 <div class="main-price">
                     <div class="price-name">Цена</div>
                     <!---->
                     <p class="price-num price-num_history">
-                        {{product.UnitPrice}} ₽
+                        {{orderPosition.Price}} ₽
                     </p>
                 </div>
                 <div class="main-summa">
                     <div class="price-name">Сумма</div>
                     <div class="sum-icon">
                         <p class="price-num price-num_history">
-                            {{product.TotalPrice}} ₽
+                            {{orderPosition.TotalPrice}} ₽
                         </p>
                     </div>
                 </div>

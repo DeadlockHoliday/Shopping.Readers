@@ -13,5 +13,13 @@ public interface IOrderPosition : IProduct
     /// - gramms,
     /// - liters.
     /// </remarks>
-    public decimal Quantity { get; }
+    public decimal Quantity { get; } // TODO: rework to separate ValueObject for processing the different measures.
+
+    /// <summary>
+    /// Total price.
+    /// </summary>
+    /// <remarks>
+    /// Price x Quantity.
+    /// </remarks>
+    public decimal TotalPrice { get; }
 }

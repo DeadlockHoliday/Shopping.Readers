@@ -27,19 +27,24 @@ public class OrderReaderTests
 
         Assert.Multiple(() =>
         {
-            Assert.That(result[0].OrderDate, Is.EqualTo(firstOrderDate));
-            Assert.That(result[1].OrderDate, Is.EqualTo(secondOrderDate));
+            Assert.That(result[0].Date, Is.EqualTo(firstOrderDate));
+            Assert.That(result[1].Date, Is.EqualTo(secondOrderDate));
         });
 
         Assert.Multiple(() =>
         {
-            foreach (var actual in result)
+            foreach (var actualOrder in result)
             {
-                Assert.That(actual.CategoryName, Is.EqualTo(expected.CategoryName));
-                Assert.That(actual.FullName, Is.EqualTo(expected.ProductFullName));
-                Assert.That(actual.UnitPrice, Is.EqualTo(expected.UnitPrice));
-                Assert.That(actual.TotalPrice, Is.EqualTo(expected.TotalPrice));
-                Assert.That(actual.Url, Is.EqualTo(expected.Url));
+                Assert.Multiple(() =>
+                {
+                    foreach (var actualPosition in actualOrder.Positions)
+                    {
+                        Assert.That(actualPosition.CategoryName, Is.EqualTo(expected.CategoryName));
+                        Assert.That(actualPosition.Info, Is.EqualTo(expected.ProductFullName));
+                        Assert.That(actualPosition.Price, Is.EqualTo(expected.UnitPrice));
+                        Assert.That(actualPosition.Url, Is.EqualTo(expected.Url));
+                    }
+                });
             }
         });
     }
@@ -70,8 +75,8 @@ public class OrderReaderTests
         Assert.Multiple(() =>
         {
             Assert.That(actual.CategoryName, Is.EqualTo(expected.CategoryName));
-            Assert.That(actual.FullName, Is.EqualTo(expected.ProductFullName));
-            Assert.That(actual.UnitPrice, Is.EqualTo(expected.UnitPrice));
+            Assert.That(actual.Info, Is.EqualTo(expected.ProductFullName));
+            Assert.That(actual.Price, Is.EqualTo(expected.UnitPrice));
             Assert.That(actual.TotalPrice, Is.EqualTo(expected.TotalPrice));
             Assert.That(actual.OrderDate, Is.EqualTo(expected.OrderDate));
             Assert.That(actual.Url, Is.EqualTo(expected.Url));
@@ -98,8 +103,8 @@ public class OrderReaderTests
         Assert.Multiple(() =>
         {
             Assert.That(actual.CategoryName, Is.EqualTo(expected.CategoryName));
-            Assert.That(actual.FullName, Is.EqualTo(expected.ProductFullName));
-            Assert.That(actual.UnitPrice, Is.EqualTo(expected.UnitPrice));
+            Assert.That(actual.Info, Is.EqualTo(expected.ProductFullName));
+            Assert.That(actual.Price, Is.EqualTo(expected.UnitPrice));
             Assert.That(actual.TotalPrice, Is.EqualTo(expected.TotalPrice));
             Assert.That(actual.OrderDate, Is.EqualTo(expected.OrderDate));
             Assert.That(actual.Url, Is.EqualTo(expected.Url));

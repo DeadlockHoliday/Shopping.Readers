@@ -1,4 +1,6 @@
-﻿namespace Shopping.Readers.Common.Contracts;
+﻿using Shopping.Readers.Common.Contracts.Static;
+
+namespace Shopping.Readers.Common.Contracts;
 
 /// <summary>
 /// A contract for an abstract product.
@@ -34,4 +36,9 @@ public interface IProduct
     /// A currency code.
     /// </summary>
     CurrencyCode CurrencyCode { get; }
+
+    /// <summary>
+    /// Url to a product.
+    /// </summary>
+    string Url { get; }
 }

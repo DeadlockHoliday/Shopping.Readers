@@ -1,4 +1,4 @@
-﻿namespace Shopping.Readers.Common.Contracts;
+﻿namespace Shopping.Readers.Common.Contracts.Static;
 
 /// <summary>
 /// A currency code in ISO 4217.

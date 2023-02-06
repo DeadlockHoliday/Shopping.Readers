@@ -14,9 +14,4 @@ public interface IOrderPosition : IProduct
     /// - liters.
     /// </remarks>
     public decimal Quantity { get; }
-
-    /// <summary>
-    /// Full url to a product.
-    /// </summary>
-    public string Url { get; }
 }

@@ -1,29 +1,32 @@
 ﻿using SoftCircuits.HtmlMonkey;
 using Shopping.Readers.MT.Data;
+using Shopping.Readers.Common.Contracts;
 
 namespace Shopping.Readers.MT.Html;
 
 internal static class ProductReader
 {
-    public static Product[] Read(HtmlElementNode orderNode)
+    public static IOrderPosition[] Read(HtmlElementNode orderNode)
         => orderNode.Children
             .Find(".history-order-good")
             .Select(x =>
             {
                 var prices = x.Children.GetPrices();
-                return new Product
+                return new OrderPosition
                 {
                     CategoryName = x.Children.GetText(".main-name"),
-                    FullName = x.Children.GetText(".main-text > p"),
+                    Info = x.Children.GetText(".main-text > p"),
                     Url = x.Children.GetHrefValue(".main-link"),
-                    UnitPrice = prices[0],
-                    TotalPrice = prices[1]
+                    Price = prices[0],
+                    Quantity = 0,
+                    // TotalPrice = prices[1]
                 };
             })
-            .DistinctBy(x => x.FullName)
+            .DistinctBy(x => x.Info)
+            .Cast<IOrderPosition>()
             .ToArray();
 
-    internal static Product[] Read(string html)
+    internal static IOrderPosition[] Read(string html)
     {
         // TODO: replace this method by mock.
         var rootNodes = HtmlDocument.FromHtml(html).RootNodes;

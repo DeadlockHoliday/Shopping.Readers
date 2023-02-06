@@ -21,9 +21,8 @@ public class ProductReaderTests
         Assert.Multiple(() =>
         {
             Assert.That(actual.CategoryName, Is.EqualTo(expected.CategoryName));
-            Assert.That(actual.FullName, Is.EqualTo(expected.ProductFullName));
-            Assert.That(actual.UnitPrice, Is.EqualTo(expected.UnitPrice));
-            Assert.That(actual.TotalPrice, Is.EqualTo(expected.TotalPrice));
+            Assert.That(actual.Info, Is.EqualTo(expected.ProductFullName));
+            Assert.That(actual.Price, Is.EqualTo(expected.UnitPrice));
             Assert.That(actual.Url, Is.EqualTo(expected.Url));
         });
     }

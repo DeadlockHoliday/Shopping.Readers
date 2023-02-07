@@ -1,5 +1,6 @@
 ﻿using Shopping.Readers.Common.Contracts;
 using Shopping.Readers.MT.Data;
+using Shopping.Readers.MT.Tests.Helpers;
 using System.Collections.Immutable;
 using AssertBy = Shopping.Readers.MT.Tests.Helpers.AssertHelpers.AssertBy;
 
@@ -19,12 +20,11 @@ public class OrderReaderTests
             Quantity = 1,
         };
 
-        // TODO: create a factory
-        var expectedOrders = new Order[]
+        var expectedOrders = new IOrder[]
         {
-            new(){ Id = 1, Date = new DateOnly(2020, 10, 1), Positions = new OrderPosition[] { expectedPosition }.Cast<IOrderPosition>().ToImmutableList() },
-            new(){ Id = 2, Date = new DateOnly(2022, 10, 1), Positions = new OrderPosition[] { expectedPosition }.Cast<IOrderPosition>().ToImmutableList() },
-        }.Cast<IOrder>().ToArray();
+            OrderFactory.CreateOrder(1, new DateOnly(2020, 10, 1), expectedPosition),
+            OrderFactory.CreateOrder(2, new DateOnly(2022, 10, 1), expectedPosition),
+        };
 
         var html = OrderRenderer.Render(expectedOrders);
         var result = OrderReader.Parse(html);
@@ -40,11 +40,6 @@ public class OrderReaderTests
     [Test]
     public void Parse_DuplicatedProduct_ShouldReturn_SingleResult()
     {
-        // TODO: reduce time from 100ms to 10ms.
-        // 1. Set time limit for test.
-        // 2. See bottleneck.
-        // 3. Fix it.
-
         var expectedPosition = new OrderPosition
         {
             CategoryName = "Пластиковая посуда",
@@ -54,9 +49,11 @@ public class OrderReaderTests
             Quantity = 1,
         };
 
-        // TODO: make a factory method/.
-        var expectedOrderPositions = new OrderPosition[] { expectedPosition, expectedPosition }.Cast<IOrderPosition>().ToImmutableList();
-        var expectedOrder = new Order { Id = 1, Date = new DateOnly(2020, 10, 1), Positions = expectedOrderPositions };
+        var expectedOrder = OrderFactory.CreateOrder(
+            1, 
+            new DateOnly(2020, 10, 1), 
+            expectedPosition, 
+            expectedPosition);
 
         var html = OrderRenderer.Render(expectedOrder);
         var result = OrderReader.Parse(html);
@@ -77,12 +74,13 @@ public class OrderReaderTests
             Quantity = 1,
         };
 
-        var expectedOrderPositions = new OrderPosition[] { expectedPosition }.Cast<IOrderPosition>().ToImmutableList();
-        var expectedOrder = new Order { Id = 1, Date = new DateOnly(2020, 10, 1), Positions = expectedOrderPositions };
+        var expectedOrder = OrderFactory.CreateOrder(
+            1,
+            new DateOnly(2020, 10, 1),
+            expectedPosition);
 
         var html = OrderRenderer.Render(expectedOrder);
-        var actualOrder = OrderReader.Parse(html)
-            .First();
+        var actualOrder = OrderReader.Parse(html).First();
 
         Assert.Multiple(() =>
         {
@@ -91,7 +89,7 @@ public class OrderReaderTests
 
         Assert.Multiple(() =>
         {
-            AssertBy.OrderPosition.Equal(expectedOrder.Positions, expectedOrderPositions);
+            AssertBy.OrderPosition.Equal(actualOrder.Positions, expectedOrder.Positions);
         });
     }
 }

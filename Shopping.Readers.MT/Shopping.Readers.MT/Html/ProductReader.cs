@@ -25,12 +25,4 @@ internal static class ProductReader
             .DistinctBy(x => x.Info)
             .Cast<IOrderPosition>()
             .ToArray();
-
-    internal static IOrderPosition[] Read(string html)
-    {
-        // TODO: replace this method by mock.
-        var rootNodes = HtmlDocument.FromHtml(html).RootNodes;
-        var parentRootNode = new HtmlElementNode("div", new HtmlAttributeCollection(), rootNodes);
-        return Read(parentRootNode);
-    }
 }

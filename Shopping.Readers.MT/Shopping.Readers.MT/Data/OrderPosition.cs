@@ -13,7 +13,7 @@ internal readonly struct OrderPosition : IOrderPosition
 
     public string CategoryName { get; init; }
 
-    public decimal Price { get; init; } // TODO: Encapsulate Price and CurrencyCode (and TotalPrice?)
+    public decimal Price { get; init; }
 
     public decimal TotalPrice { get; init; }
 

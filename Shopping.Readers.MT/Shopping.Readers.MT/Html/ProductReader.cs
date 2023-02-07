@@ -1,6 +1,7 @@
 ﻿using SoftCircuits.HtmlMonkey;
 using Shopping.Readers.MT.Data;
 using Shopping.Readers.Common.Contracts;
+using Shopping.Readers.MT.Helpers;
 
 namespace Shopping.Readers.MT.Html;
 
@@ -18,8 +19,7 @@ internal static class ProductReader
                     Info = x.Children.GetText(".main-text > p"),
                     Url = x.Children.GetHrefValue(".main-link"),
                     Price = prices[0],
-                    Quantity = 0,
-                    // TotalPrice = prices[1]
+                    Quantity = x.Children.GetText(".main-quantity > .item-count").AsDecimal() ?? 0,
                 };
             })
             .DistinctBy(x => x.Info)

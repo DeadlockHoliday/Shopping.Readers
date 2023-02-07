@@ -1,6 +1,6 @@
 ﻿using SoftCircuits.HtmlMonkey;
 
-namespace Shopping.Readers.MT.Html;
+namespace Shopping.Readers.MT.Helpers;
 
 internal static class HtmlHelper
 {

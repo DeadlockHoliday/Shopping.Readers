@@ -21,12 +21,4 @@ internal static class HtmlHelper
             .First()
             .Text
             .Trim();
-
-    internal static decimal[] GetPrices(this IEnumerable<HtmlNode> children)
-        => children.Find(".price-num")
-                .Select(x => x.Text.Trim()
-                    .Split(' ')
-                    .First())
-                .Select(x => decimal.Parse(x))
-                .ToArray();
 }

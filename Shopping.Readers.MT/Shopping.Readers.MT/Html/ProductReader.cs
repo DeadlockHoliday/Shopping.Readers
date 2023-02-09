@@ -12,14 +12,14 @@ internal static class ProductReader
             .Find(".history-order-good")
             .Select(x =>
             {
-                var prices = x.Children.GetPrices();
                 return new OrderPosition
                 {
                     CategoryName = x.Children.GetText(".main-name"),
                     Info = x.Children.GetText(".main-text > p"),
                     Url = x.Children.GetHrefValue(".main-link"),
-                    Price = prices[0],
+                    Price = x.Children.GetText(".main-price .price-num").AsSum() ?? 0,
                     Quantity = x.Children.GetText(".main-quantity > .item-count").AsDecimal() ?? 0,
+                    TotalPrice = x.Children.GetText(".main-summa .price-num").AsSum() ?? 0
                 };
             })
             .DistinctBy(x => x.Info)

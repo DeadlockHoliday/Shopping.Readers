@@ -7,4 +7,7 @@ internal static class ParseHelper
         if (decimal.TryParse(value, out decimal result)) { return result; }
         else return null;
     }
+
+    public static decimal? AsSum(this string value)
+        => value.Split(' ')[0].AsDecimal();
 }

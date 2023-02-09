@@ -23,6 +23,7 @@ internal static partial class AssertBy
         {
             Product.Equal(actualPosition, expectedPosition);
             Assert.That(actualPosition.Quantity, Is.EqualTo(expectedPosition.Quantity), "Quantity");
+            Assert.That(actualPosition.TotalPrice, Is.EqualTo(expectedPosition.TotalPrice), "TotalPrice");
         }
     }
 }

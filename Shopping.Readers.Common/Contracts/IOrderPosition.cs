@@ -6,16 +6,6 @@
 public interface IOrderPosition : IProduct
 {
     /// <summary>
-    /// Product quantity.
-    /// </summary>
-    /// <remarks>
-    /// - pieces,
-    /// - gramms,
-    /// - liters.
-    /// </remarks>
-    public decimal Quantity { get; }
-
-    /// <summary>
     /// Total price.
     /// </summary>
     /// <remarks>

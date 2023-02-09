@@ -13,5 +13,5 @@ internal static class OrderFormatExtensions
             "csv");
 
     internal static string ToStamp(this DateOnly date)
-        => date.ToString("yyyy-dd-M");
+        => date.ToString("yyyy-dd-MM");
 }

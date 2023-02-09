@@ -1,10 +1,9 @@
 ﻿using Shopping.Readers.Common.Contracts;
 using Shopping.Readers.MT.Data;
 using Shopping.Readers.MT.Tests.Helpers;
-using System.Collections.Immutable;
 using AssertBy = Shopping.Readers.MT.Tests.Helpers.AssertHelpers.AssertBy;
 
-namespace Shopping.Readers.MT.Tests;
+namespace Shopping.Readers.MT.Tests.Html;
 
 public class OrderReaderTests
 {
@@ -50,9 +49,9 @@ public class OrderReaderTests
         };
 
         var expectedOrder = OrderFactory.CreateOrder(
-            1, 
-            new DateOnly(2020, 10, 1), 
-            expectedPosition, 
+            1,
+            new DateOnly(2020, 10, 1),
+            expectedPosition,
             expectedPosition);
 
         var html = OrderRenderer.Render(expectedOrder);

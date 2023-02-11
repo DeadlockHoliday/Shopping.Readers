@@ -20,7 +20,7 @@ internal class ProductNormalizer
         var pieces = 0UL;
         var gramms = 0UL;
 
-        matches.Prepend(string.Empty);
+        matches = matches.Prepend(string.Empty).ToList();
         for (int i = matches.Count - 1; i > 0; i--)
         {
             // 1 

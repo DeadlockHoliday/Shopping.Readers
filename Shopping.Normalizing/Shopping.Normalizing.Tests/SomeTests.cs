@@ -35,4 +35,11 @@ internal class ProductNormalizerTests
     {
         throw new NotImplementedException();
     }
+
+    [TestCase("2 л 1шт")]
+    [TestCase("2л 12шт")]
+    public void LitersCases(string line)
+    {
+        throw new NotImplementedException();
+    }
 }

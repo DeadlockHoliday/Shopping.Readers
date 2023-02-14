@@ -10,15 +10,15 @@ internal class ProductNormalizer
         throw new Exception();
     }
 
-    internal static ulong ExtractMassGramms(string line)
+    internal static long ExtractVolume(string line)
     {
         var matches = new Regex("(\\S+)+?")
             .Split(line)
             .Where(token => !string.IsNullOrWhiteSpace(token))
             .ToList();
 
-        var pieces = 0UL;
-        var gramms = 0UL;
+        var pieces = 0L;
+        var gramms = 0L;
 
         matches = matches.Prepend(string.Empty).ToList();
         for (int i = matches.Count - 1; i > 0; i--)
@@ -52,9 +52,9 @@ internal class ProductNormalizer
         return gramms * pieces;
     }
 
-    private static ulong ExtractNumber(params string[] values) 
+    private static long ExtractNumber(params string[] values) 
     {
-        var result = 0UL;
+        var result = 0L;
         var regex = new Regex("^(\\d+).*$");
 
         var match = values
@@ -63,7 +63,7 @@ internal class ProductNormalizer
             .Groups[1]
             .ValueSpan;
 
-        _ = ulong.TryParse(match, out result);
+        _ = long.TryParse(match, out result);
         return result;
     }
 }

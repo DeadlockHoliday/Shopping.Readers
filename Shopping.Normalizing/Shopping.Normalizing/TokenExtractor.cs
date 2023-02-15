@@ -13,7 +13,7 @@ internal static class TokenExtractor
         | RegexOptions.Multiline
         | RegexOptions.IgnorePatternWhitespace;
 
-    private static Regex regex = new(@"(\d+[\.|,]?\d?) \s? ([a-zA-Zа-яА-Я]+)", regexOptions);
+    private static readonly Regex regex = new(@"(\d+[\.|,]?\d?) \s? ([a-zA-Zа-яА-Я]+)", regexOptions);
 
     internal static IReadOnlyCollection<MeasureToken> ExtractTokens(string line)
         => regex.Matches(line)

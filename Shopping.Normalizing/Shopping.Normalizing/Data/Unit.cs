@@ -1,3 +1,3 @@
 ﻿namespace Shopping.Normalizing.Data;
 
-internal record struct Unit(decimal Number, string Measure);
+internal record struct Unit(decimal Value, string Measure);

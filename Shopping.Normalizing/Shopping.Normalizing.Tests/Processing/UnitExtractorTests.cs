@@ -46,7 +46,7 @@ internal class UnitExtractorTests
     {
         var actual = Extract(line)
             .ElementAt(0)
-            .Number
+            .Value
             .ToString();
 
         Assert.That(actual, Is.EqualTo(expected));

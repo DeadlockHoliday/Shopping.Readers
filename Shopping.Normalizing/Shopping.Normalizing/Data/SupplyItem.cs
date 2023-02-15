@@ -8,7 +8,7 @@
 /// - supply of bread.
 /// - etc.
 /// </remarks>
-internal readonly record struct SupplyItem
+public readonly record struct SupplyItem
 {
     public string Name { get; init; }
     public ulong MassGramms { get; init; }

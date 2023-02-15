@@ -20,5 +20,4 @@ internal class UnitNormalizerTests
 
     private Unit Normalize(decimal value, string measure)
         => UnitNormalizer.Normalize(new Unit(value, measure));
-
 }

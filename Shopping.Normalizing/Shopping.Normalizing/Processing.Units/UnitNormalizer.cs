@@ -1,6 +1,6 @@
 ﻿using Shopping.Normalizing.Data;
 
-namespace Shopping.Normalizing.Processing;
+namespace Shopping.Normalizing.Processing.Units;
 
 internal static class UnitNormalizer
 {

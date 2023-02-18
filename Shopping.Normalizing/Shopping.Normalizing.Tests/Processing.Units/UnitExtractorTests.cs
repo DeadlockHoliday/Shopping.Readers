@@ -1,8 +1,8 @@
 ﻿using Shopping.Normalizing.Data;
 using System.Text.RegularExpressions;
-using static Shopping.Normalizing.Processing.UnitExtractor;
+using static Shopping.Normalizing.Processing.Units.UnitExtractor;
 
-namespace Shopping.Normalizing.Tests.Processing;
+namespace Shopping.Normalizing.Tests.Processing.Units;
 
 internal class UnitExtractorTests
 {

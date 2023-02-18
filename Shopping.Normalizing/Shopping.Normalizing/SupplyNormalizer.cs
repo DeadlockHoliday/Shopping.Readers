@@ -1,5 +1,5 @@
 ﻿using Shopping.Normalizing.Data;
-using Shopping.Normalizing.Processing;
+using Shopping.Normalizing.Processing.Units;
 
 namespace Shopping.Normalizing;
 

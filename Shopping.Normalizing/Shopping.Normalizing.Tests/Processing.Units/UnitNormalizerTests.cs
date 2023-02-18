@@ -1,9 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using Shopping.Normalizing.Data;
-using Shopping.Normalizing.Processing;
-using static Shopping.Normalizing.Processing.UnitNormalizer;
+using Shopping.Normalizing.Processing.Units;
 
-namespace Shopping.Normalizing.Tests.Processing;
+namespace Shopping.Normalizing.Tests.Processing.Units;
 
 internal class UnitNormalizerTests
 {

@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using Shopping.Normalizing.Data;
 
-namespace Shopping.Normalizing.Processing;
+namespace Shopping.Normalizing.Processing.Units;
 
 internal static class UnitExtractor
 {
@@ -13,6 +13,13 @@ internal static class UnitExtractor
         | RegexOptions.Multiline
         | RegexOptions.IgnorePatternWhitespace;
 
+    /// <summary>
+    /// A regex for unit extraction.
+    /// </summary>
+    /// <remarks>
+    /// 123 g
+    /// 12.3kg
+    /// </remarks>
     private static readonly Regex regex = new(@"(\d+(?:[.\,]\d+)?) \s? ([a-zA-Zа-яА-Я]+)\b", regexOptions);
 
     internal static IReadOnlyCollection<Unit> Extract(string line)

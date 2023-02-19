@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using Shopping.Normalizing.Data;
+﻿using Shopping.Normalizing.Data;
 using Shopping.Normalizing.Processing.Units;
 
 namespace Shopping.Normalizing.Tests.Processing.Units;

@@ -2,6 +2,8 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
 using Shopping.Normalizing.Data;
+using UnitsNet;
+using UnitsNet.Units;
 
 namespace Shopping.Normalizing.Processing.Units;
 

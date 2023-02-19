@@ -10,11 +10,16 @@ internal static class NameExtractor
         TokenExtractor.Exclusive(@"\w+(?:ая)"), // adjectives
         TokenExtractor.Exclusive(@"\w+ньон"), // foreignWords
         TokenExtractor.Exclusive(@"\(.+?\)"), // parentesed (words)
+        TokenExtractor.Exclusive(@"^[a-zA-Z]+?$"), // english
     };
 
-    private static readonly TokenExtractor[] unclearWordExtractors = new[]
+    private static readonly string[] specialWords = new string[]
     {
-        TokenExtractor.Inclusive(@"^(?:корень)$"),
+        "корень",
+        "Крупа",
+        "Масло",
+        "Пена",
+        "Хлопья"
     };
 
     /// <summary>
@@ -25,24 +30,31 @@ internal static class NameExtractor
     /// </remarks>
     internal static string Extract(string line)
     {
-        var filteredWords = line
-            .Split(' ')
-            .Apply(filters);
-
-        return IsFirstWordClear(filteredWords) switch
-        {
-            true => filteredWords.First(),
-            false => string.Join(' ', filteredWords),
-        };
+        return ExtractWithSpecialWords(line)
+            ?? ExtractWithFilters(line);
     }
 
-    private static bool IsFirstWordClear(IEnumerable<string> filteredWords)
+    private static string ExtractWithFilters(string line)
     {
-        var firstWord = filteredWords.Take(1);
+        var tokens = line.Split(' ')
+            .Apply(filters);
 
-        bool isTokenClear(TokenExtractor x)
-            => x.Apply(firstWord).Count() == 0;
+        return string.Join(' ', tokens);
+    }
 
-        return unclearWordExtractors.All(isTokenClear);
+    private static string? ExtractWithSpecialWords(string line) 
+    {
+        var tokens = line.Split(' ');
+        if (!tokens.Any())
+        {
+            return null;
+        }
+
+        if (specialWords.Any(x => x.Equals(tokens[0])))
+        {
+            return string.Join(' ', tokens[0], tokens[1]);
+        }
+
+        return null;
     }
 }

@@ -28,18 +28,4 @@ internal class TokenExtractor
 
     public string[] Apply(IEnumerable<string> tokens)
         => tokens.Where(x => regex.IsMatch(x) == isMatch).ToArray();
-
-    public string[] Apply(string line)
-        => regex.Matches(line).Select(x => x.Value).ToArray();
-
-    public static string[] Apply(IEnumerable<string> tokens, TokenExtractor[] extractors)
-    {
-        var result = tokens.ToArray();
-        foreach (var extractor in extractors)
-        {
-            result = extractor.Apply(result);
-        }
-
-        return result;
-    }
 }

@@ -10,7 +10,7 @@ internal class SupplyNormalizerTests
     [TestCase("Молоко вкусное 0.1л", ExpectedResult = 100)]
     [TestCase("Молоко 0.1л вкусное", ExpectedResult = 100)]
     [TestCase("0.1л вкусное молоко", ExpectedResult = 100)]
-    public decimal NormalizeLine_ShouldParse_Liters_ReturnGramms(string line)
+    public decimal NormalizeLine_ShouldReturn_MassGramms(string line)
         => SupplyNormalizer.NormalizeLine(line).MassGramms;
 
     [TestCase("Paclan Стакан пластиковый прозрачный", ExpectedResult = "Стакан")]
@@ -32,8 +32,13 @@ internal class SupplyNormalizerTests
     [TestCase("Сахар белый кристаллический 900г", ExpectedResult = "Сахар")]
     [TestCase("Тушка цыпленка-бройлера замороженная", ExpectedResult = "Тушка куриная")]
     [TestCase("Хлопья овсяные Крупиночка 450г", ExpectedResult = "Хлопья овсяные")]
-    public string NormalizeLine_RealCase_ShouldParse_Names_ReturnNames(string line)
-        => SupplyNormalizer.NormalizeLine(line).Name;
+    [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = "Яйцо")]
+    public string NormalizeLine_ShouldReturn_GroupingNames(string line)
+        => SupplyNormalizer.NormalizeLine(line).GroupingName;
+
+    [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = "12 шт")]
+    public string NormalizeLine_ShouldReturn_Pieces(string line)
+        => SupplyNormalizer.NormalizeLine(line).Pieces + " шт";
 
     [TestCase("0.1шт")]
     [TestCase("2.00.2мл")] // doesnt crash because regex captures 00.2.

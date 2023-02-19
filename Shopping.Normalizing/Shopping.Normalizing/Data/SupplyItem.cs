@@ -10,7 +10,7 @@
 /// </remarks>
 public readonly record struct SupplyItem
 {
-    public string Name { get; init; }
+    public string GroupingName { get; init; }
     public ulong MassGramms { get; init; }
-    public decimal Amount { get; init; }
+    public ulong Pieces { get; init; }
 }

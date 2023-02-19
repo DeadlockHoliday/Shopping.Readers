@@ -11,22 +11,22 @@ public static class SupplyNormalizer
         var units = UnitExtractor.Extract(line)
             .Select(UnitNormalizer.Normalize)
             .ToArray();
-
-        // ? 
-        var mass = 0uL;
-        var massUnit = units.FirstOrDefault(x => x.Measure == "г");
-        if (massUnit.Value != 0)
-        {
-            mass = (ulong)massUnit.Value;
-        }
-
-        var name = NameExtractor.Extract(line);
-
-        // 3. Extract Amount
+        
         return new()
         {
-            MassGramms = mass,
-            Name = name
+            Pieces = GetUnit(units, "шт"),
+            MassGramms = GetUnit(units, "г"),
+            GroupingName = NameExtractor.Extract(line)
+        };
+    }
+
+    private static ulong GetUnit(Unit[] units, string name)
+    {
+        var unit = units.FirstOrDefault(x => x.Measure == name);
+        return (unit.Value != 0) switch
+        {
+            true => (ulong)unit.Value,
+            _ => 0uL
         };
     }
 }

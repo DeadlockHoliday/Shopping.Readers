@@ -4,7 +4,7 @@ namespace Shopping.Normalizing.Processing.Names;
 
 internal static class NameExtractor
 {
-    private static readonly TokenExtractor[] filters = new TokenExtractor[]
+    private static readonly TokenExtractor[] filters = new[]
     {
         TokenExtractor.Exclusive(@"^.{0,2}$"), // smallWords
         TokenExtractor.Exclusive(@"\w+(?:ая)"), // adjectives
@@ -12,7 +12,10 @@ internal static class NameExtractor
         TokenExtractor.Exclusive(@"\(.+?\)"), // parentesed (words)
     };
 
-    private static readonly TokenExtractor unclearWordsExtractor = TokenExtractor.Inclusive(@"^(?:корень)$");
+    private static readonly TokenExtractor[] unclearWordExtractors = new[]
+    {
+        TokenExtractor.Inclusive(@"^(?:корень)$"),
+    };
 
     /// <summary>
     /// Extracts a name as single word.
@@ -26,11 +29,20 @@ internal static class NameExtractor
             .Split(' ')
             .Apply(filters);
 
-        var isFirstWordUnclear = filteredWords.Take(1).Apply(unclearWordsExtractor).Any();
-        return isFirstWordUnclear switch
+        return IsFirstWordClear(filteredWords) switch
         {
-            true => string.Join(' ', filteredWords),
-            _ => filteredWords.First()
+            true => filteredWords.First(),
+            false => string.Join(' ', filteredWords),
         };
+    }
+
+    private static bool IsFirstWordClear(IEnumerable<string> filteredWords)
+    {
+        var firstWord = filteredWords.Take(1);
+
+        bool isTokenClear(TokenExtractor x)
+            => x.Apply(firstWord).Count() == 0;
+
+        return unclearWordExtractors.All(isTokenClear);
     }
 }

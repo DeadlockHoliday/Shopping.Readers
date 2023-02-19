@@ -1,6 +1,4 @@
-﻿using System.Text.RegularExpressions;
-
-namespace Shopping.Normalizing.Processing.Names;
+﻿namespace Shopping.Normalizing.Processing.Names;
 
 internal static class NameExtractor
 {
@@ -18,8 +16,19 @@ internal static class NameExtractor
         "корень",
         "Крупа",
         "Масло",
-        "Пена",
-        "Хлопья"
+        "Хлопья",
+        "Тушка",
+        "Печень",
+    };
+
+    private static readonly string[] knownGroups = new string[]
+    {
+        "Пена для бритья"
+    };
+
+    private static readonly Dictionary<string, string> replacers = new Dictionary<string, string>()
+    {
+        { "цыпленка-бройлера", "куриная" }
     };
 
     /// <summary>
@@ -30,16 +39,26 @@ internal static class NameExtractor
     /// </remarks>
     internal static string Extract(string line)
     {
-        return ExtractWithSpecialWords(line)
-            ?? ExtractWithFilters(line);
+        foreach (var item in replacers)
+        {
+            line = line.Replace(item.Key, item.Value);
+        }
+
+        return ExtractWithKnownGroups(line)
+            ?? ExtractWithSpecialWords(line)
+            ?? ExtractWithFilters(line)
+            ?? line;
     }
 
-    private static string ExtractWithFilters(string line)
+    private static string? ExtractWithKnownGroups(string line)
+        => knownGroups.FirstOrDefault(x => line.Contains(x, StringComparison.InvariantCultureIgnoreCase));
+
+    private static string? ExtractWithFilters(string line)
     {
         var tokens = line.Split(' ')
             .Apply(filters);
 
-        return string.Join(' ', tokens);
+        return tokens.FirstOrDefault();
     }
 
     private static string? ExtractWithSpecialWords(string line) 
@@ -50,7 +69,7 @@ internal static class NameExtractor
             return null;
         }
 
-        if (specialWords.Any(x => x.Equals(tokens[0])))
+        if (specialWords.Any(x => x.Equals(tokens[0], StringComparison.InvariantCultureIgnoreCase)))
         {
             return string.Join(' ', tokens[0], tokens[1]);
         }

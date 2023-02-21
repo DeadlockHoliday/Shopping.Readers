@@ -2,10 +2,9 @@
 
 namespace Shopping.Readers.Common.Contracts;
 
-public interface IOrder
+public interface ISupply
 {
-    int Id { get; }
     DateOnly Date { get; }
     Vendor Vendor { get; }
-    IReadOnlyList<IOrderPosition> Positions { get; }
+    IReadOnlyList<ISupplyPosition> Positions { get; }
 }

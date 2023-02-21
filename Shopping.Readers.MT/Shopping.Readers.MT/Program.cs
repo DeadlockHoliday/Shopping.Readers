@@ -8,7 +8,7 @@ var outputFolder = Environment.CurrentDirectory;
 
 var inputHtml = GetHtml(input);
 
-var orders = OrderReader.Parse(inputHtml);
+var orders = SupplyReader.Parse(inputHtml);
 
 ResultWriter.Write(orders, outputFolder);
 

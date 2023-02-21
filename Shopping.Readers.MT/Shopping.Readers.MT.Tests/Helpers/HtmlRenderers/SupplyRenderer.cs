@@ -1,13 +1,13 @@
 ﻿using Shopping.Readers.Common.Contracts;
 
-internal class OrderRenderer
+internal class SupplyRenderer
 {
-    public static string Render(IOrder[] orders)
-        => String.Join('\n', orders.Select(Render));
+    public static string Render(ISupply[] supplyPositions)
+        => String.Join('\n', supplyPositions.Select(Render));
 
-    public static string Render(IOrder order)
+    public static string Render(ISupply supplyPosition)
     {
-        var orderDateStr = order.Date.ToString("dd-MM-yyyy") + " 23:59";
+        var orderDateStr = supplyPosition.Date.ToString("dd-MM-yyyy") + " 23:59";
         return $$"""
             <table>
                 <tr class="history-order">
@@ -16,7 +16,7 @@ internal class OrderRenderer
                             <div>
                                 <div class="order-head hopened">
                                     <div class="order-data">
-                                        <div class="order-data_item id">{{order.Id}}</div>
+                                        <div class="order-data_item id">123456</div>
                                         <div class="order-data_item date">{{orderDateStr}} </div>
                                         <div class="order-data_item sum">9999.00 ₽</div>
                                         <div class="order-data_item state">оформлен</div>
@@ -26,8 +26,8 @@ internal class OrderRenderer
                             <div class="dropdown opened">
                                 <div id="dropdownContent">
                                     <div class="order-item-container">
-                                        {{order.Positions
-                                            .Select(OrderPositionRenderer.Render)
+                                        {{supplyPosition.Positions
+                                            .Select(SupplyPositionRendere.Render)
                                             .Aggregate((x, y) => x + Environment.NewLine +  y)}}
                                     </div>
                                 </div>

@@ -2,41 +2,41 @@
 
 namespace Shopping.Readers.MT.Tests.Helpers.HtmlRenderers;
 
-internal class OrderPositionRenderer
+internal class SupplyPositionRendere
 {
-    public static string Render(IOrderPosition orderPosition)
+    public static string Render(ISupplyPosition supplyPosition)
         => $$"""
             <div class="history-order-good">
-                <a href="{{orderPosition.Url}}" class="main-link">
+                <a href="{{supplyPosition.Url}}" class="main-link">
                     <div class="good-img">
                         <img class="main_good-img" />
                     </div>
                     <div class="main-desc">
-                        <p class="main-name">{{orderPosition.CategoryName}}</p>
+                        <p class="main-name">{{supplyPosition.Product.CategoryName}}</p>
                         <!---->
                         <div class="main-text">
                             <p>
-                                {{orderPosition.Info}}
+                                {{supplyPosition.Product.Info}}
                             </p>
                         </div>
                     </div>
                 </a>
                 <div class="main-quantity">
                     <span class="item-count_label">Количество</span>
-                    <span class="item-count">{{orderPosition.Quantity}}</span>
+                    <span class="item-count">{{supplyPosition.Quantity}}</span>
                 </div>
                 <div class="main-price">
                     <div class="price-name">Цена</div>
                     <!---->
                     <p class="price-num price-num_history">
-                        {{orderPosition.Price}} ₽
+                        {{supplyPosition.Price}} ₽
                     </p>
                 </div>
                 <div class="main-summa">
                     <div class="price-name">Сумма</div>
                     <div class="sum-icon">
                         <p class="price-num price-num_history">
-                            {{orderPosition.TotalPrice}} ₽
+                            {{supplyPosition.TotalPrice}} ₽
                         </p>
                     </div>
                 </div>

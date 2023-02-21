@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NMoneys" Version="6.1.2" />
+  </ItemGroup>
+
 </Project>

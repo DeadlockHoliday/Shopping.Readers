@@ -3,13 +3,11 @@ using Shopping.Readers.Common.Contracts.Static;
 
 namespace Shopping.Readers.MT.Data;
 
-internal readonly record struct Order : IOrder
+internal readonly record struct Supply : ISupply
 {
-    public int Id { get; init; }
-
     public DateOnly Date { get; init; }
 
     public Vendor Vendor => Vendor.MT;
 
-    public IReadOnlyList<IOrderPosition> Positions { get; init; }
+    public IReadOnlyList<ISupplyPosition> Positions { get; init; }
 }

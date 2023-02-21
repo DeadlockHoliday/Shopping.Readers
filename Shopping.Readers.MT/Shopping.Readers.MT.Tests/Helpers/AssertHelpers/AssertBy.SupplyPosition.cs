@@ -4,9 +4,9 @@ namespace Shopping.Readers.MT.Tests.Helpers.AssertHelpers;
 
 internal static partial class AssertBy
 {
-    internal static class OrderPosition
+    internal static class SupplyPosition
     {
-        internal static void Equal(IEnumerable<IOrderPosition> actualPositions, IEnumerable<IOrderPosition> expectedPositions)
+        internal static void Equal(IEnumerable<ISupplyPosition> actualPositions, IEnumerable<ISupplyPosition> expectedPositions)
         {
             var actual = actualPositions.ToArray();
             var expected = expectedPositions.ToArray();
@@ -15,13 +15,13 @@ internal static partial class AssertBy
 
             for (int i = 0; i < actual.Length; i++)
             {
-                AssertBy.OrderPosition.Equal(actual[i], expected[i]);
+                Equal(actual[i], expected[i]);
+                AssertBy.Product.Equal(actual[i].Product, expected[i].Product);
             }
         }
 
-        internal static void Equal(IOrderPosition actualPosition, IOrderPosition expectedPosition)
+        internal static void Equal(ISupplyPosition actualPosition, ISupplyPosition expectedPosition)
         {
-            Product.Equal(actualPosition, expectedPosition);
             Assert.That(actualPosition.Quantity, Is.EqualTo(expectedPosition.Quantity), "Quantity");
             Assert.That(actualPosition.TotalPrice, Is.EqualTo(expectedPosition.TotalPrice), "TotalPrice");
         }

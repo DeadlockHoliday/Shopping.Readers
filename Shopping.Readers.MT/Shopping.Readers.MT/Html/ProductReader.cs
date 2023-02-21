@@ -7,22 +7,24 @@ namespace Shopping.Readers.MT.Html;
 
 internal static class ProductReader
 {
-    public static IOrderPosition[] Read(HtmlElementNode orderNode)
+    public static ISupplyPosition[] Read(HtmlElementNode orderNode)
         => orderNode.Children
             .Find(".history-order-good")
             .Select(x =>
             {
-                return new OrderPosition
+                return new SupplyPosition
                 {
-                    CategoryName = x.Children.GetText(".main-name"),
-                    Info = x.Children.GetText(".main-text > p"),
+                    Product = new Product()
+                    {
+                        CategoryName = x.Children.GetText(".main-name"),
+                        Info = x.Children.GetText(".main-text > p"),
+                    },
                     Url = x.Children.GetHrefValue(".main-link"),
-                    Price = x.Children.GetText(".main-price .price-num").AsSum() ?? 0,
-                    Quantity = x.Children.GetText(".main-quantity > .item-count").AsDecimal() ?? 0,
-                    TotalPrice = x.Children.GetText(".main-summa .price-num").AsSum() ?? 0
+                    Price = x.Children.GetText(".main-price .price-num")?.AsSum()?.AsMoney() ?? new NMoneys.Money(0),
+                    Quantity = x.Children.GetText(".main-quantity > .item-count").AsLong() ?? 0,
                 };
             })
-            .DistinctBy(x => x.Info)
-            .Cast<IOrderPosition>()
+            .DistinctBy(x => x.Product.Info)
+            .Cast<ISupplyPosition>()
             .ToArray();
 }

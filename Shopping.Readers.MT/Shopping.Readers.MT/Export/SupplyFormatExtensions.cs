@@ -2,14 +2,13 @@
 
 namespace Shopping.Readers.MT.Export;
 
-internal static class OrderFormatExtensions
+internal static class SupplyFormatExtensions
 {
-    internal static string ToCsvFileName(this IOrder order)
+    internal static string ToCsvFileName(this ISupply supply)
         => string.Join(
             '.',
-            order.Vendor,
-            order.Date.ToStamp(),
-            order.Id,
+            supply.Vendor,
+            supply.Date.ToStamp(),
             "csv");
 
     internal static string ToStamp(this DateOnly date)

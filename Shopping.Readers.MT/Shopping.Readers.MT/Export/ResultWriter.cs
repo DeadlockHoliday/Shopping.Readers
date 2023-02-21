@@ -13,20 +13,20 @@ internal class ResultWriter
         PrepareHeaderForMatch = args => args.Header.ToLower(),
     };
 
-    internal static void Write(IOrder[] orders, string writeFolder)
+    internal static void Write(ISupply[] orders, string writeFolder)
     {
         Parallel.ForEach(orders, (order, i) 
             => Write(writeFolder, order));
     }
 
-    private static void Write(string writeFolder, IOrder order)
+    private static void Write(string writeFolder, ISupply order)
     {
         var fileName = order.ToCsvFileName();
         var writePath = Path.Combine(writeFolder, fileName);
         using var writer = new StreamWriter(writePath);
         using var csvWriter = new CsvWriter(writer, csvConfig);
 
-        var items = order.Positions.Cast<OrderPosition>();
+        var items = order.Positions.Cast<SupplyPosition>();
         csvWriter.WriteRecords(items);
     }
 }

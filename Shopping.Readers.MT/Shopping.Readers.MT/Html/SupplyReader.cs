@@ -5,20 +5,19 @@ using System.Collections.Immutable;
 
 namespace Shopping.Readers.MT.Html;
 
-internal class OrderReader
+internal class SupplyReader
 {
-    public static IOrder[] Parse(HtmlDocument doc)
+    public static ISupply[] Parse(HtmlDocument doc)
         => doc.Find(".history-order")
-            .Select(x => new Order()
+            .Select(x => new Supply()
                 {
                     Positions = ProductReader.Read(x).ToImmutableArray(),
                     Date = ParseDate(x) ?? DateOnly.MinValue,
-                    Id = ParseId(x)
                 })
-            .Cast<IOrder>()
+            .Cast<ISupply>()
             .ToArray();
 
-    internal static IOrder[] Parse(string html)
+    internal static ISupply[] Parse(string html)
         => Parse(HtmlDocument.FromHtml(html));
 
     private static DateOnly? ParseDate(HtmlElementNode node)
@@ -31,19 +30,6 @@ internal class OrderReader
         }
 
         return DateOnly.ParseExact(dateEntry, "dd-MM-yyyy");
-    }
-
-    private static int ParseId(HtmlElementNode node)
-    {
-        const int dateElementHtmlIndex = 0;
-        var idEntry = GetOrderDataEntry(node, dateElementHtmlIndex);
-
-        if (string.IsNullOrWhiteSpace(idEntry))
-        {
-            return 0;
-        }
-
-        return int.Parse(idEntry);
     }
 
     private static string? GetOrderDataEntry(HtmlElementNode node, int index)

@@ -11,8 +11,6 @@ internal static partial class AssertBy
         {
             Assert.That(actualProduct.CategoryName, Is.EqualTo(expectedProduct.CategoryName), "CategoryName");
             Assert.That(actualProduct.Info, Is.EqualTo(expectedProduct.Info), "Info");
-            Assert.That(actualProduct.Price, Is.EqualTo(expectedProduct.Price), "Price");
-            Assert.That(actualProduct.CurrencyCode, Is.EqualTo(expectedProduct.CurrencyCode), "CurrencyCode");
         }
     }
 }

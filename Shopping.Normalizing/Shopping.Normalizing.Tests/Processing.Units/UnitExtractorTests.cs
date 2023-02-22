@@ -1,5 +1,4 @@
-﻿using Shopping.Normalizing.Data;
-using System.Text.RegularExpressions;
+﻿using Shopping.Readers.Common.Contracts.ValueObjects;
 using static Shopping.Normalizing.Processing.Units.UnitExtractor;
 
 namespace Shopping.Normalizing.Tests.Processing.Units;

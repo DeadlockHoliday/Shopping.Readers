@@ -1,9 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using Shopping.Normalizing.Data;
-using UnitsNet;
-using UnitsNet.Units;
+using Shopping.Readers.Common.Contracts.ValueObjects;
 
 namespace Shopping.Normalizing.Processing.Units;
 
@@ -34,4 +32,14 @@ internal static class UnitExtractor
                 return new Unit(number, measure);
             })
             .ToImmutableArray();
+
+    internal static long GetUnit(Unit[] units, string name)
+    {
+        var unit = units.FirstOrDefault(x => x.Measure == name);
+        return (unit.Value != 0) switch
+        {
+            true => (long)unit.Value,
+            _ => 0L
+        };
+    }
 }

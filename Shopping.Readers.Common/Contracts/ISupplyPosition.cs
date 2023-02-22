@@ -1,4 +1,5 @@
 ﻿using NMoneys;
+using Shopping.Readers.Common.Contracts.Products;
 
 namespace Shopping.Readers.Common.Contracts;
 

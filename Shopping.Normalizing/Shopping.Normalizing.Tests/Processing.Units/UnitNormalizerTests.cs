@@ -1,5 +1,5 @@
-﻿using Shopping.Normalizing.Data;
-using Shopping.Normalizing.Processing.Units;
+﻿using Shopping.Normalizing.Processing.Units;
+using Shopping.Readers.Common.Contracts.ValueObjects;
 
 namespace Shopping.Normalizing.Tests.Processing.Units;
 

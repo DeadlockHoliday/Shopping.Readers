@@ -1,23 +1,24 @@
 ﻿using SoftCircuits.HtmlMonkey;
 using Shopping.Readers.MT.Data;
- 
+
 using System.Collections.Immutable;
+using Shopping.Readers.Common.Supplies;
 
 namespace Shopping.Readers.MT.Html;
 
 internal class SupplyReader
 {
-    public static ISupply[] Parse(HtmlDocument doc)
+    public static ISupplyPackage[] Parse(HtmlDocument doc)
         => doc.Find(".history-order")
             .Select(x => new Supply()
                 {
                     Positions = ProductReader.Read(x).ToImmutableArray(),
                     Date = ParseDate(x) ?? DateOnly.MinValue,
                 })
-            .Cast<ISupply>()
+            .Cast<ISupplyPackage>()
             .ToArray();
 
-    internal static ISupply[] Parse(string html)
+    internal static ISupplyPackage[] Parse(string html)
         => Parse(HtmlDocument.FromHtml(html));
 
     private static DateOnly? ParseDate(HtmlElementNode node)

@@ -1,4 +1,5 @@
-﻿ 
+﻿
+using Shopping.Readers.Common.Supplies;
 using Shopping.Readers.MT.Data;
 using Shopping.Readers.MT.Tests.Helpers;
 using AssertBy = Shopping.Readers.MT.Tests.Helpers.AssertHelpers.AssertBy;
@@ -22,20 +23,20 @@ public class SupplyReaderTests
             Quantity = 1,
         };
 
-        var expectedOrders = new ISupply[]
+        var expectedOrders = new ISupplyPackage[]
         {
             SupplyFactory.Create(new DateOnly(2020, 10, 1), expectedPosition),
             SupplyFactory.Create(new DateOnly(2022, 10, 1), expectedPosition),
         };
 
-        var html = SupplyRenderer.Render(expectedOrders);
+        var html = SupplyPackagesRenderer.Render(expectedOrders);
         var result = SupplyReader.Parse(html);
 
         Assert.That(result, Has.Exactly(2).Items);
 
         Assert.Multiple(() =>
         {
-            AssertBy.Supply.Equal(expectedOrders, result);
+            AssertBy.SupplyPackage.Equal(expectedOrders, result);
         });
     }
 
@@ -59,7 +60,7 @@ public class SupplyReaderTests
             expectedPosition,
             expectedPosition);
 
-        var html = SupplyRenderer.Render(expectedOrder);
+        var html = SupplyPackagesRenderer.Render(expectedOrder);
         var result = SupplyReader.Parse(html);
         var actualOrder = result.First();
 
@@ -85,17 +86,17 @@ public class SupplyReaderTests
             new DateOnly(2020, 10, 1),
             expectedPosition);
 
-        var html = SupplyRenderer.Render(expectedOrder);
+        var html = SupplyPackagesRenderer.Render(expectedOrder);
         var actualOrder = SupplyReader.Parse(html).First();
 
         Assert.Multiple(() =>
         {
-            AssertBy.Supply.Equal(expectedOrder, actualOrder);
+            AssertBy.SupplyPackage.Equal(expectedOrder, actualOrder);
         });
 
         Assert.Multiple(() =>
         {
-            AssertBy.SupplyPosition.Equal(actualOrder.Positions, expectedOrder.Positions);
+            AssertBy.SupplyPackagePosition.Equal(actualOrder.Positions, expectedOrder.Positions);
         });
     }
 }

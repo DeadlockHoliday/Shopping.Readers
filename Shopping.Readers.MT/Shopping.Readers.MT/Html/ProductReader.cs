@@ -1,13 +1,14 @@
 ﻿using SoftCircuits.HtmlMonkey;
 using Shopping.Readers.MT.Data;
- 
+
 using Shopping.Readers.MT.Helpers;
+using Shopping.Readers.Common.Supplies;
 
 namespace Shopping.Readers.MT.Html;
 
 internal static class ProductReader
 {
-    public static ISupplyPosition[] Read(HtmlElementNode orderNode)
+    public static ISupplyPackagePosition[] Read(HtmlElementNode orderNode)
         => orderNode.Children
             .Find(".history-order-good")
             .Select(x =>
@@ -25,6 +26,6 @@ internal static class ProductReader
                 };
             })
             .DistinctBy(x => x.Product.Name)
-            .Cast<ISupplyPosition>()
+            .Cast<ISupplyPackagePosition>()
             .ToArray();
 }

@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
+using Shopping.Readers.Common.Supplies;
 using Shopping.Readers.MT.Data;
 using System.Globalization;
 
@@ -12,13 +13,13 @@ internal class ResultWriter
         PrepareHeaderForMatch = args => args.Header.ToLower(),
     };
 
-    internal static void Write(ISupply[] orders, string writeFolder)
+    internal static void Write(ISupplyPackage[] orders, string writeFolder)
     {
         Parallel.ForEach(orders, (order, i) 
             => Write(writeFolder, order));
     }
 
-    private static void Write(string writeFolder, ISupply order)
+    private static void Write(string writeFolder, ISupplyPackage order)
     {
         var fileName = order.ToCsvFileName();
         var writePath = Path.Combine(writeFolder, fileName);

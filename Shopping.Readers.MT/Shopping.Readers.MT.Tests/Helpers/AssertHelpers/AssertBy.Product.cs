@@ -1,6 +1,4 @@
-﻿ 
-
-namespace Shopping.Readers.MT.Tests.Helpers.AssertHelpers;
+﻿namespace Shopping.Readers.MT.Tests.Helpers.AssertHelpers;
 
 internal static partial class AssertBy
 {

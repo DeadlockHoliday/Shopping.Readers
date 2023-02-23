@@ -1,8 +1,10 @@
-﻿namespace Shopping.Readers.MT.Export;
+﻿using Shopping.Readers.Common.Supplies;
+
+namespace Shopping.Readers.MT.Export;
 
 internal static class SupplyFormatExtensions
 {
-    internal static string ToCsvFileName(this ISupply supply)
+    internal static string ToCsvFileName(this ISupplyPackage supply)
         => string.Join(
             '.',
             supply.Vendor,

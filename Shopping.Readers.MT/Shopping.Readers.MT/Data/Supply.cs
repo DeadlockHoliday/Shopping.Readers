@@ -1,10 +1,12 @@
-﻿namespace Shopping.Readers.MT.Data;
+﻿using Shopping.Readers.Common.Supplies;
 
-internal readonly record struct Supply : ISupply
+namespace Shopping.Readers.MT.Data;
+
+internal readonly record struct Supply : ISupplyPackage
 {
     public DateOnly Date { get; init; }
 
     public Vendor Vendor => Vendor.MT;
 
-    public IReadOnlyList<ISupplyPosition> Positions { get; init; }
+    public IReadOnlyList<ISupplyPackagePosition> Positions { get; init; }
 }

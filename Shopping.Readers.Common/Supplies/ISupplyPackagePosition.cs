@@ -1,22 +1,17 @@
 ﻿using NMoneys;
 using Shopping.Readers.Common.Products;
 
-namespace Shopping.Readers.Common;
+namespace Shopping.Readers.Common.Supplies;
 
 /// <summary>
 /// A contract for order position of a product.
 /// </summary>
-public interface ISupplyPosition
+public interface ISupplyPackagePosition
 {
     /// <summary>
     /// Number of copies of product.
     /// </summary>
-    long Quantity { get; } // = 1
-
-    /// <summary>
-    /// Mass of a supply.
-    /// </summary>
-    long WeightGramms { get; } // = 1
+    long Quantity { get; }
 
     /// <summary>
     /// A price for a supply.
@@ -26,12 +21,7 @@ public interface ISupplyPosition
     /// <summary>
     /// Total price.
     /// </summary>
-    Money TotalPrice => Price.Times(Quantity * WeightGramms);
-
-    /// <summary>
-    /// Url to a supply.
-    /// </summary>
-    string Url { get; }
+    Money TotalPrice => Price.Times(Quantity);
 
     IProduct Product { get; }
 }

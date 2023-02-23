@@ -1,13 +1,13 @@
-﻿ 
+﻿using Shopping.Readers.Common.Supplies;
 
-internal class SupplyRenderer
+internal class SupplyPackagesRenderer
 {
-    public static string Render(ISupply[] supplyPositions)
-        => String.Join('\n', supplyPositions.Select(Render));
+    public static string Render(ISupplyPackage[] supplyPackage)
+        => String.Join('\n', supplyPackage.Select(Render));
 
-    public static string Render(ISupply supplyPosition)
+    public static string Render(ISupplyPackage supplyPackage)
     {
-        var orderDateStr = supplyPosition.Date.ToString("dd-MM-yyyy") + " 23:59";
+        var orderDateStr = supplyPackage.Date.ToString("dd-MM-yyyy") + " 23:59";
         return $$"""
             <table>
                 <tr class="history-order">
@@ -26,8 +26,8 @@ internal class SupplyRenderer
                             <div class="dropdown opened">
                                 <div id="dropdownContent">
                                     <div class="order-item-container">
-                                        {{supplyPosition.Positions
-                                            .Select(SupplyPositionRendere.Render)
+                                        {{supplyPackage.Positions
+                                            .Select(SupplyPackagePositionRenderer.Render)
                                             .Aggregate((x, y) => x + Environment.NewLine +  y)}}
                                     </div>
                                 </div>

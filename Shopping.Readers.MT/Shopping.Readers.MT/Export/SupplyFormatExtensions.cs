@@ -1,6 +1,4 @@
-﻿using Shopping.Readers.Common.Contracts;
-
-namespace Shopping.Readers.MT.Export;
+﻿namespace Shopping.Readers.MT.Export;
 
 internal static class SupplyFormatExtensions
 {

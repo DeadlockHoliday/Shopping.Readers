@@ -1,15 +1,15 @@
 ﻿using Shopping.Normalizing.Processing.Names;
 using Shopping.Normalizing.Processing.Units;
 using Shopping.Readers.Common.Products;
-using System.Collections.ObjectModel;
 
 namespace Shopping.Normalizing;
 
 public static class SupplyNormalizer
 {
-    public static ProcessedProduct NormalizeLine(string line)
+    public static ProcessedProduct NormalizeLine(string line, string category)
         => new(
-            NameExtractor.Extract(line),
+            line,
+            NameExtractor.Extract(line) ?? category,
             new Dictionary<string, string>()
             {
                 { "Mass", GetUnit(line, "г").ToString() },

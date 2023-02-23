@@ -1,13 +1,16 @@
-﻿namespace Shopping.Readers.Common.Units;
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace Shopping.Readers.Common.Units;
 
 public readonly record struct Unit
 {
     private const string GramsMeasure = "г";
     private const string PiecesMeasure = "шт";
 
-    public decimal Value { get; init; }
-    public string Measure { get; init; }
+    public required decimal Value { get; init; }
+    public required string Measure { get; init; }
 
+    [SetsRequiredMembers]
     public Unit(decimal value, string measure)
     {
         Value = value;

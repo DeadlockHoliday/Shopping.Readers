@@ -2,10 +2,7 @@
 
 public record struct UnprocessedProduct : IProduct
 {
-    public string CategoryName { get; init; }
+    public required string CategoryName { get; init; }
 
-    /// <summary>
-    /// Full info of product, whatever a vendor supplies.
-    /// </summary>
-    string Info { get; init; }
+    public required string Name { get; init; }
 }

@@ -37,7 +37,7 @@ internal static class NameExtractor
     /// <remarks>
     /// If failed to recognize a single word - returns multiple words instead.
     /// </remarks>
-    internal static string Extract(string line)
+    internal static string? Extract(string line)
     {
         foreach (var item in replacers)
         {
@@ -46,8 +46,7 @@ internal static class NameExtractor
 
         return ExtractWithKnownGroups(line)
             ?? ExtractWithSpecialWords(line)
-            ?? ExtractWithFilters(line)
-            ?? line;
+            ?? ExtractWithFilters(line);
     }
 
     private static string? ExtractWithKnownGroups(string line)

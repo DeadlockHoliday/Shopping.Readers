@@ -1,4 +1,4 @@
-﻿using Shopping.Readers.Common.Contracts;
+﻿ 
 
 namespace Shopping.Readers.MT.Tests.Helpers.AssertHelpers;
 

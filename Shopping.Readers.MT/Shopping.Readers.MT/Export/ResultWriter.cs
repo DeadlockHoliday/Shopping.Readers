@@ -1,6 +1,5 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using Shopping.Readers.Common.Contracts;
 using Shopping.Readers.MT.Data;
 using System.Globalization;
 

@@ -10,7 +10,7 @@ internal static class AssertHelpers
         {
             foreach (var sample in samples)
             {
-                var actual = NameExtractor.Extract(sample.Line);
+                var actual = NameExtractor.Extract(sample.Line) ?? "";
                 AssertSample(sample, actual);
             }
         });

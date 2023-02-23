@@ -1,16 +1,20 @@
 ﻿using Shopping.Readers.Common.Units;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Shopping.Readers.Common.Products;
 
 public readonly record struct ProcessedProduct : IProduct
 {
-    public string CategoryName { get; init; }
+    public required string Name { get; init; }
+    public required string CategoryName { get; init; }
     public ReadOnlyDictionary<string, string> Details { get; init; }
 
-    public ProcessedProduct(string categoryName, IDictionary<string, string> details)
+    [SetsRequiredMembers]
+    public ProcessedProduct(string name, string categoryName, IDictionary<string, string> details)
     {
+        Name = name;
         CategoryName = categoryName;
         Details = new ReadOnlyDictionary<string, string>(details);
     }

@@ -1,6 +1,6 @@
 ﻿using SoftCircuits.HtmlMonkey;
 using Shopping.Readers.MT.Data;
-using Shopping.Readers.Common.Contracts;
+ 
 using System.Collections.Immutable;
 
 namespace Shopping.Readers.MT.Html;

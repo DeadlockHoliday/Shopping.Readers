@@ -1,4 +1,4 @@
-﻿using Shopping.Readers.Common.Contracts;
+﻿ 
 
 namespace Shopping.Readers.MT.Tests.Helpers.HtmlRenderers;
 
@@ -16,7 +16,7 @@ internal class SupplyPositionRendere
                         <!---->
                         <div class="main-text">
                             <p>
-                                {{supplyPosition.Product.Info}}
+                                {{supplyPosition.Product.Name}}
                             </p>
                         </div>
                     </div>

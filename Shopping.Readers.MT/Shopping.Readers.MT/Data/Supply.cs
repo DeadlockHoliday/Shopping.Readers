@@ -1,7 +1,4 @@
-﻿using Shopping.Readers.Common.Contracts;
-using Shopping.Readers.Common.Contracts.Static;
-
-namespace Shopping.Readers.MT.Data;
+﻿namespace Shopping.Readers.MT.Data;
 
 internal readonly record struct Supply : ISupply
 {

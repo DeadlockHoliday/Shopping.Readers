@@ -1,4 +1,4 @@
-﻿using Shopping.Readers.Common.Contracts;
+﻿ 
 using Shopping.Readers.MT.Data;
 using System.Collections.Immutable;
 

@@ -1,4 +1,4 @@
-﻿using Shopping.Readers.Common.Contracts;
+﻿ 
 using Shopping.Readers.MT.Data;
 using Shopping.Readers.MT.Tests.Helpers;
 using AssertBy = Shopping.Readers.MT.Tests.Helpers.AssertHelpers.AssertBy;
@@ -12,10 +12,10 @@ public class SupplyReaderTests
     {
         var expectedPosition = new SupplyPosition
         {
-            Product = new Product()
+            Product = new UnprocessedProduct()
             {
                 CategoryName = "Пластиковая посуда",
-                Info = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
+                Name = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
             },
             Price = new NMoneys.Money(49),
             Url = "https://mt.delivery/single?id=206609",
@@ -44,10 +44,10 @@ public class SupplyReaderTests
     {
         var expectedPosition = new SupplyPosition
         {
-            Product = new Product()
+            Product = new UnprocessedProduct()
             {
                 CategoryName = "Пластиковая посуда",
-                Info = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
+                Name = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
             },            
             Price = new NMoneys.Money(49),
             Url = "https://mt.delivery/single?id=206609",
@@ -71,10 +71,10 @@ public class SupplyReaderTests
     {
         var expectedPosition = new SupplyPosition
         {
-            Product = new Product
+            Product = new UnprocessedProduct
             {
                 CategoryName = "Пластиковая посуда",
-                Info = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
+                Name = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
             },
             Price = new NMoneys.Money(49),
             Url = "https://mt.delivery/single?id=206609",

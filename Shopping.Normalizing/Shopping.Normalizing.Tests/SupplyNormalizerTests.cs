@@ -11,7 +11,7 @@ internal class SupplyNormalizerTests
     [TestCase("Молоко 0.1л вкусное", ExpectedResult = 100)]
     [TestCase("0.1л вкусное молоко", ExpectedResult = 100)]
     public long? NormalizeLine_ShouldReturn_MassGramms(string line)
-        => SupplyNormalizer.NormalizeLine(line)
+        => SupplyNormalizer.NormalizeLine(line, "Misc")
             .Details
             .TryGetValue("Mass", out var val) ?
                 long.Parse(val) : null;
@@ -37,11 +37,11 @@ internal class SupplyNormalizerTests
     [TestCase("Хлопья овсяные Крупиночка 450г", ExpectedResult = "Хлопья овсяные")]
     [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = "Яйцо")]
     public string NormalizeLine_ShouldReturn_CategoryName(string line)
-        => SupplyNormalizer.NormalizeLine(line).CategoryName;
+        => SupplyNormalizer.NormalizeLine(line, "Misc").CategoryName;
 
     [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = 12)]
     public long? NormalizeLine_ShouldReturn_Pieces(string line)
-        => SupplyNormalizer.NormalizeLine(line)
+        => SupplyNormalizer.NormalizeLine(line, "Misc")
             .Details
             .TryGetValue("Pieces", out var val) ?
                 long.Parse(val) : null;
@@ -50,6 +50,6 @@ internal class SupplyNormalizerTests
     [TestCase("2.00.2мл")] // doesnt crash because regex captures 00.2.
     public void NormalizeLine_IncorrectCases_ShouldThrow(string line)
     {
-        Assert.That(() => SupplyNormalizer.NormalizeLine(line), Throws.Exception);
+        Assert.That(() => SupplyNormalizer.NormalizeLine(line, "Misc"), Throws.Exception);
     }
 }

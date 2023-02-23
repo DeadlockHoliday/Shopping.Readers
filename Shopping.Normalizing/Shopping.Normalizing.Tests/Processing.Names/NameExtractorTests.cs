@@ -8,7 +8,7 @@ internal class NameExtractorTests
     [TestCase("Корень имбиря", "Корень имбиря")]
     public void Extract_ShouldKeep_Names_IfUnclear(string line, string expected)
     {
-        var actual = NameExtractor.Extract(line);
+        var actual = NameExtractor.Extract(line) ?? "";
         AssertSample(new(line, expected), actual);
     }
 

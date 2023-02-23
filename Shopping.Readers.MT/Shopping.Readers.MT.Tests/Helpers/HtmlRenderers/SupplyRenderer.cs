@@ -1,4 +1,4 @@
-﻿using Shopping.Readers.Common.Contracts;
+﻿ 
 
 internal class SupplyRenderer
 {

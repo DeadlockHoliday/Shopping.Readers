@@ -1,4 +1,4 @@
-﻿using Shopping.Readers.Common.Contracts;
+﻿ 
 
 namespace Shopping.Readers.MT.Tests.Helpers.AssertHelpers;
 
@@ -10,7 +10,7 @@ internal static partial class AssertBy
         internal static void Equal(IProduct actualProduct, IProduct expectedProduct)
         {
             Assert.That(actualProduct.CategoryName, Is.EqualTo(expectedProduct.CategoryName), "CategoryName");
-            Assert.That(actualProduct.Info, Is.EqualTo(expectedProduct.Info), "Info");
+            Assert.That(actualProduct.Name, Is.EqualTo(expectedProduct.Name), "Info");
         }
     }
 }

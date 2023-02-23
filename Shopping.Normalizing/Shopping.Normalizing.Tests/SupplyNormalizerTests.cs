@@ -10,8 +10,11 @@ internal class SupplyNormalizerTests
     [TestCase("Молоко вкусное 0.1л", ExpectedResult = 100)]
     [TestCase("Молоко 0.1л вкусное", ExpectedResult = 100)]
     [TestCase("0.1л вкусное молоко", ExpectedResult = 100)]
-    public long NormalizeLine_ShouldReturn_MassGramms(string line)
-        => SupplyNormalizer.NormalizeLine(line).TryGetMassGramms() ?? 0;
+    public long? NormalizeLine_ShouldReturn_MassGramms(string line)
+        => SupplyNormalizer.NormalizeLine(line)
+            .Details
+            .TryGetValue("Mass", out var val) ?
+                long.Parse(val) : null;
 
     [TestCase("Paclan Стакан пластиковый прозрачный", ExpectedResult = "Стакан")]
     [TestCase("Горох колотый желтый Донель 800г", ExpectedResult = "Горох")]
@@ -36,9 +39,12 @@ internal class SupplyNormalizerTests
     public string NormalizeLine_ShouldReturn_CategoryName(string line)
         => SupplyNormalizer.NormalizeLine(line).CategoryName;
 
-    [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = "12 шт")]
-    public string NormalizeLine_ShouldReturn_Pieces(string line)
-        => SupplyNormalizer.NormalizeLine(line).TryGetPieces() + " шт";
+    [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = 12)]
+    public long? NormalizeLine_ShouldReturn_Pieces(string line)
+        => SupplyNormalizer.NormalizeLine(line)
+            .Details
+            .TryGetValue("Pieces", out var val) ?
+                long.Parse(val) : null;
 
     [TestCase("0.1шт")]
     [TestCase("2.00.2мл")] // doesnt crash because regex captures 00.2.

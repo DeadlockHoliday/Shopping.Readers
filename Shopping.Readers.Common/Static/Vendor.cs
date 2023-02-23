@@ -1,14 +1,14 @@
-﻿namespace Shopping.Readers.Common.Contracts.Static;
+﻿namespace Shopping.Readers.Common.Static;
 
 public enum Vendor
 {
     /// <summary>
     /// https://mt.delivery/
     /// </summary>
-    MT, 
+    MT,
 
     /// <summary>
     /// Misc buyins in different places during the walk.
     /// </summary>
-    Walk, 
+    Walk,
 }

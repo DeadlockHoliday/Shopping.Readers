@@ -1,4 +1,4 @@
-﻿using Shopping.Readers.Common.Contracts.ValueObjects;
+﻿using Shopping.Readers.Common.Units;
 using static Shopping.Normalizing.Processing.Units.UnitExtractor;
 
 namespace Shopping.Normalizing.Tests.Processing.Units;

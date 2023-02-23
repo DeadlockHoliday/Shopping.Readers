@@ -1,4 +1,4 @@
-﻿namespace Shopping.Readers.Common.Contracts.Products;
+﻿namespace Shopping.Readers.Common.Products;
 
 /// <summary>
 /// A contract for an abstract product.

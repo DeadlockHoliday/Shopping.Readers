@@ -1,10 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="UnitsNet" Version="5.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Shopping.Readers.Common\Shopping.Readers.Common.csproj" />
   </ItemGroup>
 

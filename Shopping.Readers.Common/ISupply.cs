@@ -1,6 +1,6 @@
-﻿using Shopping.Readers.Common.Contracts.Static;
+﻿using Shopping.Readers.Common.Static;
 
-namespace Shopping.Readers.Common.Contracts;
+namespace Shopping.Readers.Common;
 
 public interface ISupply
 {

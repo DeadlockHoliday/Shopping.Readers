@@ -1,3 +1,5 @@
-﻿[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Shopping.Normalizing.Tests")]
+﻿using System.Globalization;
 
-var a = 1323;
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Shopping.Normalizing.Tests")]
+
+var b = "";

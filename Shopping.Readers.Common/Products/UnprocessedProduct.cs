@@ -1,4 +1,4 @@
-﻿namespace Shopping.Readers.Common.Contracts.Products;
+﻿namespace Shopping.Readers.Common.Products;
 
 public record struct UnprocessedProduct : IProduct
 {

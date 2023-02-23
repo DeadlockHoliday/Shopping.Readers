@@ -1,7 +1,7 @@
 ﻿using NMoneys;
-using Shopping.Readers.Common.Contracts.Products;
+using Shopping.Readers.Common.Products;
 
-namespace Shopping.Readers.Common.Contracts;
+namespace Shopping.Readers.Common;
 
 /// <summary>
 /// A contract for order position of a product.

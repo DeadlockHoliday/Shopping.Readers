@@ -1,6 +1,4 @@
 ﻿using SoftCircuits.HtmlMonkey;
-using Shopping.Readers.MT.Data;
-
 using Shopping.Readers.MT.Helpers;
 using Shopping.Readers.Common.Supplies;
 
@@ -13,14 +11,14 @@ internal static class ProductReader
             .Find(".history-order-good")
             .Select(x =>
             {
-                return new SupplyPosition
+                return new SupplyPackagePosition
                 {
                     Product = new UnprocessedProduct()
                     {
                         CategoryName = x.Children.GetText(".main-name"),
                         Name = x.Children.GetText(".main-text > p"),
                     },
-                    Url = x.Children.GetHrefValue(".main-link"),
+                    //Url = x.Children.GetHrefValue(".main-link"),
                     Price = x.Children.GetText(".main-price .price-num")?.AsSum()?.AsMoney() ?? new NMoneys.Money(0),
                     Quantity = x.Children.GetText(".main-quantity > .item-count").AsLong() ?? 0,
                 };

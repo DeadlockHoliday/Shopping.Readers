@@ -1,6 +1,5 @@
 ﻿
 using Shopping.Readers.Common.Supplies;
-using Shopping.Readers.MT.Data;
 using Shopping.Readers.MT.Tests.Helpers;
 using AssertBy = Shopping.Readers.MT.Tests.Helpers.AssertHelpers.AssertBy;
 
@@ -11,7 +10,7 @@ public class SupplyReaderTests
     [Test]
     public void Parse_SameProduct_InDifferentOrders_ShouldReturn_SameProduct()
     {
-        var expectedPosition = new SupplyPosition
+        var expectedPosition = new SupplyPackagePosition
         {
             Product = new UnprocessedProduct()
             {
@@ -19,7 +18,7 @@ public class SupplyReaderTests
                 Name = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
             },
             Price = new NMoneys.Money(49),
-            Url = "https://mt.delivery/single?id=206609",
+            //Url = "https://mt.delivery/single?id=206609",
             Quantity = 1,
         };
 
@@ -43,7 +42,7 @@ public class SupplyReaderTests
     [Test]
     public void Parse_DuplicatedProduct_ShouldReturn_SingleResult()
     {
-        var expectedPosition = new SupplyPosition
+        var expectedPosition = new SupplyPackagePosition
         {
             Product = new UnprocessedProduct()
             {
@@ -51,7 +50,7 @@ public class SupplyReaderTests
                 Name = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
             },            
             Price = new NMoneys.Money(49),
-            Url = "https://mt.delivery/single?id=206609",
+            //Url = "https://mt.delivery/single?id=206609",
             Quantity = 1,
         };
 
@@ -70,7 +69,7 @@ public class SupplyReaderTests
     [Test]
     public void Parse_SingleProduct_ShouldReturn_CorrectResult()
     {
-        var expectedPosition = new SupplyPosition
+        var expectedPosition = new SupplyPackagePosition
         {
             Product = new UnprocessedProduct
             {
@@ -78,7 +77,7 @@ public class SupplyReaderTests
                 Name = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
             },
             Price = new NMoneys.Money(49),
-            Url = "https://mt.delivery/single?id=206609",
+            //Url = "https://mt.delivery/single?id=206609",
             Quantity = 1,
         };
 

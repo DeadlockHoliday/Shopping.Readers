@@ -1,6 +1,4 @@
 ﻿using SoftCircuits.HtmlMonkey;
-using Shopping.Readers.MT.Data;
-
 using System.Collections.Immutable;
 using Shopping.Readers.Common.Supplies;
 
@@ -10,7 +8,7 @@ internal class SupplyReader
 {
     public static ISupplyPackage[] Parse(HtmlDocument doc)
         => doc.Find(".history-order")
-            .Select(x => new Supply()
+            .Select(x => new SupplyPackage()
                 {
                     Positions = ProductReader.Read(x).ToImmutableArray(),
                     Date = ParseDate(x) ?? DateOnly.MinValue,

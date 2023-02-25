@@ -31,14 +31,14 @@ internal class SupplyPackagePositionRenderer
                     <div class="price-name">Цена</div>
                     <!---->
                     <p class="price-num price-num_history">
-                        {{supplyPackagePosition.Price}} ₽
+                        {{supplyPackagePosition.Price.Amount}} ₽
                     </p>
                 </div>
                 <div class="main-summa">
                     <div class="price-name">Сумма</div>
                     <div class="sum-icon">
                         <p class="price-num price-num_history">
-                            {{supplyPackagePosition.TotalPrice}} ₽
+                            {{supplyPackagePosition.TotalPrice.Amount}} ₽
                         </p>
                     </div>
                 </div>

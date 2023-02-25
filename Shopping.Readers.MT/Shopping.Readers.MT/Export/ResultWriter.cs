@@ -1,7 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using Shopping.Readers.Common.Supplies;
-using Shopping.Readers.MT.Data;
 using System.Globalization;
 
 namespace Shopping.Readers.MT.Export;
@@ -26,7 +25,7 @@ internal class ResultWriter
         using var writer = new StreamWriter(writePath);
         using var csvWriter = new CsvWriter(writer, csvConfig);
 
-        var items = order.Positions.Cast<SupplyPosition>();
+        var items = order.Positions.Cast<SupplyPackagePosition>();
         csvWriter.WriteRecords(items);
     }
 }

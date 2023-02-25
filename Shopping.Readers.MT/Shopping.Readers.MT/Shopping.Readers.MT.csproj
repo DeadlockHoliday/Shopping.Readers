@@ -16,4 +16,8 @@
     <ProjectReference Include="..\..\Shopping.Readers.Common\Shopping.Readers.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>

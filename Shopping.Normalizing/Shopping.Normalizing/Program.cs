@@ -1,8 +1,8 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using Shopping.Normalizing;
-using Shopping.Readers.Common.Products;
-using Shopping.Readers.Common.Supplies;
+using Shopping.Readers.Common.Data;
+using Shopping.Readers.Common.Data.Products;
 using System.Text.RegularExpressions;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Shopping.Normalizing.Tests")]
@@ -29,7 +29,7 @@ Directory.GetFiles(inputFolder)
         WritePositions(f, newPositions);
     });
 
-void WritePositions(string file, SupplyPackagePosition[] positions)
+void WritePositions(string file, SupplyPackagePosition<ProcessedProduct>[] positions)
 {
     var newFile = new FileInfo(file + ".processed.csv");
     if (newFile.Exists)
@@ -42,7 +42,7 @@ void WritePositions(string file, SupplyPackagePosition[] positions)
     csvWriter.WriteRecords(positions);
 }
 
-SupplyPackagePosition[] LoadPositions(string file)
+SupplyPackagePosition<UnprocessedProduct>[] LoadPositions(string file)
 {
     using var streamReader = new StreamReader(file);
     using var csvReader = new CsvReader(streamReader, new CsvConfiguration(culture)
@@ -51,13 +51,13 @@ SupplyPackagePosition[] LoadPositions(string file)
     });
 
     // MissingMethodException: Constructor 'Shopping.Readers.Common.Products.IProduct()' was not found.
-    return csvReader.GetRecords<SupplyPackagePosition>().ToArray();
+    return csvReader.GetRecords<SupplyPackagePosition<UnprocessedProduct>>().ToArray();
 }
 
-SupplyPackagePosition[] NormalizePositions(SupplyPackagePosition[] positions)
-    => positions.Select(position => new SupplyPackagePosition()
+SupplyPackagePosition<ProcessedProduct>[] NormalizePositions(SupplyPackagePosition<UnprocessedProduct>[] positions)
+    => positions.Select(position => new SupplyPackagePosition<ProcessedProduct>()
     {
         Price = position.Price,
-        Product = SupplyNormalizer.NormalizeLine(position.Product.Name, position.Product.CategoryName),
+        Product = SupplyNormalizer.NormalizeLine(position.Product.Info, position.Product.CategoryName),
         Quantity = position.Quantity
     }).ToArray();

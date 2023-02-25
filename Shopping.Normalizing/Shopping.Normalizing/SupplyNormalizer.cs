@@ -1,6 +1,6 @@
 ﻿using Shopping.Normalizing.Processing.Names;
 using Shopping.Normalizing.Processing.Units;
-using Shopping.Readers.Common.Products;
+using Shopping.Readers.Common.Data.Products;
 
 namespace Shopping.Normalizing;
 
@@ -8,7 +8,6 @@ public static class SupplyNormalizer
 {
     public static ProcessedProduct NormalizeLine(string line, string category)
         => new(
-            line,
             NameExtractor.Extract(line) ?? category,
             new Dictionary<string, string>()
             {

@@ -1,6 +1,7 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using Shopping.Readers.Common.Supplies;
+using Shopping.Readers.Common.Data;
+using Shopping.Readers.Common.Data.Products;
 using System.Globalization;
 
 namespace Shopping.Readers.MT.Export;
@@ -12,20 +13,14 @@ internal class ResultWriter
         PrepareHeaderForMatch = args => args.Header.ToLower(),
     };
 
-    internal static void Write(ISupplyPackage[] orders, string writeFolder)
+    internal static void Write(SupplyPackagePosition<UnprocessedProduct>[] positions, string writeFolder)
     {
-        Parallel.ForEach(orders, (order, i) 
-            => Write(writeFolder, order));
-    }
-
-    private static void Write(string writeFolder, ISupplyPackage order)
-    {
-        var fileName = order.ToCsvFileName();
+        var first = positions.First();
+        var fileName = first.ToCsvFileName();
         var writePath = Path.Combine(writeFolder, fileName);
         using var writer = new StreamWriter(writePath);
         using var csvWriter = new CsvWriter(writer, csvConfig);
 
-        var items = order.Positions.Cast<SupplyPackagePosition>();
-        csvWriter.WriteRecords(items);
+        csvWriter.WriteRecords(positions);
     }
 }

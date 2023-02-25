@@ -1,101 +1,67 @@
 ﻿
-using Shopping.Readers.Common.Supplies;
-using Shopping.Readers.MT.Tests.Helpers;
-using AssertBy = Shopping.Readers.MT.Tests.Helpers.AssertHelpers.AssertBy;
+using Shopping.Readers.Common.Data;
+using Shopping.Readers.Common.Data.Products;
+using Shopping.Readers.MT.Tests.Helpers.AssertHelpers;
 
 namespace Shopping.Readers.MT.Tests.Html;
 
 public class SupplyReaderTests
 {
     [Test]
-    public void Parse_SameProduct_InDifferentOrders_ShouldReturn_SameProduct()
+    public void Parse_SameProduct_InDifferentOrders_ShouldReturn_Duplicates()
     {
-        var expectedPosition = new SupplyPackagePosition
+        var product = new UnprocessedProduct()
         {
-            Product = new UnprocessedProduct()
-            {
-                CategoryName = "Пластиковая посуда",
-                Name = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
+            CategoryName = "Пластиковая посуда",
+            Info = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
+        };
+
+        var expectedPositions = new SupplyPackagePosition<UnprocessedProduct>[]
+        {
+            new() {
+                Product = product,
+                Price = new NMoneys.Money(49),
+                //Url = "https://mt.delivery/single?id=206609",
+                Quantity = 1,
+                Date = new DateOnly(2020, 10, 1),
             },
-            Price = new NMoneys.Money(49),
-            //Url = "https://mt.delivery/single?id=206609",
-            Quantity = 1,
+            new() {
+                Product = product,
+                Price = new NMoneys.Money(51),
+                //Url = "https://mt.delivery/single?id=206609",
+                Quantity = 3,
+                Date = new DateOnly(2020, 11, 1),
+            },
         };
 
-        var expectedOrders = new ISupplyPackage[]
-        {
-            SupplyFactory.Create(new DateOnly(2020, 10, 1), expectedPosition),
-            SupplyFactory.Create(new DateOnly(2022, 10, 1), expectedPosition),
-        };
-
-        var html = SupplyPackagesRenderer.Render(expectedOrders);
+        var html = SupplyPackagesRenderer.Render(expectedPositions);
         var result = SupplyReader.Parse(html);
 
-        Assert.That(result, Has.Exactly(2).Items);
-
-        Assert.Multiple(() =>
-        {
-            AssertBy.SupplyPackage.Equal(expectedOrders, result);
-        });
-    }
-
-    [Test]
-    public void Parse_DuplicatedProduct_ShouldReturn_SingleResult()
-    {
-        var expectedPosition = new SupplyPackagePosition
-        {
-            Product = new UnprocessedProduct()
-            {
-                CategoryName = "Пластиковая посуда",
-                Name = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
-            },            
-            Price = new NMoneys.Money(49),
-            //Url = "https://mt.delivery/single?id=206609",
-            Quantity = 1,
-        };
-
-        var expectedOrder = SupplyFactory.Create(
-            new DateOnly(2020, 10, 1),
-            expectedPosition,
-            expectedPosition);
-
-        var html = SupplyPackagesRenderer.Render(expectedOrder);
-        var result = SupplyReader.Parse(html);
-        var actualOrder = result.First();
-
-        Assert.That(actualOrder.Positions, Has.Exactly(1).Items);
+        Assert.That(result, Is.EquivalentTo(expectedPositions));        
     }
 
     [Test]
     public void Parse_SingleProduct_ShouldReturn_CorrectResult()
     {
-        var expectedPosition = new SupplyPackagePosition
+        var expectedPosition = new SupplyPackagePosition<UnprocessedProduct>
         {
-            Product = new UnprocessedProduct
+            Product = new()
             {
                 CategoryName = "Пластиковая посуда",
-                Name = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
+                Info = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
             },
             Price = new NMoneys.Money(49),
             //Url = "https://mt.delivery/single?id=206609",
             Quantity = 1,
+            Date = new DateOnly(2020, 10, 1),
         };
 
-        var expectedOrder = SupplyFactory.Create(
-            new DateOnly(2020, 10, 1),
-            expectedPosition);
-
-        var html = SupplyPackagesRenderer.Render(expectedOrder);
-        var actualOrder = SupplyReader.Parse(html).First();
+        var html = SupplyPackagesRenderer.Render(expectedPosition);
+        var actualPosition = SupplyReader.Parse(html).First();
 
         Assert.Multiple(() =>
         {
-            AssertBy.SupplyPackage.Equal(expectedOrder, actualOrder);
-        });
-
-        Assert.Multiple(() =>
-        {
-            AssertBy.SupplyPackagePosition.Equal(actualOrder.Positions, expectedOrder.Positions);
+            AssertBySupplyPackagePosition.Equal(actualPosition, expectedPosition);
         });
     }
 }

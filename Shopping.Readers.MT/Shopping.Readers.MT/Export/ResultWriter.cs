@@ -1,24 +1,30 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 using Shopping.Readers.Common.Data;
-using Shopping.Readers.Common.Data.Products;
-using System.Globalization;
 
 namespace Shopping.Readers.MT.Export;
 
 internal class ResultWriter
 {
-    private static readonly CsvConfiguration csvConfig = new(CultureInfo.InvariantCulture)
+    private static readonly CsvConfiguration csvConfig = new(Config.CultureInfo)
     {
         PrepareHeaderForMatch = args => args.Header.ToLower(),
     };
 
-    internal static void Write(SupplyPackagePosition<UnprocessedProduct>[] positions, string writeFolder)
+    internal static void Write(string vendor, UnprocessedSupplyPackagePosition[] positions, string writeFolder)
     {
-        var first = positions.First();
-        var fileName = first.ToCsvFileName();
-        var writePath = Path.Combine(writeFolder, fileName);
-        using var writer = new StreamWriter(writePath);
+        var dateStamp = DateOnly
+            .FromDateTime(DateTime.Now)
+            .ToStamp();
+
+        var filename = $"{dateStamp}.{vendor}.csv";
+        var fileInfo = new FileInfo(Path.Combine(writeFolder, filename));
+        if (fileInfo.Exists)
+        {
+            fileInfo.Delete();
+        }
+
+        using var writer = new StreamWriter(fileInfo.OpenWrite());
         using var csvWriter = new CsvWriter(writer, csvConfig);
 
         csvWriter.WriteRecords(positions);

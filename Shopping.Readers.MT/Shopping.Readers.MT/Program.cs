@@ -10,7 +10,7 @@ var inputHtml = GetHtml(input);
 
 var positions = SupplyReader.Parse(inputHtml).ToArray();
 
-ResultWriter.Write(positions, outputFolder);
+ResultWriter.Write("MT", positions, outputFolder);
 
 static string GetHtml(string url)
 {

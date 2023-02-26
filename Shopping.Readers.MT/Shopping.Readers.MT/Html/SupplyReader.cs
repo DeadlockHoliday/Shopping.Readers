@@ -7,17 +7,17 @@ namespace Shopping.Readers.MT.Html;
 
 internal class SupplyReader
 {
-    public static SupplyPackagePosition<UnprocessedProduct>[] Parse(HtmlDocument doc)
+    public static UnprocessedSupplyPackagePosition[] Parse(HtmlDocument doc)
         => doc.Find(".history-order")
-            .Select(x => new
+            .Select(node => new
             {
-                x,
-                date = ParseDate(x) ?? DateOnly.MinValue,
+                Node = node,
+                Date = ParseDate(node) ?? DateOnly.MinValue,
             })
-            .SelectMany(x => ProductReader.Read(x.x, x.date))
+            .SelectMany(x => ProductReader.Read(x.Node, x.Date))
             .ToArray();
 
-    internal static SupplyPackagePosition<UnprocessedProduct>[] Parse(string html)
+    internal static UnprocessedSupplyPackagePosition[] Parse(string html)
         => Parse(HtmlDocument.FromHtml(html));
 
     private static DateOnly? ParseDate(HtmlElementNode node)

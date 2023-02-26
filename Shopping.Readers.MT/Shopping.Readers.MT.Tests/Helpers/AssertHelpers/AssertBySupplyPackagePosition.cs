@@ -7,7 +7,7 @@ namespace Shopping.Readers.MT.Tests.Helpers.AssertHelpers;
 
 internal static partial class AssertBySupplyPackagePosition
 {
-    internal static void Equal(IEnumerable<SupplyPackagePosition<UnprocessedProduct>> actualPositions, IEnumerable<SupplyPackagePosition<UnprocessedProduct>> expectedPositions)
+    internal static void Equal(IEnumerable<UnprocessedSupplyPackagePosition> actualPositions, IEnumerable<UnprocessedSupplyPackagePosition> expectedPositions)
     {
         var actual = actualPositions.ToArray();
         var expected = expectedPositions.ToArray();
@@ -21,7 +21,7 @@ internal static partial class AssertBySupplyPackagePosition
         }
     }
 
-    internal static void Equal(SupplyPackagePosition<UnprocessedProduct> actualPosition, SupplyPackagePosition<UnprocessedProduct> expectedPosition)
+    internal static void Equal(UnprocessedSupplyPackagePosition actualPosition, UnprocessedSupplyPackagePosition expectedPosition)
     {
         Assert.That(actualPosition, Is.EqualTo(expectedPosition));
     }

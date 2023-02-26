@@ -4,8 +4,7 @@ using Shopping.Readers.Common.Static;
 
 namespace Shopping.Readers.Common.Data;
 
-public readonly record struct SupplyPackagePosition<TProduct> : ISupplyPackagePosition
-    where TProduct : IProduct
+public readonly record struct SupplyPackagePosition : ISupplyPackagePosition<ProcessedProduct>
 {
     public DateOnly Date { get; init; }
 
@@ -17,5 +16,5 @@ public readonly record struct SupplyPackagePosition<TProduct> : ISupplyPackagePo
 
     public Money TotalPrice => Price.Times(Quantity);
 
-    public TProduct Product { get; init; }
+    public ProcessedProduct Product { get; init; }
 }

@@ -16,7 +16,7 @@ public class SupplyReaderTests
             Info = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
         };
 
-        var expectedPositions = new SupplyPackagePosition<UnprocessedProduct>[]
+        var expectedPositions = new UnprocessedSupplyPackagePosition[]
         {
             new() {
                 Product = product,
@@ -43,7 +43,7 @@ public class SupplyReaderTests
     [Test]
     public void Parse_SingleProduct_ShouldReturn_CorrectResult()
     {
-        var expectedPosition = new SupplyPackagePosition<UnprocessedProduct>
+        var expectedPosition = new UnprocessedSupplyPackagePosition
         {
             Product = new()
             {

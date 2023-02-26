@@ -24,8 +24,8 @@ public readonly record struct Unit
         => new(value, PiecesMeasure);
 
     public bool IsGrams()
-        => Measure.Equals(GramsMeasure, StringComparison.CurrentCultureIgnoreCase);
+        => Measure.Equals(GramsMeasure, StringComparison.InvariantCultureIgnoreCase);
 
     public bool IsPieces()
-        => Measure.Equals(PiecesMeasure, StringComparison.CurrentCultureIgnoreCase);
+        => Measure.Equals(PiecesMeasure, StringComparison.InvariantCultureIgnoreCase);
 };

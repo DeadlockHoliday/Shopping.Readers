@@ -2,7 +2,7 @@
 using CsvHelper.Configuration;
 using Shopping.Normalizing;
 using Shopping.Readers.Common.Data;
-using Shopping.Readers.Common.Data.Products;
+using Shopping.Readers.Common.Static;
 using System.Text.RegularExpressions;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Shopping.Normalizing.Tests")]
@@ -10,14 +10,13 @@ using System.Text.RegularExpressions;
 #if DEBUG
 args = new string[]
 {
-    @"C:\Users\IT\Documents\#Coding\Pets\Shopping.Samples\Shopping.Samples.Readers.Input",
-    @".*[0-9]+?\.csv",
+    Environment.CurrentDirectory,
+    @"MT.Sample.csv",
 };
 #endif
 
 var inputFolder = args[0];
 var targetFilesSelector = new Regex(args[1], RegexOptions.Compiled);
-var culture = System.Globalization.CultureInfo.InvariantCulture;
 
 Directory.GetFiles(inputFolder)
     .Where(x => targetFilesSelector.IsMatch(x))
@@ -29,7 +28,7 @@ Directory.GetFiles(inputFolder)
         WritePositions(f, newPositions);
     });
 
-void WritePositions(string file, SupplyPackagePosition<ProcessedProduct>[] positions)
+void WritePositions(string file, SupplyPackagePosition[] positions)
 {
     var newFile = new FileInfo(file + ".processed.csv");
     if (newFile.Exists)
@@ -38,26 +37,26 @@ void WritePositions(string file, SupplyPackagePosition<ProcessedProduct>[] posit
     }
 
     using var streamWriter = new StreamWriter(newFile.OpenWrite());
-    using var csvWriter = new CsvWriter(streamWriter, culture);
+    using var csvWriter = new CsvWriter(streamWriter, Config.CultureInfo);
     csvWriter.WriteRecords(positions);
 }
 
-SupplyPackagePosition<UnprocessedProduct>[] LoadPositions(string file)
+UnprocessedSupplyPackagePosition[] LoadPositions(string file)
 {
     using var streamReader = new StreamReader(file);
-    using var csvReader = new CsvReader(streamReader, new CsvConfiguration(culture)
+    using var csvReader = new CsvReader(streamReader, new CsvConfiguration(Config.CultureInfo)
     {
         PrepareHeaderForMatch = args => args.Header.ToLower()
     });
 
     // MissingMethodException: Constructor 'Shopping.Readers.Common.Products.IProduct()' was not found.
-    return csvReader.GetRecords<SupplyPackagePosition<UnprocessedProduct>>().ToArray();
+    return csvReader.GetRecords<UnprocessedSupplyPackagePosition>().ToArray();
 }
 
-SupplyPackagePosition<ProcessedProduct>[] NormalizePositions(SupplyPackagePosition<UnprocessedProduct>[] positions)
-    => positions.Select(position => new SupplyPackagePosition<ProcessedProduct>()
+SupplyPackagePosition[] NormalizePositions(UnprocessedSupplyPackagePosition[] positions)
+    => positions.Select(position => new SupplyPackagePosition()
     {
         Price = position.Price,
-        Product = SupplyNormalizer.NormalizeLine(position.Product.Info, position.Product.CategoryName),
+        Product = ProductProcessor.Process(position.Product.Info, position.Product.CategoryName),
         Quantity = position.Quantity
     }).ToArray();

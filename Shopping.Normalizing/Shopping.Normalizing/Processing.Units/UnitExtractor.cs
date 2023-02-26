@@ -36,10 +36,6 @@ internal static class UnitExtractor
     internal static long GetUnit(Unit[] units, string name)
     {
         var unit = units.FirstOrDefault(x => x.Measure == name);
-        return (unit.Value != 0) switch
-        {
-            true => (long)unit.Value,
-            _ => 0L
-        };
+        return Convert.ToInt64(unit.Value);
     }
 }

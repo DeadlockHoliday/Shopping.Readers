@@ -7,13 +7,17 @@ namespace Shopping.Readers.MT.Tests.Helpers.HtmlRenderers;
 
 internal class SupplyPackagePositionRenderer
 {
-    public static string Render(SupplyPackagePosition<UnprocessedProduct> supplyPackagePosition)
+    public static string Render(UnprocessedSupplyPackagePosition supplyPackagePosition)
         => $$"""
             <div class="history-order-good">
                 {{Render(supplyPackagePosition.Product)}}
                 {{Render(supplyPackagePosition as ISupplyPackagePosition)}}
             </div>
             """;
+
+    public static string Render(IEnumerable<UnprocessedSupplyPackagePosition> supplyPackagePositions)
+        => supplyPackagePositions.Select(Render)
+            .Aggregate((x, y) => x + Environment.NewLine + y);
 
     private static string Render(UnprocessedProduct product)
         => $$"""

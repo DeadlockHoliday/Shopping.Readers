@@ -3,19 +3,19 @@ using Shopping.Readers.Common.Data.Products;
 
 internal class SupplyPackagesRenderer
 {
-    public static string Render(params SupplyPackagePosition<UnprocessedProduct>[] positions)
+    public static string Render(params UnprocessedSupplyPackagePosition[] positions)
     {
         return string.Join('\n', positions
-            .GroupBy(x => x.Date)
-            .Select(x => new
+            .GroupBy(p => p.Date)
+            .Select(group => new
             {
-                x,
-                orderDateStr = x.First().Date.ToString("dd-MM-yyyy") + " 23:59"
+                Positions = group,
+                OrderDateStr = group.First().Date.ToString("dd-MM-yyyy") + " 23:59"
             })
-            .Select(x => RenderTable(x.orderDateStr, x.x.ToArray())));
+            .Select(x => RenderTable(x.OrderDateStr, x.Positions.ToArray())));
     }
 
-    public static string RenderTable(string orderDateStr, params SupplyPackagePosition<UnprocessedProduct>[] positions)
+    public static string RenderTable(string orderDateStr, params UnprocessedSupplyPackagePosition[] positions)
         => $$"""
             <table>
                 <tr class="history-order">
@@ -25,9 +25,7 @@ internal class SupplyPackagesRenderer
                             <div class="dropdown opened">
                                 <div id="dropdownContent">
                                     <div class="order-item-container">
-                                        {{positions
-                                            .Select(SupplyPackagePositionRenderer.Render)
-                                            .Aggregate((x, y) => x + Environment.NewLine + y)}}
+                                        {{SupplyPackagePositionRenderer.Render(positions)}}
                                     </div>
                                 </div>
                             </div>

@@ -8,9 +8,9 @@ var outputFolder = Environment.CurrentDirectory;
 
 var inputHtml = GetHtml(input);
 
-var orders = OrderReader.Parse(inputHtml);
+var positions = SupplyReader.Parse(inputHtml).ToArray();
 
-ResultWriter.Write(orders, outputFolder);
+ResultWriter.Write("MT", positions, outputFolder);
 
 static string GetHtml(string url)
 {

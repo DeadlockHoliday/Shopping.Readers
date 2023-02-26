@@ -1,32 +1,32 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using Shopping.Readers.Common.Contracts;
-using Shopping.Readers.MT.Data;
-using System.Globalization;
+using Shopping.Readers.Common.Data.Supply;
 
 namespace Shopping.Readers.MT.Export;
 
 internal class ResultWriter
 {
-    private static readonly CsvConfiguration csvConfig = new(CultureInfo.InvariantCulture)
+    private static readonly CsvConfiguration csvConfig = new(Config.CultureInfo)
     {
         PrepareHeaderForMatch = args => args.Header.ToLower(),
     };
 
-    internal static void Write(IOrder[] orders, string writeFolder)
+    internal static void Write(string vendor, SupplyPosition[] positions, string writeFolder)
     {
-        Parallel.ForEach(orders, (order, i) 
-            => Write(writeFolder, order));
-    }
+        var dateStamp = DateOnly
+            .FromDateTime(DateTime.Now)
+            .ToStamp();
 
-    private static void Write(string writeFolder, IOrder order)
-    {
-        var fileName = order.ToCsvFileName();
-        var writePath = Path.Combine(writeFolder, fileName);
-        using var writer = new StreamWriter(writePath);
+        var filename = $"{dateStamp}.{vendor}.csv";
+        var fileInfo = new FileInfo(Path.Combine(writeFolder, filename));
+        if (fileInfo.Exists)
+        {
+            fileInfo.Delete();
+        }
+
+        using var writer = new StreamWriter(fileInfo.OpenWrite());
         using var csvWriter = new CsvWriter(writer, csvConfig);
 
-        var items = order.Positions.Cast<OrderPosition>();
-        csvWriter.WriteRecords(items);
+        csvWriter.WriteRecords(positions);
     }
 }

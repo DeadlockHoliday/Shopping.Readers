@@ -1,7 +1,7 @@
-﻿using Shopping.Normalizing.Processing.Units;
+﻿using Shopping.Processing.Units;
 using Shopping.Readers.Common.Units;
 
-namespace Shopping.Normalizing.Tests.Processing.Units;
+namespace Shopping.Processing.Tests.Units;
 
 internal class UnitNormalizerTests
 {

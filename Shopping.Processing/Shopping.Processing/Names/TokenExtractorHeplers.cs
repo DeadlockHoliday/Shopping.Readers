@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Shopping.Normalizing.Processing.Names;
+namespace Shopping.Processing.Names;
 
 internal static class TokenExtractorHeplers
 {

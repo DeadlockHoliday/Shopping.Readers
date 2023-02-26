@@ -1,7 +1,7 @@
-﻿using Shopping.Normalizing.Processing.Names;
-using static Shopping.Normalizing.Tests.Processing.Names.AssertHelpers;
+﻿using Shopping.Processing.Names;
+using static Shopping.Processing.Tests.Names.AssertHelpers;
 
-namespace Shopping.Normalizing.Tests.Processing.Names;
+namespace Shopping.Processing.Tests.Names;
 
 internal class NameExtractorTests
 {

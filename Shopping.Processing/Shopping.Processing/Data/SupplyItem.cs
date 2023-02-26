@@ -1,4 +1,4 @@
-﻿namespace Shopping.Normalizing.Data;
+﻿namespace Shopping.Processing.Data;
 
 /// <summary>
 /// Represent a bunch of items of similar nature.

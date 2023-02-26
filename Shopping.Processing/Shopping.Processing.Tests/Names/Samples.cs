@@ -1,4 +1,4 @@
-﻿namespace Shopping.Normalizing.Tests.Processing.Names;
+﻿namespace Shopping.Processing.Tests.Names;
 
 internal readonly record struct Sample(string Line, params string[] Nouns);
 internal static class Samples

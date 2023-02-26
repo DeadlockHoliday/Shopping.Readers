@@ -1,4 +1,4 @@
-﻿namespace Shopping.Normalizing.Processing.Names;
+﻿namespace Shopping.Processing.Names;
 
 internal static class NameExtractor
 {

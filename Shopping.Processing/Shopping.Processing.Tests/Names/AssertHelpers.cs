@@ -1,6 +1,6 @@
-﻿using Shopping.Normalizing.Processing.Names;
+﻿using Shopping.Processing.Names;
 
-namespace Shopping.Normalizing.Tests.Processing.Names;
+namespace Shopping.Processing.Tests.Names;
 
 internal static class AssertHelpers
 {

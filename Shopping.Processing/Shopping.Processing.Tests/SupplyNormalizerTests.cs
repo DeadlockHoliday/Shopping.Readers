@@ -1,4 +1,6 @@
-﻿using Shopping.Readers.Common.Helpers;
+﻿using Shopping.Processing;
+using Shopping.Readers.Common.Data.Products;
+using Shopping.Readers.Common.Helpers;
 
 namespace Shopping.Normalizing.Tests;
 
@@ -15,7 +17,7 @@ internal class SupplyNormalizerTests
     [TestCase("Молоко 0.1л вкусное", ExpectedResult = 100)]
     [TestCase("0.1л вкусное молоко", ExpectedResult = 100)]
     public long? NormalizeLine_ShouldReturn_MassGramms(string line)
-        => ProductProcessor.Process(line, defaultCategory)
+        => Process(line)
             .GetValue("Mass")?
             .ToInt64() ?? 0;
         
@@ -40,11 +42,11 @@ internal class SupplyNormalizerTests
     [TestCase("Хлопья овсяные Крупиночка 450г", ExpectedResult = "Хлопья овсяные")]
     [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = "Яйцо")]
     public string NormalizeLine_ShouldReturn_CategoryName(string line)
-        => ProductProcessor.Process(line, defaultCategory).CategoryName;
+        => Process(line).CategoryName;
 
     [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = 12)]
     public long NormalizeLine_ShouldReturn_Pieces(string line)
-        => ProductProcessor.Process(line, defaultCategory)
+        => Process(line)
                 .GetValue("Pieces")?
                 .ToInt64() ?? 0;
 
@@ -52,6 +54,14 @@ internal class SupplyNormalizerTests
     [TestCase("2.00.2мл")] // doesnt crash because regex captures 00.2.
     public void NormalizeLine_IncorrectCases_ShouldThrow(string line)
     {
-        Assert.That(() => ProductProcessor.Process(line, defaultCategory), Throws.Exception);
+        Assert.That(() => Process(line), Throws.Exception);
     }
+
+    private static ProcessedProduct Process(string info)
+        => ProductProcessor.Process(
+            new UnprocessedProduct() 
+            { 
+                CategoryName = defaultCategory, 
+                Info = info 
+            });
 }

@@ -1,8 +1,8 @@
-﻿using Shopping.Normalizing.Processing.Names;
-using Shopping.Normalizing.Processing.Units;
+﻿using Shopping.Processing.Names;
+using Shopping.Processing.Units;
 using Shopping.Readers.Common.Data.Products;
 
-namespace Shopping.Normalizing;
+namespace Shopping.Processing;
 
 public static class ProductProcessor
 {

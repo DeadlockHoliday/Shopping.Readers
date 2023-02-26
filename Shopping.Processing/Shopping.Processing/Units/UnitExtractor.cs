@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using Shopping.Readers.Common.Units;
 
-namespace Shopping.Normalizing.Processing.Units;
+namespace Shopping.Processing.Units;
 
 internal static class UnitExtractor
 {

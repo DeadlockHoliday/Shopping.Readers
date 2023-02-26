@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shopping.Readers.Common\Shopping.Readers.Common.csproj" />
-    <ProjectReference Include="..\Shopping.Normalizing\Shopping.Normalizing.csproj" />
+    <ProjectReference Include="..\Shopping.Processing\Shopping.Processing.csproj" />
   </ItemGroup>
 
 </Project>

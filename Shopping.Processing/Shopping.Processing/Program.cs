@@ -1,11 +1,11 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using Shopping.Normalizing;
+using Shopping.Processing;
 using Shopping.Readers.Common.Data;
 using Shopping.Readers.Common.Static;
 using System.Text.RegularExpressions;
 
-[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Shopping.Normalizing.Tests")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Shopping.Processing.Tests")]
 
 #if DEBUG
 args = new string[]
@@ -57,6 +57,6 @@ SupplyPackagePosition[] NormalizePositions(UnprocessedSupplyPackagePosition[] po
     => positions.Select(position => new SupplyPackagePosition()
     {
         Price = position.Price,
-        Product = ProductProcessor.Process(position.Product.Info, position.Product.CategoryName),
+        Product = ProductProcessor.Process(position.Product),
         Quantity = position.Quantity
     }).ToArray();

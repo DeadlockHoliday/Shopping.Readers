@@ -1,7 +1,7 @@
 ﻿using Shopping.Readers.Common.Units;
-using static Shopping.Normalizing.Processing.Units.UnitExtractor;
+using static Shopping.Processing.Units.UnitExtractor;
 
-namespace Shopping.Normalizing.Tests.Processing.Units;
+namespace Shopping.Processing.Tests.Units;
 
 internal class UnitExtractorTests
 {

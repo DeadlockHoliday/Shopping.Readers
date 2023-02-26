@@ -1,10 +1,9 @@
 ﻿using NMoneys;
-using Shopping.Readers.Common.Data.Products;
 using Shopping.Readers.Common.Static;
 
-namespace Shopping.Readers.Common.Data;
+namespace Shopping.Readers.Common.Data.Supply;
 
-public readonly record struct SupplyPackagePosition : ISupplyPackagePosition<ProcessedProduct>
+public readonly record struct Invoice
 {
     public DateOnly Date { get; init; }
 
@@ -15,6 +14,4 @@ public readonly record struct SupplyPackagePosition : ISupplyPackagePosition<Pro
     public Money Price { get; init; }
 
     public Money TotalPrice => Price.Times(Quantity);
-
-    public ProcessedProduct Product { get; init; }
 }

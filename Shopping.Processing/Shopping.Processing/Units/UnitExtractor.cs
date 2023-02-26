@@ -1,7 +1,7 @@
 ﻿using System.Collections.Immutable;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using Shopping.Readers.Common.Units;
+using Shopping.Readers.Common.Data.Units;
 
 namespace Shopping.Processing.Units;
 

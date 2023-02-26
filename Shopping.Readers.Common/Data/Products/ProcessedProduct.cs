@@ -3,18 +3,17 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Shopping.Readers.Common.Data.Products;
 
-public readonly record struct ProcessedProduct : IProduct
+public sealed record class ProcessedProduct : Product
 {
-    public required string CategoryName { get; init; }
-    private ReadOnlyDictionary<string, string> Details { get; init; }
-
     [SetsRequiredMembers]
-    public ProcessedProduct(string categoryName, IDictionary<string, string> details)
+    public ProcessedProduct(Product original, IDictionary<string, string> details) : base(original)
     {
-        CategoryName = categoryName;
         Details = new ReadOnlyDictionary<string, string>(details);
     }
 
+    // JSON?
+    private ReadOnlyDictionary<string, string> Details { get; init; }
+    
     public string? GetValue(string key)
         => Details.TryGetValue(key, out var value) ? value : null;
 }

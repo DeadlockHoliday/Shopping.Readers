@@ -1,5 +1,5 @@
 ﻿using Shopping.Processing.Units;
-using Shopping.Readers.Common.Units;
+using Shopping.Readers.Common.Data.Units;
 
 namespace Shopping.Processing.Tests.Units;
 

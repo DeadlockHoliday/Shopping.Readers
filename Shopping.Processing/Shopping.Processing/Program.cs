@@ -2,6 +2,7 @@
 using CsvHelper.Configuration;
 using Shopping.Processing;
 using Shopping.Readers.Common.Data;
+using Shopping.Readers.Common.Data.Supply;
 using Shopping.Readers.Common.Static;
 using System.Text.RegularExpressions;
 
@@ -28,7 +29,7 @@ Directory.GetFiles(inputFolder)
         WritePositions(f, newPositions);
     });
 
-void WritePositions(string file, SupplyPackagePosition[] positions)
+void WritePositions(string file, SupplyPosition[] positions)
 {
     var newFile = new FileInfo(file + ".processed.csv");
     if (newFile.Exists)
@@ -41,7 +42,7 @@ void WritePositions(string file, SupplyPackagePosition[] positions)
     csvWriter.WriteRecords(positions);
 }
 
-UnprocessedSupplyPackagePosition[] LoadPositions(string file)
+SupplyPosition[] LoadPositions(string file)
 {
     using var streamReader = new StreamReader(file);
     using var csvReader = new CsvReader(streamReader, new CsvConfiguration(Config.CultureInfo)
@@ -50,13 +51,12 @@ UnprocessedSupplyPackagePosition[] LoadPositions(string file)
     });
 
     // MissingMethodException: Constructor 'Shopping.Readers.Common.Products.IProduct()' was not found.
-    return csvReader.GetRecords<UnprocessedSupplyPackagePosition>().ToArray();
+    return csvReader.GetRecords<SupplyPosition>().ToArray();
 }
 
-SupplyPackagePosition[] NormalizePositions(UnprocessedSupplyPackagePosition[] positions)
-    => positions.Select(position => new SupplyPackagePosition()
+SupplyPosition[] NormalizePositions(SupplyPosition[] positions)
+    => positions.Select(position => new SupplyPosition()
     {
-        Price = position.Price,
         Product = ProductProcessor.Process(position.Product),
-        Quantity = position.Quantity
+        Invoice = position.Invoice,
     }).ToArray();

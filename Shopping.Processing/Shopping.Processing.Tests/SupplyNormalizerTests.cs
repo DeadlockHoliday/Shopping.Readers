@@ -42,7 +42,7 @@ internal class SupplyNormalizerTests
     [TestCase("Хлопья овсяные Крупиночка 450г", ExpectedResult = "Хлопья овсяные")]
     [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = "Яйцо")]
     public string NormalizeLine_ShouldReturn_CategoryName(string line)
-        => Process(line).CategoryName;
+        => Process(line).Category;
 
     [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = 12)]
     public long NormalizeLine_ShouldReturn_Pieces(string line)
@@ -59,9 +59,5 @@ internal class SupplyNormalizerTests
 
     private static ProcessedProduct Process(string info)
         => ProductProcessor.Process(
-            new UnprocessedProduct() 
-            { 
-                CategoryName = defaultCategory, 
-                Info = info 
-            });
+            new Product(info, defaultCategory));
 }

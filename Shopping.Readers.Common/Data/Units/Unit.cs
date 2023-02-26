@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace Shopping.Readers.Common.Units;
+namespace Shopping.Readers.Common.Data.Units;
 
 public readonly record struct Unit
 {

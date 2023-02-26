@@ -1,21 +1,21 @@
-﻿using Shopping.Readers.Common.Data;
-using Shopping.Readers.Common.Data.Products;
+﻿using Shopping.Readers.Common.Data.Products;
+using Shopping.Readers.Common.Data.Supply;
 
 internal class SupplyPackagesRenderer
 {
-    public static string Render(params UnprocessedSupplyPackagePosition[] positions)
+    public static string Render(params SupplyPosition[] positions)
     {
         return string.Join('\n', positions
-            .GroupBy(p => p.Date)
+            .GroupBy(p => p.Invoice.Date)
             .Select(group => new
             {
                 Positions = group,
-                OrderDateStr = group.First().Date.ToString("dd-MM-yyyy") + " 23:59"
+                OrderDateStr = group.First().Invoice.Date.ToString("dd-MM-yyyy") + " 23:59"
             })
             .Select(x => RenderTable(x.OrderDateStr, x.Positions.ToArray())));
     }
 
-    public static string RenderTable(string orderDateStr, params UnprocessedSupplyPackagePosition[] positions)
+    public static string RenderTable(string orderDateStr, params SupplyPosition[] positions)
         => $$"""
             <table>
                 <tr class="history-order">
@@ -25,7 +25,7 @@ internal class SupplyPackagesRenderer
                             <div class="dropdown opened">
                                 <div id="dropdownContent">
                                     <div class="order-item-container">
-                                        {{SupplyPackagePositionRenderer.Render(positions)}}
+                                        {{SupplyPositionRenderer.Render(positions)}}
                                     </div>
                                 </div>
                             </div>

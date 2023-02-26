@@ -1,4 +1,4 @@
-﻿using Shopping.Readers.Common.Units;
+﻿using Shopping.Readers.Common.Data.Units;
 using static Shopping.Processing.Units.UnitExtractor;
 
 namespace Shopping.Processing.Tests.Units;

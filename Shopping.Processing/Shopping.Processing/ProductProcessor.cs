@@ -6,14 +6,17 @@ namespace Shopping.Processing;
 
 public static class ProductProcessor
 {
-    public static ProcessedProduct Process(UnprocessedProduct product)
+    public static ProcessedProduct Process(Product product)
         => new(
-            NameExtractor.Extract(product.Info) ?? product.CategoryName,
+            ProcessProduct(product),
             new Dictionary<string, string>()
             {
                 { "Mass", GetUnit(product.Info, "г").ToString() },
                 { "Pieces", GetUnit(product.Info, "шт").ToString() },
             });
+
+    private static Product ProcessProduct(Product product)
+        => new(product.Info, NameExtractor.Extract(product.Info) ?? product.Category);
 
     private static long GetUnit(string line, string measure)
     {

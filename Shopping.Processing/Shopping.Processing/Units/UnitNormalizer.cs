@@ -1,4 +1,4 @@
-﻿using Shopping.Readers.Common.Units;
+﻿using Shopping.Readers.Common.Data.Units;
 
 namespace Shopping.Processing.Units;
 

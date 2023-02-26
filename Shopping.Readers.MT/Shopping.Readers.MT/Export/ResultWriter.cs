@@ -1,6 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
-using Shopping.Readers.Common.Data;
+using Shopping.Readers.Common.Data.Supply;
 
 namespace Shopping.Readers.MT.Export;
 
@@ -11,7 +11,7 @@ internal class ResultWriter
         PrepareHeaderForMatch = args => args.Header.ToLower(),
     };
 
-    internal static void Write(string vendor, UnprocessedSupplyPackagePosition[] positions, string writeFolder)
+    internal static void Write(string vendor, SupplyPosition[] positions, string writeFolder)
     {
         var dateStamp = DateOnly
             .FromDateTime(DateTime.Now)

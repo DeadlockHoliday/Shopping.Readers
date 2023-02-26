@@ -1,32 +1,31 @@
-﻿
-
-using Shopping.Readers.Common.Data;
+﻿using Shopping.Readers.Common.Data;
 using Shopping.Readers.Common.Data.Products;
+using Shopping.Readers.Common.Data.Supply;
 
 namespace Shopping.Readers.MT.Tests.Helpers.HtmlRenderers;
 
-internal class SupplyPackagePositionRenderer
+internal class SupplyPositionRenderer
 {
-    public static string Render(UnprocessedSupplyPackagePosition supplyPackagePosition)
+    public static string Render(SupplyPosition supplyPosition)
         => $$"""
             <div class="history-order-good">
-                {{Render(supplyPackagePosition.Product)}}
-                {{Render(supplyPackagePosition)}}
+                {{Render(supplyPosition.Product)}}
+                {{Render(supplyPosition.Invoice)}}
             </div>
             """;
 
-    public static string Render(IEnumerable<UnprocessedSupplyPackagePosition> supplyPackagePositions)
-        => supplyPackagePositions.Select(Render)
+    public static string Render(IEnumerable<SupplyPosition> supplyPositions)
+        => supplyPositions.Select(Render)
             .Aggregate((x, y) => x + Environment.NewLine + y);
 
-    private static string Render(UnprocessedProduct product)
+    private static string Render(Product product)
         => $$"""
         <a href="www.example.com" class="main-link">
                 <div class="good-img">
                     <img class="main_good-img" />
                 </div>
                 <div class="main-desc">
-                    <p class="main-name">{{product.CategoryName}}</p>
+                    <p class="main-name">{{product.Category}}</p>
                     <!---->
                     <div class="main-text">
                         <p>
@@ -37,24 +36,24 @@ internal class SupplyPackagePositionRenderer
             </a>
         """;
 
-    private static string Render(ISupplyPackagePosition position)
+    private static string Render(Invoice info)
     => $$"""
             <div class="main-quantity">
                 <span class="item-count_label">Количество</span>
-                <span class="item-count">{{position.Quantity}}</span>
+                <span class="item-count">{{info.Quantity}}</span>
             </div>
             <div class="main-price">
                 <div class="price-name">Цена</div>
                 <!---->
                 <p class="price-num price-num_history">
-                    {{position.Price.Amount}} ₽
+                    {{info.Price.Amount}} ₽
                 </p>
             </div>
             <div class="main-summa">
                 <div class="price-name">Сумма</div>
                 <div class="sum-icon">
                     <p class="price-num price-num_history">
-                        {{position.TotalPrice.Amount}} ₽
+                        {{info.TotalPrice.Amount}} ₽
                     </p>
                 </div>
             </div>

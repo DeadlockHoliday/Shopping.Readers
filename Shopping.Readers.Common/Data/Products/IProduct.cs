@@ -1,6 +1,5 @@
-﻿namespace Shopping.Readers.Common.Data.Products
+﻿namespace Shopping.Readers.Common.Data.Products;
+
+public interface IProduct
 {
-    public interface IProduct
-    {
-    }
 }

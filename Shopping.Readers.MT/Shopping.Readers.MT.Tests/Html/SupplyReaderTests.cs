@@ -1,7 +1,6 @@
 ﻿
 using Shopping.Readers.Common.Data;
 using Shopping.Readers.Common.Data.Products;
-using Shopping.Readers.MT.Tests.Helpers.AssertHelpers;
 
 namespace Shopping.Readers.MT.Tests.Html;
 
@@ -61,7 +60,7 @@ public class SupplyReaderTests
 
         Assert.Multiple(() =>
         {
-            AssertBySupplyPackagePosition.Equal(actualPosition, expectedPosition);
+            Assert.That(expectedPosition, Is.EqualTo(actualPosition));
         });
     }
 }

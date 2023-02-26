@@ -11,7 +11,7 @@ internal class SupplyPackagePositionRenderer
         => $$"""
             <div class="history-order-good">
                 {{Render(supplyPackagePosition.Product)}}
-                {{Render(supplyPackagePosition as ISupplyPackagePosition)}}
+                {{Render(supplyPackagePosition)}}
             </div>
             """;
 

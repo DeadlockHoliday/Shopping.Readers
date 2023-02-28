@@ -1,0 +1,3 @@
+[submodule "Shopping.Samples"]
+	path = Shopping.Samples
+	url = https://github.com/DeadlockHoliday/Shopping.Samples.git

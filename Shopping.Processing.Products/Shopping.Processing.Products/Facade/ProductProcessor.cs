@@ -2,19 +2,24 @@
 using Shopping.Processing.Products.Units;
 using Shopping.Common.Data.Products;
 using Shopping.Common.Modules;
+using System.Text.Json;
 
 namespace Shopping.Processing.Products.Facade;
 
 public sealed class ProductProcessor : IProductProcessor
 {
     public ProcessedProduct Process(Product product)
-        => new(
+    {
+        var details = new
+        {
+            Mass = GetUnit(product.Info, "г").ToString(),
+            Pieces = GetUnit(product.Info, "шт").ToString(),
+        };
+
+        return new(
             ProcessProduct(product),
-            new Dictionary<string, string>()
-            {
-                { "Mass", GetUnit(product.Info, "г").ToString() },
-                { "Pieces", GetUnit(product.Info, "шт").ToString() },
-            });
+            JsonSerializer.Serialize(details));
+    }
 
     private static Product ProcessProduct(Product product)
         => new(product.Info, NameExtractor.Extract(product.Info) ?? product.Category);

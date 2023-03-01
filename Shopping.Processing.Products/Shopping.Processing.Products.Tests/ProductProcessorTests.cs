@@ -18,9 +18,10 @@ internal class ProductProcessorTests
     [TestCase("0.1л вкусное молоко", ExpectedResult = 100)]
     public long? Process_ShouldReturn_MassGramms(string line)
         => Process(line)
-            .GetValue("Mass")?
-            .ToInt64() ?? 0;
-        
+            .Details
+            .GetProperty("Mass")
+            .GetInt64();
+
     [TestCase("Paclan Стакан пластиковый прозрачный", ExpectedResult = "Стакан")]
     [TestCase("Горох колотый желтый Донель 800г", ExpectedResult = "Горох")]
     [TestCase("Капуста", ExpectedResult = "Капуста")]
@@ -47,8 +48,9 @@ internal class ProductProcessorTests
     [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = 12)]
     public long Process_ShouldReturn_Pieces(string line)
         => Process(line)
-                .GetValue("Pieces")?
-                .ToInt64() ?? 0;
+            .Details
+            .GetProperty("Pieces")
+            .GetInt64();
 
     [TestCase("0.1шт")]
     [TestCase("2.00.2мл")] // doesnt crash because regex captures 00.2.

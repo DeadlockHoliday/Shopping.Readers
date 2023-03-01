@@ -1,19 +1,18 @@
 ﻿using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json;
 
 namespace Shopping.Common.Data.Products;
 
 public sealed record class ProcessedProduct : Product
 {
     [SetsRequiredMembers]
-    public ProcessedProduct(Product original, IDictionary<string, string> details) : base(original)
+    public ProcessedProduct(
+        Product original, 
+        [StringSyntax(StringSyntaxAttribute.Json)] string json) : base(original)
     {
-        Details = new ReadOnlyDictionary<string, string>(details);
+        Details = JsonDocument.Parse(json).RootElement;
     }
 
-    // JSON?
-    private ReadOnlyDictionary<string, string> Details { get; init; }
-    
-    public string? GetValue(string key)
-        => Details.TryGetValue(key, out var value) ? value : null;
+    public JsonElement Details { get; init; }
 }

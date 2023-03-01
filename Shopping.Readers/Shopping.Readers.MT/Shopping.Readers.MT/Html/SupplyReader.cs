@@ -1,13 +1,11 @@
 ﻿using SoftCircuits.HtmlMonkey;
-using System.Collections.Immutable;
-using Shopping.Common.Data.Products;
 using Shopping.Common.Data.Supply;
 
 namespace Shopping.Readers.MT.Html;
 
 internal class SupplyReader
 {
-    public static SupplyPosition[] Parse(HtmlDocument doc)
+    internal static SupplyPosition[] Parse(HtmlDocument doc)
         => doc.Find(".history-order")
             .Select(node => new
             {
@@ -16,9 +14,6 @@ internal class SupplyReader
             })
             .SelectMany(x => ProductReader.Read(x.Node, x.Date))
             .ToArray();
-
-    internal static SupplyPosition[] Parse(string html)
-        => Parse(HtmlDocument.FromHtml(html));
 
     private static DateOnly? ParseDate(HtmlElementNode node)
     {

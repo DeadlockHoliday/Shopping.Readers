@@ -1,12 +1,13 @@
 ﻿using Shopping.Processing.Products.Names;
 using Shopping.Processing.Products.Units;
 using Shopping.Common.Data.Products;
+using Shopping.Common.Modules;
 
-namespace Shopping.Processing.Products;
+namespace Shopping.Processing.Products.Facade;
 
-public static class ProductProcessor
+public sealed class ProductProcessor : IProductProcessor
 {
-    public static ProcessedProduct Process(Product product)
+    public ProcessedProduct Process(Product product)
         => new(
             ProcessProduct(product),
             new Dictionary<string, string>()

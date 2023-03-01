@@ -1,10 +1,10 @@
-﻿using Shopping.Common.Data;
-using Shopping.Common.Data.Products;
+﻿using Shopping.Common.Data.Products;
 using Shopping.Common.Data.Supply;
+using Shopping.Readers.MT.Facade;
 
 namespace Shopping.Readers.MT.Tests.Html;
 
-public class SupplyReaderTests
+public class MTSupplyPositionsReaderTests
 {
     [Test]
     public void Parse_SameProduct_InDifferentOrders_ShouldReturn_Duplicates()
@@ -38,9 +38,10 @@ public class SupplyReaderTests
         };
 
         var html = SupplyPackagesRenderer.Render(expectedPositions);
-        var result = SupplyReader.Parse(html);
+        var reader = new MTSupplyPositionsReader();
+        var result = reader.Read(html);
 
-        Assert.That(result, Is.EquivalentTo(expectedPositions));        
+        Assert.That(result, Is.EquivalentTo(expectedPositions));
     }
 
     [Test]
@@ -61,7 +62,8 @@ public class SupplyReaderTests
         };
 
         var html = SupplyPackagesRenderer.Render(expectedPosition);
-        var actualPosition = SupplyReader.Parse(html).First();
+        var reader = new MTSupplyPositionsReader();
+        var actualPosition = reader.Read(html).First();
 
         Assert.Multiple(() =>
         {

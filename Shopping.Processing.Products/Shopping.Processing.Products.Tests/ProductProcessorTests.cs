@@ -1,9 +1,10 @@
 ﻿using Shopping.Common.Data.Products;
 using Shopping.Common.Helpers;
+using Shopping.Processing.Products.Facade;
 
 namespace Shopping.Processing.Products.Tests;
 
-internal class SupplyNormalizerTests
+internal class ProductProcessorTests
 {
     private const string defaultCategory = "Misc";
 
@@ -15,7 +16,7 @@ internal class SupplyNormalizerTests
     [TestCase("Молоко вкусное 0.1л", ExpectedResult = 100)]
     [TestCase("Молоко 0.1л вкусное", ExpectedResult = 100)]
     [TestCase("0.1л вкусное молоко", ExpectedResult = 100)]
-    public long? NormalizeLine_ShouldReturn_MassGramms(string line)
+    public long? Process_ShouldReturn_MassGramms(string line)
         => Process(line)
             .GetValue("Mass")?
             .ToInt64() ?? 0;
@@ -40,23 +41,23 @@ internal class SupplyNormalizerTests
     [TestCase("Тушка цыпленка-бройлера замороженная", ExpectedResult = "Тушка куриная")]
     [TestCase("Хлопья овсяные Крупиночка 450г", ExpectedResult = "Хлопья овсяные")]
     [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = "Яйцо")]
-    public string NormalizeLine_ShouldReturn_CategoryName(string line)
+    public string Process_ShouldReturn_CategoryName(string line)
         => Process(line).Category;
 
     [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = 12)]
-    public long NormalizeLine_ShouldReturn_Pieces(string line)
+    public long Process_ShouldReturn_Pieces(string line)
         => Process(line)
                 .GetValue("Pieces")?
                 .ToInt64() ?? 0;
 
     [TestCase("0.1шт")]
     [TestCase("2.00.2мл")] // doesnt crash because regex captures 00.2.
-    public void NormalizeLine_IncorrectCases_ShouldThrow(string line)
+    public void Process_IncorrectCases_ShouldThrow(string line)
     {
         Assert.That(() => Process(line), Throws.Exception);
     }
 
     private static ProcessedProduct Process(string info)
-        => ProductProcessor.Process(
+        => new ProductProcessor().Process(
             new Product(info, defaultCategory));
 }

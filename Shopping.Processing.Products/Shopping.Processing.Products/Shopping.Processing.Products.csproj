@@ -8,12 +8,6 @@
     <ProjectReference Include="..\..\Shopping.Common\Shopping.Common.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="MT.Sample.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net7.0</TargetFramework>

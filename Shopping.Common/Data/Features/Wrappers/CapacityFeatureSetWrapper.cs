@@ -4,7 +4,7 @@ namespace Shopping.Common.Data.Features.Wrappers;
 
 public class CapacityFeatureSetWrapper : FeatureSetWrapperBase
 {
-    public CapacityFeatureSetWrapper(IDictionary<string, JsonNode?> featureSet) : base(featureSet)
+    public CapacityFeatureSetWrapper(JsonObject featureSet) : base(featureSet)
     { 
     }
 

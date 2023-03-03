@@ -12,21 +12,24 @@ public sealed class ProductProcessor : IProductProcessor
 {
     public Product Process(Product product)
     {
-        var sharedFeatureSet = new Dictionary<string, JsonNode?>();
-        var features = new FeatureSetWrapperBase[]
-        {
-            new CapacityFeatureSetWrapper(sharedFeatureSet)
-            {
-                MassGramms = GetUnit(product.Info, "г"),
-                Pieces = GetUnit(product.Info, "шт"),
-            },
-            new NameFeatureSetWrapper(sharedFeatureSet)
-            {
-                GroupingName = NameExtractor.Extract(product.Info)
-            }
-        }.Select(x => x.FeatureSet);
+        var sharedFeatureSet = new JsonObject();
 
-        return product with { ProcessorVersion = "v0.0001a", FeatureSet = sharedFeatureSet };
+        _ = new CapacityFeatureSetWrapper(sharedFeatureSet)
+        {
+            MassGramms = GetUnit(product.Info, "г"),
+            Pieces = GetUnit(product.Info, "шт"),
+        };
+
+        _ = new NameFeatureSetWrapper(sharedFeatureSet)
+        {
+            GroupingName = NameExtractor.Extract(product.Info)
+        };
+
+        return product with 
+        {
+            ProcessorVersion = "v0.0001a", 
+            FeatureSet = sharedFeatureSet 
+        };
     }
 
     private static long GetUnit(string line, string measure)

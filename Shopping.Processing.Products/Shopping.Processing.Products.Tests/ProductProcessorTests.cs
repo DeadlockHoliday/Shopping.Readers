@@ -1,4 +1,4 @@
-﻿using Shopping.Common.Data.Features;
+﻿using Shopping.Common.Data.Features.Wrappers;
 using Shopping.Common.Data.Products;
 using Shopping.Processing.Products.Facade;
 
@@ -17,15 +17,19 @@ internal class ProductProcessorTests
     [TestCase("Молоко 0.1л вкусное", ExpectedResult = 100)]
     [TestCase("0.1л вкусное молоко", ExpectedResult = 100)]
     public long? Process_ShouldReturn_MassGramms(string line)
-        => Process(line)
-            .GetFeatureSet<CapacityFeatureSet>()
-            .MassGramms;
+    {
+        var product = Process(line);
+        var wrapper = new CapacityFeatureSetWrapper(product.FeatureSet);
+        return wrapper.MassGramms;
+    }
 
     [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = 12)]
     public long Process_ShouldReturn_Pieces(string line)
-        => Process(line)
-            .GetFeatureSet<CapacityFeatureSet>()
-            .Pieces;
+    {
+        var product = Process(line);
+        var wrapper = new CapacityFeatureSetWrapper(product.FeatureSet);
+        return wrapper.Pieces;
+    }
 
     [TestCase("Paclan Стакан пластиковый прозрачный", ExpectedResult = "Стакан")]
     [TestCase("Горох колотый желтый Донель 800г", ExpectedResult = "Горох")]
@@ -48,9 +52,11 @@ internal class ProductProcessorTests
     [TestCase("Хлопья овсяные Крупиночка 450г", ExpectedResult = "Хлопья овсяные")]
     [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = "Яйцо")]
     public string Process_ShouldReturn_GroupingName(string line)
-        => Process(line)
-            .GetFeatureSet<NameFeatureSet>()
-            .GroupingName!;
+    {
+        var product = Process(line);
+        var wrapper = new NameFeatureSetWrapper(product.FeatureSet);
+        return wrapper.GroupingName!;
+    }
 
     private static Product Process(string info)
         => new ProductProcessor()

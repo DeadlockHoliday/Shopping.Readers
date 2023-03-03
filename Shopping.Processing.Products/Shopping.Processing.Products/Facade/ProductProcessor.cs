@@ -3,6 +3,8 @@ using Shopping.Processing.Products.Units;
 using Shopping.Common.Data.Products;
 using Shopping.Common.Modules;
 using Shopping.Common.Data.Features;
+using Shopping.Common.Data.Features.Wrappers;
+using System.Text.Json.Nodes;
 
 namespace Shopping.Processing.Products.Facade;
 
@@ -10,19 +12,21 @@ public sealed class ProductProcessor : IProductProcessor
 {
     public Product Process(Product product)
     {
-        var features = new FeatureSet(
-            new CapacityFeatureSet
+        var sharedFeatureSet = new Dictionary<string, JsonNode?>();
+        var features = new FeatureSetWrapperBase[]
+        {
+            new CapacityFeatureSetWrapper(sharedFeatureSet)
             {
                 MassGramms = GetUnit(product.Info, "г"),
                 Pieces = GetUnit(product.Info, "шт"),
             },
-            new NameFeatureSet
+            new NameFeatureSetWrapper(sharedFeatureSet)
             {
                 GroupingName = NameExtractor.Extract(product.Info)
             }
-        );
+        }.Select(x => x.FeatureSet);
 
-        return product with { ProcessorVersion = "v0.0001a", FeatureSet = features };
+        return product with { ProcessorVersion = "v0.0001a", FeatureSet = sharedFeatureSet };
     }
 
     private static long GetUnit(string line, string measure)

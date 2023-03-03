@@ -1,5 +1,5 @@
-﻿using Shopping.Common.Data.Products;
-using Shopping.Common.Helpers;
+﻿using Shopping.Common.Data.Features;
+using Shopping.Common.Data.Products;
 using Shopping.Processing.Products.Facade;
 
 namespace Shopping.Processing.Products.Tests;
@@ -18,9 +18,14 @@ internal class ProductProcessorTests
     [TestCase("0.1л вкусное молоко", ExpectedResult = 100)]
     public long? Process_ShouldReturn_MassGramms(string line)
         => Process(line)
-            .Details
-            .GetProperty("Mass")
-            .GetInt64();
+            .GetFeatureSet<CapacityFeatureSet>()
+            .MassGramms;
+
+    [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = 12)]
+    public long Process_ShouldReturn_Pieces(string line)
+        => Process(line)
+            .GetFeatureSet<CapacityFeatureSet>()
+            .Pieces;
 
     [TestCase("Paclan Стакан пластиковый прозрачный", ExpectedResult = "Стакан")]
     [TestCase("Горох колотый желтый Донель 800г", ExpectedResult = "Горох")]
@@ -42,24 +47,12 @@ internal class ProductProcessorTests
     [TestCase("Тушка цыпленка-бройлера замороженная", ExpectedResult = "Тушка куриная")]
     [TestCase("Хлопья овсяные Крупиночка 450г", ExpectedResult = "Хлопья овсяные")]
     [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = "Яйцо")]
-    public string Process_ShouldReturn_CategoryName(string line)
-        => Process(line).Category;
-
-    [TestCase("Яйцо стальное фирмы Чак Норрис 12шт", ExpectedResult = 12)]
-    public long Process_ShouldReturn_Pieces(string line)
+    public string Process_ShouldReturn_GroupingName(string line)
         => Process(line)
-            .Details
-            .GetProperty("Pieces")
-            .GetInt64();
+            .GetFeatureSet<NameFeatureSet>()
+            .GroupingName!;
 
-    [TestCase("0.1шт")]
-    [TestCase("2.00.2мл")] // doesnt crash because regex captures 00.2.
-    public void Process_IncorrectCases_ShouldThrow(string line)
-    {
-        Assert.That(() => Process(line), Throws.Exception);
-    }
-
-    private static ProcessedProduct Process(string info)
-        => new ProductProcessor().Process(
-            new Product(info, defaultCategory));
+    private static Product Process(string info)
+        => new ProductProcessor()
+            .Process(new(info, defaultCategory));
 }

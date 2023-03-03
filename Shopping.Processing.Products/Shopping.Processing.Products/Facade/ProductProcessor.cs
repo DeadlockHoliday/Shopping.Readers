@@ -2,27 +2,28 @@
 using Shopping.Processing.Products.Units;
 using Shopping.Common.Data.Products;
 using Shopping.Common.Modules;
-using System.Text.Json;
+using Shopping.Common.Data.Features;
 
 namespace Shopping.Processing.Products.Facade;
 
 public sealed class ProductProcessor : IProductProcessor
 {
-    public ProcessedProduct Process(Product product)
+    public Product Process(Product product)
     {
-        var details = new
-        {
-            Mass = GetUnit(product.Info, "г").ToString(),
-            Pieces = GetUnit(product.Info, "шт").ToString(),
-        };
+        var features = new FeatureSet(
+            new CapacityFeatureSet
+            {
+                MassGramms = GetUnit(product.Info, "г"),
+                Pieces = GetUnit(product.Info, "шт"),
+            },
+            new NameFeatureSet
+            {
+                GroupingName = NameExtractor.Extract(product.Info)
+            }
+        );
 
-        return new(
-            ProcessProduct(product),
-            JsonSerializer.Serialize(details));
+        return product with { ProcessorVersion = "v0.0001a", FeatureSet = features };
     }
-
-    private static Product ProcessProduct(Product product)
-        => new(product.Info, NameExtractor.Extract(product.Info) ?? product.Category);
 
     private static long GetUnit(string line, string measure)
     {

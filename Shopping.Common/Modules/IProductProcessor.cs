@@ -4,5 +4,5 @@ namespace Shopping.Common.Modules;
 
 public interface IProductProcessor
 {
-    ProcessedProduct Process(Product product);
+    Product Process(Product product);
 }

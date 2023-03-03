@@ -1,10 +1,9 @@
 ﻿using Shopping.Processing.Products.Names;
 using Shopping.Processing.Products.Units;
-using Shopping.Common.Data.Products;
 using Shopping.Common.Modules;
-using Shopping.Common.Data.Features;
-using Shopping.Common.Data.Features.Wrappers;
+using Shopping.Common.Data;
 using System.Text.Json.Nodes;
+using Shopping.Common.Data.Scoping;
 
 namespace Shopping.Processing.Products.Facade;
 
@@ -14,13 +13,13 @@ public sealed class ProductProcessor : IProductProcessor
     {
         var sharedFeatureSet = new JsonObject();
 
-        _ = new CapacityFeatureSetWrapper(sharedFeatureSet)
+        _ = new CapacityFeatureScope(sharedFeatureSet)
         {
             MassGramms = GetUnit(product.Info, "г"),
             Pieces = GetUnit(product.Info, "шт"),
         };
 
-        _ = new NameFeatureSetWrapper(sharedFeatureSet)
+        _ = new NamingFeatureScope(sharedFeatureSet)
         {
             GroupingName = NameExtractor.Extract(product.Info)
         };
@@ -28,7 +27,7 @@ public sealed class ProductProcessor : IProductProcessor
         return product with 
         {
             ProcessorVersion = "v0.0001a", 
-            FeatureSet = sharedFeatureSet 
+            Features = sharedFeatureSet 
         };
     }
 

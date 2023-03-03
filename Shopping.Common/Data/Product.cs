@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Nodes;
 
-namespace Shopping.Common.Data.Products;
+namespace Shopping.Common.Data;
 
 public readonly record struct Product
 {
@@ -9,7 +9,7 @@ public readonly record struct Product
     public string ProcessorVersion { get; init; }
     public required string Info { get; init; }
     public required string Category { get; init; }
-    public readonly JsonObject FeatureSet { get; init; }
+    public readonly JsonObject Features { get; init; }
 
     [SetsRequiredMembers]
     public Product(string info, string category)
@@ -17,6 +17,6 @@ public readonly record struct Product
         Info = info;
         Category = category;
         ProcessorVersion = string.Empty;
-        FeatureSet = new JsonObject();
+        Features = new JsonObject();
     }
 }

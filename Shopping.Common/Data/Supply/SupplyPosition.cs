@@ -1,6 +1,4 @@
-﻿using Shopping.Common.Data.Products;
-
-namespace Shopping.Common.Data.Supply;
+﻿namespace Shopping.Common.Data.Supply;
 
 public readonly record struct SupplyPosition
 {

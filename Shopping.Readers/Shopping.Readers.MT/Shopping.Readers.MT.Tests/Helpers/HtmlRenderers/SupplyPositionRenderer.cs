@@ -1,5 +1,4 @@
 ﻿using Shopping.Common.Data;
-using Shopping.Common.Data.Products;
 using Shopping.Common.Data.Supply;
 
 namespace Shopping.Readers.MT.Tests.Helpers.HtmlRenderers;

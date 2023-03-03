@@ -1,11 +1,11 @@
 ﻿using System.Text.Json.Nodes;
 
-namespace Shopping.Common.Data.Features.Wrappers;
+namespace Shopping.Common.Data.Scoping;
 
-public class FeatureSetWrapperBase
+public class FeatureScopeBase
 {
     protected readonly JsonObject featureSet;
-    public FeatureSetWrapperBase(JsonObject featureSet)
+    public FeatureScopeBase(JsonObject featureSet)
     {
         this.featureSet = featureSet;
     }

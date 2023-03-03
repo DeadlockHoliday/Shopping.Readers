@@ -2,8 +2,8 @@
 using Shopping.Common.Helpers;
 using Shopping.Readers.MT.Helpers;
 using Shopping.Common.Data.Supply;
-using Shopping.Common.Data.Products;
 using System.Linq;
+using Shopping.Common.Data;
 
 namespace Shopping.Readers.MT.Html;
 

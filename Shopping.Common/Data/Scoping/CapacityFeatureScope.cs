@@ -1,11 +1,11 @@
 ﻿using System.Text.Json.Nodes;
 
-namespace Shopping.Common.Data.Features.Wrappers;
+namespace Shopping.Common.Data.Scoping;
 
-public class CapacityFeatureSetWrapper : FeatureSetWrapperBase
+public class CapacityFeatureScope : FeatureScopeBase
 {
-    public CapacityFeatureSetWrapper(JsonObject featureSet) : base(featureSet)
-    { 
+    public CapacityFeatureScope(JsonObject featureSet) : base(featureSet)
+    {
     }
 
     public long MassGramms

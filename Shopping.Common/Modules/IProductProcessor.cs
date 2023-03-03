@@ -1,4 +1,4 @@
-﻿using Shopping.Common.Data.Products;
+﻿using Shopping.Common.Data;
 
 namespace Shopping.Common.Modules;
 

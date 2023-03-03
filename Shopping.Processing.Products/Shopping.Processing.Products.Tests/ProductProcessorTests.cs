@@ -1,5 +1,5 @@
-﻿using Shopping.Common.Data.Features.Wrappers;
-using Shopping.Common.Data.Products;
+﻿using Shopping.Common.Data;
+using Shopping.Common.Data.Scoping;
 using Shopping.Processing.Products.Facade;
 
 namespace Shopping.Processing.Products.Tests;
@@ -19,7 +19,7 @@ internal class ProductProcessorTests
     public long? Process_ShouldReturn_MassGramms(string line)
     {
         var product = Process(line);
-        var wrapper = new CapacityFeatureSetWrapper(product.FeatureSet);
+        var wrapper = new CapacityFeatureScope(product.Features);
         return wrapper.MassGramms;
     }
 
@@ -27,7 +27,7 @@ internal class ProductProcessorTests
     public long Process_ShouldReturn_Pieces(string line)
     {
         var product = Process(line);
-        var wrapper = new CapacityFeatureSetWrapper(product.FeatureSet);
+        var wrapper = new CapacityFeatureScope(product.Features);
         return wrapper.Pieces;
     }
 
@@ -54,7 +54,7 @@ internal class ProductProcessorTests
     public string Process_ShouldReturn_GroupingName(string line)
     {
         var product = Process(line);
-        var wrapper = new NameFeatureSetWrapper(product.FeatureSet);
+        var wrapper = new NamingFeatureScope(product.Features);
         return wrapper.GroupingName!;
     }
 

@@ -1,4 +1,5 @@
 ﻿using Shopping.Common.Data.Supply;
+using Shopping.Common.Modules;
 using Shopping.Readers.MT.Html;
 using SoftCircuits.HtmlMonkey;
 

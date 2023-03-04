@@ -4,7 +4,7 @@ namespace Shopping.Common.Data.Scoping;
 
 public class CapacityFeatureScope : FeatureScopeBase
 {
-    public CapacityFeatureScope(JsonObject featureSet) : base(featureSet)
+    public CapacityFeatureScope(IDictionary<string, JsonNode> featureSet) : base(featureSet)
     {
     }
 

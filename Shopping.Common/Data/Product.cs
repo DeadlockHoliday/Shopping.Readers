@@ -9,5 +9,5 @@ public readonly record struct Product
     public string ProcessorVersion { get; init; }
     public required string Info { get; init; }
     public required string Category { get; init; }
-    public readonly JsonObject Features { get; init; }
+    public readonly IDictionary<string, JsonNode> Features { get; init; }
 }

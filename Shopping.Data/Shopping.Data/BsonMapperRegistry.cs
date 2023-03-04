@@ -14,10 +14,10 @@ internal static class BsonMapperRegistry
             deserialize: (bson) => new Money(bson.AsDecimal)
         );
 
-        BsonMapper.Global.RegisterType<JsonObject>
+        BsonMapper.Global.RegisterType<JsonNode>
         (
-            serialize: (jsonObject) => jsonObject.ToJsonString(),
-            deserialize: (bson) => (JsonObject)JsonNode.Parse(bson.AsString)!
+            serialize: (jsonNode) => jsonNode.ToJsonString(),
+            deserialize: (bson) => JsonNode.Parse(bson.AsString)!
         );
     }
 }

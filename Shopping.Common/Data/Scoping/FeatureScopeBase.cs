@@ -4,17 +4,15 @@ namespace Shopping.Common.Data.Scoping;
 
 public class FeatureScopeBase
 {
-    protected readonly JsonObject featureSet;
-    public FeatureScopeBase(JsonObject featureSet)
+    protected readonly IDictionary<string, JsonNode> featureSet;
+    public FeatureScopeBase(IDictionary<string, JsonNode> featureSet)
     {
         this.featureSet = featureSet;
     }
 
-    public JsonObject FeatureSet => featureSet;
-
     public TValue? TryGet<TValue>(string key, TValue? fallback)
     {
-        if (featureSet.TryGetPropertyValue(key, out var node))
+        if (featureSet.TryGetValue(key, out var node))
         {
             return node!.GetValue<TValue>();
         }
@@ -22,8 +20,8 @@ public class FeatureScopeBase
         return fallback;
     }
 
-    public void Set(string key, Func<JsonNode?> selector)
+    public void Set(string key, Func<JsonNode> selector)
     {
-        featureSet[key] = selector();
+        featureSet[key] = selector.Invoke();
     }
 }

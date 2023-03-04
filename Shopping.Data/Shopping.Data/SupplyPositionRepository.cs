@@ -1,32 +1,22 @@
-﻿using LiteDB;
-using Shopping.Common.Data.Supply;
-using Shopping.Common.Modules;
+﻿using Shopping.Common.Data.Supply;
 
 namespace Shopping.Data;
 
-public interface ISupplyPositionRepository
-{
-    void Add(SupplyPosition position);
-    void Update(SupplyPosition position);
-    void Remove(SupplyPosition position);
-    SupplyPosition Get(string jsonPath);
-    SupplyPosition[] Load(string jsonPath);
-}
-
 public class SupplyPositionRepository : ISupplyPositionRepository
 {
-    private readonly string connectionString;
+    private readonly IDatabaseManager databaseManager;
 
-    public SupplyPositionRepository(string connectionString)
+    public SupplyPositionRepository(IDatabaseManager databaseManager)
     {
-        this.connectionString = connectionString;
+        BsonMapperRegistry.Register();
+        this.databaseManager = databaseManager;
     }
 
-    public void Add(SupplyPosition position)
+    public Guid Add(SupplyPosition position)
     {
-        using var db = new LiteDatabase(connectionString);
+        using var db = databaseManager.OpenDatabaseConnection();
         var collection = db.GetCollection<SupplyPosition>();
-        collection.Insert(position);
+        return collection.Insert(position);
     }
 
     public SupplyPosition Get(string jsonPath)
@@ -36,7 +26,7 @@ public class SupplyPositionRepository : ISupplyPositionRepository
             throw new NotImplementedException("jsonPath is under development");
         }
 
-        using var db = new LiteDatabase(connectionString);
+        using var db = databaseManager.OpenDatabaseConnection();
         var collection = db.GetCollection<SupplyPosition>();
         return collection.Query().First();
     }
@@ -48,24 +38,22 @@ public class SupplyPositionRepository : ISupplyPositionRepository
             throw new NotImplementedException("jsonPath is under development");
         }
 
-        using var db = new LiteDatabase(connectionString);
+        using var db = databaseManager.OpenDatabaseConnection();
         var collection = db.GetCollection<SupplyPosition>();
         return collection.Query().ToArray();
     }
 
-    public void Remove(SupplyPosition position)
+    public void Remove(Guid id)
     {
-        using var db = new LiteDatabase(connectionString);
+        using var db = databaseManager.OpenDatabaseConnection();
         var collection = db.GetCollection<SupplyPosition>();
-        // collection.Delete()
-        throw new NotImplementedException("No Id Provided.");
+        collection.Delete(id);
     }
 
-    public void Update(SupplyPosition position)
+    public bool Update(SupplyPosition position)
     {
-        using var db = new LiteDatabase(connectionString);
+        using var db = databaseManager.OpenDatabaseConnection();
         var collection = db.GetCollection<SupplyPosition>();
-        // collection.Update()
-        throw new NotImplementedException("No Id Provided.");
+        return collection.Update(position);
     }
 }

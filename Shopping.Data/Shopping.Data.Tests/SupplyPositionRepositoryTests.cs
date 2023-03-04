@@ -10,7 +10,6 @@ namespace Shopping.Data.Tests;
 [TestFixture]
 internal class SupplyPositionRepositoryTests
 {
-    private ISupplyPositionRepository repository;
     private IDatabaseManager databaseManager;
 
     [SetUp]
@@ -18,7 +17,6 @@ internal class SupplyPositionRepositoryTests
     {
         var stream = new MemoryStream();
         databaseManager = new DatabaseManager(stream);
-        repository = new SupplyPositionRepository(databaseManager);
     }
 
     [Test]
@@ -26,7 +24,11 @@ internal class SupplyPositionRepositoryTests
     {
         AssertCount(0);
         var supplyPosition = Create();
-        repository.Add(supplyPosition);
+        using (var connection = databaseManager.OpenDatabaseConnection()) 
+        {
+            connection.GetCollection<SupplyPosition>().Insert(supplyPosition);
+        }
+
         AssertCount(1);
     }
 
@@ -36,21 +38,37 @@ internal class SupplyPositionRepositoryTests
         AssertCount(0);
 
         var supplyPosition = Create();
-        var id  = repository.Add(supplyPosition);
+        using (var connection = databaseManager.OpenDatabaseConnection())
+        {
+            var id = connection.GetCollection<SupplyPosition>().Insert(supplyPosition);
+            supplyPosition = supplyPosition with 
+            { 
+                Id = id
+            };
+        }
 
         var expectedProduct = new Product() { Info = "Updated_Info", Category = "Category" };
         var updatedSupplyPosition = Create() with
         {
-            Id = id,
+            Id = supplyPosition.Id,
             Invoice = new(),
             Product = expectedProduct
         };
 
-        repository.Update(updatedSupplyPosition);
+        using (var connection = databaseManager.OpenDatabaseConnection())
+        {
+            connection.GetCollection<SupplyPosition>()
+                .Update(updatedSupplyPosition);
+        }
 
-        using var connection = databaseManager.OpenDatabaseConnection();
-        var result = connection.GetCollection<SupplyPosition>().FindById(id).Product;
-        Assert.That(result, Is.EqualTo(expectedProduct));
+        using (var connection = databaseManager.OpenDatabaseConnection())
+        {
+            var result = connection.GetCollection<SupplyPosition>()
+                .FindById(supplyPosition.Id)
+                .Product;
+
+            Assert.That(result, Is.EqualTo(expectedProduct));
+        }
     }
 
     [Test]
@@ -59,11 +77,25 @@ internal class SupplyPositionRepositoryTests
         AssertCount(0);
 
         var supplyPosition = Create();
-        var id = repository.Add(supplyPosition);
+
+        using (var connection = databaseManager.OpenDatabaseConnection())
+        {
+            var id = connection.GetCollection<SupplyPosition>()
+                .Insert(supplyPosition);
+
+            supplyPosition = supplyPosition with
+            {
+                Id = id
+            };
+        }
 
         AssertCount(1);
 
-        repository.Remove(id);
+        using (var connection = databaseManager.OpenDatabaseConnection())
+        {
+            connection.GetCollection<SupplyPosition>()
+                .Delete(supplyPosition.Id);
+        }
 
         AssertCount(0);
     }

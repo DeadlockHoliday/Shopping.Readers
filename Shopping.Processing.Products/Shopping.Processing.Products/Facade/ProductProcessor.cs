@@ -11,7 +11,7 @@ public sealed class ProductProcessor : IProductProcessor
 {
     public Product Process(Product product)
     {
-        var sharedFeatureSet = new JsonObject();
+        var sharedFeatureSet = new Dictionary<string, JsonNode>();
 
         _ = new CapacityFeatureScope(sharedFeatureSet)
         {

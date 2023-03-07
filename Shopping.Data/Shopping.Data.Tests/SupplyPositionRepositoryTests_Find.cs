@@ -7,6 +7,8 @@ using Shopping.Common.Static;
 using System.Collections.Immutable;
 using System.Text.Json.Nodes;
 
+#pragma warning disable CS8618
+
 namespace Shopping.Data.Tests;
 
 [TestFixture]

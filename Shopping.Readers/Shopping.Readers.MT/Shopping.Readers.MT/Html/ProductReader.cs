@@ -16,9 +16,11 @@ internal static class ProductReader
             {
                 return new SupplyPosition
                 {
-                    Product = new Product(
-                        info:x.Children.GetText(".main-text > p"), 
-                        category:x.Children.GetText(".main-name")),
+                    Product = new Product
+                    {
+                        Info = x.Children.GetText(".main-text > p"), 
+                        Category = x.Children.GetText(".main-name"),
+                    },
                     Invoice = new()
                     {
                         Price = x.Children.GetText(".main-price .price-num").ToSum().ToMoney(),

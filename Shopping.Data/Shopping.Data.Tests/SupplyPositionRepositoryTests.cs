@@ -5,6 +5,8 @@ using Shopping.Common.Data.Scoping;
 using Shopping.Common.Data.Supply;
 using System.Text.Json.Nodes;
 
+#pragma warning disable CS8618
+
 namespace Shopping.Data.Tests;
 
 [TestFixture]
@@ -102,7 +104,7 @@ internal class SupplyPositionRepositoryTests
 
     private SupplyPosition Create()
     {
-        var productFeatures = new JsonObject();
+        var productFeatures = new Dictionary<string, JsonNode>();
         _ = new CapacityFeatureScope(productFeatures)
         {
             MassGramms = 100,

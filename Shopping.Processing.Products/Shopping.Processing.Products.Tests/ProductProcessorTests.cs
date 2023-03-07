@@ -60,5 +60,5 @@ internal class ProductProcessorTests
 
     private static Product Process(string info)
         => new ProductProcessor()
-            .Process(new(info, defaultCategory));
+            .Process(new() { Info = info,  Category = defaultCategory });
 }

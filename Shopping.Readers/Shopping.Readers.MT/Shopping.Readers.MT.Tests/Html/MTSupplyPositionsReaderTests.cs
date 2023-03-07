@@ -9,9 +9,11 @@ public class MTSupplyPositionsReaderTests
     [Test]
     public void Parse_SameProduct_InDifferentOrders_ShouldReturn_Duplicates()
     {
-        var product = new Product(
-            "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
-            "Пластиковая посуда");
+        var product = new Product
+        {
+            Info = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
+            Category = "Пластиковая посуда",
+        };
 
         var expectedPositions = new SupplyPosition[]
         {
@@ -49,9 +51,11 @@ public class MTSupplyPositionsReaderTests
     {
         var expectedPosition = new SupplyPosition
         {
-            Product = new(
-                "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
-                "Пластиковая посуда"),
+            Product = new()
+            {
+                Info = "Paclan Стакан пластиковый прозрачный Party Classic 200 мл 12шт",
+                Category = "Пластиковая посуда",
+            },
             Invoice = new Invoice()
             {
                 Price = new NMoneys.Money(49),
